@@ -13,6 +13,8 @@
 # include <math.h>
 # include <fcntl.h>
 # include <stdbool.h>
+# include <pthread.h>
+
 
 
 #endif /*MINI_RT_H*/
