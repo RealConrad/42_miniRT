@@ -1,4 +1,4 @@
-#include "minirt.h"
+#include "mini_rt.h"
 
 int	main(void)
 {
