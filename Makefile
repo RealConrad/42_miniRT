@@ -35,7 +35,7 @@ init-submodules:
 		git submodule update $(LIBFT_DIR); \
 	fi
 clean:
-	rm -rf $(OBJS_DIR)
+	rm -rf $(OBJS)
 
 fclean: clean
 	make fclean -C $(LIBFT_DIR)
