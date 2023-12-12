@@ -2,9 +2,11 @@
 # ---------------------------------- Config ---------------------------------- #
 NAME			:= minirt
 CC				:= cc
-CFLAGS			:= -I./includes -Wall -Wextra -Werror -g
-LIBFT_DIR		:= libraries/libft
-LIBFT			:= libraries/libft/libft.a
+CFLAGS			:= -I./includes -Wall -Wextra -Werror
+LIBFT_DIR		:= ./libraries/libft
+LIBFT			:= ./libraries/libft/libft.a
+MLX_DIR			:= ./libraries/mlx
+MLX				:= ./libraries/mlx/build/libmlx42.a
 
 # ------------------------------- Source files ------------------------------- #
 OBJ_DIR			:= ./objs
@@ -18,20 +20,31 @@ OBJS			:= $(addprefix $(OBJ_DIR)/, $(SRCS:%.c=%.o))
 # ----------------------------------- Rules ---------------------------------- #
 all: .submodules_initialized $(NAME)
 
-$(NAME): $(OBJS) $(LIBFT)
+$(NAME): $(OBJS) $(LIBFT) $(MLX)
 	$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
 	@echo $(GREEN)"Linking MiniRT"$(DEFAULT);
 
 $(LIBFT):
 	make -C $(LIBFT_DIR)
 
+$(MLX):
+	@cd libraries/mlx && cmake -B build && cmake --build build -j4
+
 $(OBJ_DIR)/%.o: %.c
 	mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) -c $< -o $@
 
+debug: CFLAGS += -g
+debug: all
+
+nflag: CFLAGS =
+nflag: all
+
 .submodules_initialized:
 	git submodule init $(LIBFT_DIR)
 	git submodule update $(LIBFT_DIR)
+	git submodule init $(MLX_DIR)
+	git submodule update $(MLX_DIR)
 	@touch .submodules_initialized
 
 clean:

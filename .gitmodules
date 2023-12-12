@@ -1,3 +1,6 @@
 [submodule "libraries/libft"]
 	path = libraries/libft
 	url = https://github.com/itseugen/c_library.git
+[submodule "libraries/mlx"]
+	path = libraries/mlx
+	url = https://github.com/codam-coding-college/MLX42
