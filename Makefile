@@ -2,10 +2,9 @@
 # ---------------------------------- Config ---------------------------------- #
 NAME			:= minirt
 CC				:= cc
-CFLAGS			:= -Wall -Wextra -Werror -g
-INCLUDES		:= -I./includes
+CFLAGS			:= -I./includes -Wall -Wextra -Werror -g
 LIBFT_DIR		:= libraries/libft
-LIBFT			:= $(LIBFT_DIR)/libft.a
+LIBFT			:= libraries/libft/libft.a
 
 # ------------------------------- Source files ------------------------------- #
 OBJ_DIR			:= ./objs
@@ -17,27 +16,35 @@ SRCS			:= $(SRC)
 OBJS			:= $(addprefix $(OBJ_DIR)/, $(SRCS:%.c=%.o))
 
 # ----------------------------------- Rules ---------------------------------- #
-all: init-submodules $(NAME)
+all: .submodules_initialized $(NAME)
 
 $(NAME): $(OBJS) $(LIBFT)
+	$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
+	@echo $(GREEN)"Linking MiniRT"$(DEFAULT);
+
+$(LIBFT):
 	make -C $(LIBFT_DIR)
-	$(CC) $(CFLAGS) $(INCLUDES) $(OBJS) $(LIBFT) -o $@
 
 $(OBJ_DIR)/%.o: %.c
-	mkdir -p $(OBJ_DIR)
-	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+	mkdir -p $(dir $@)
+	$(CC) $(CFLAGS) -c $< -o $@
 
-init-submodules:
-	@git submodule init $(LIBFT_DIR);
-	@git submodule update $(LIBFT_DIR);
+.submodules_initialized:
+	git submodule init $(LIBFT_DIR)
+	git submodule update $(LIBFT_DIR)
+	@touch .submodules_initialized
 
 clean:
-	rm -f $(OBJS)
+	rm -rf $(OBJS)
 
 fclean: clean
 	make fclean -C $(LIBFT_DIR)
-	rm -f $(NAME)
+	rm -f $(NAME) .submodules_initialized
 
 re: fclean all
 
-.PHONY: all clean fclean re $(LIBFT) $(NAME)
+.PHONY: all clean fclean re
+
+# Colours to make it look nice :)
+DEFAULT	= "\033[39m"
+GREEN	= "\033[32m"
