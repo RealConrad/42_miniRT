@@ -6,7 +6,9 @@
 NAME			:= miniRT
 CC				:= cc
 CFLAGS			:= -I./includes -Wall -Wextra -Werror
-CFLAGS			+= -pthread
+LINKS			= -Iinclude -lglfw -L"/Users/$(USER)/.brew/opt/glfw/lib/"
+LINKS			+= -framework Cocoa -framework OpenGL -framework IOKit
+LINKS			+= -pthread
 LIBFT_DIR		:= ./libraries/libft
 LIBFT			:= ./libraries/libft/libft.a
 MLX_DIR			:= ./libraries/mlx
@@ -31,7 +33,7 @@ OBJS			:= $(addprefix $(OBJ_DIR)/, $(SRCS:%.c=%.o))
 all: .submodules_initialized $(NAME)
 
 $(NAME): $(OBJS) $(LIBFT) $(MLX)
-	$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJS) -o $(NAME) $(LIBFT) $(MLX) $(LINKS)
 	@echo $(GREEN)"Linking MiniRT"$(DEFAULT);
 
 $(LIBFT):
