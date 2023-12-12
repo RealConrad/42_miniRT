@@ -19,7 +19,7 @@ OBJS			:= $(addprefix $(OBJ_DIR)/, $(SRCS:%.c=%.o))
 all: init-submodules $(NAME)
 
 $(NAME): $(OBJS)
-	make -C $(LIBFT_DIR)
+	@make -C $(LIBFT_DIR)
 	$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
 
 $(OBJ_DIR)/%.o: %.c
@@ -39,4 +39,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re $(NAME)
+.PHONY: all clean fclean re $(NAME) $(LIBFT)
