@@ -18,12 +18,12 @@ OBJS			:= $(addprefix $(OBJ_DIR)/, $(SRCS:%.c=%.o))
 # ----------------------------------- Rules ---------------------------------- #
 all: init-submodules $(NAME)
 
-$(NAME): $(OBJS) $(LIBFT)
+$(NAME): $(OBJS)
 	make -C $(LIBFT_DIR)
-	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -o $@
+	$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
 
 $(OBJ_DIR)/%.o: %.c
-	mkdir -p $(OBJ_DIR)
+	mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 init-submodules:
@@ -31,7 +31,7 @@ init-submodules:
 	@git submodule update $(LIBFT_DIR)
 
 clean:
-	rm -f $(OBJS)
+	rm -rf $(OBJS)
 
 fclean: clean
 	make fclean -C $(LIBFT_DIR)
@@ -39,4 +39,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re $(LIBFT) $(NAME) init-submodules
+.PHONY: all clean fclean re $(NAME)
