@@ -9,6 +9,8 @@
 # include "../libraries/libft/libft.h"
 # include "../libraries/mlx/include/MLX42/MLX42.h"
 
+# include "structs.h"
+
 # include <stdio.h>
 # include <math.h>
 # include <fcntl.h>
