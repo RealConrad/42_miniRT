@@ -17,6 +17,16 @@
 # include <stdbool.h>
 # include <pthread.h>
 
+/* -------------------------------------------------------------------------- */
+/*                                   Defines                                  */
+/* -------------------------------------------------------------------------- */
 
+# ifndef WIDTH
+#  define WIDTH 1920
+# endif /*WIDTH*/
+
+# ifndef HEIGHT
+#  define HEIGHT 1080
+# endif /*HEIGHT*/
 
 #endif /*MINI_RT_H*/
