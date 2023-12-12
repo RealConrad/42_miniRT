@@ -27,6 +27,6 @@
 
 # ifndef HEIGHT
 #  define HEIGHT 1080
-# endif
+# endif /*HEIGHT*/
 
 #endif /*MINI_RT_H*/
