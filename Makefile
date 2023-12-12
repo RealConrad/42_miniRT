@@ -19,19 +19,23 @@ OBJS			:= $(addprefix $(OBJ_DIR)/, $(SRCS:%.c=%.o))
 # ----------------------------------- Rules ---------------------------------- #
 all: init-submodules $(NAME)
 
-$(NAME): $(OBJS)
-	make -C $(LIBFT_DIR)
-	$(CC) $(CFLAGS) $(INCLUDES) $(LIBFT) -o $@
+$(NAME): $(OBJS) $(LIBFT)
+	$(CC) $(CFLAGS) $(INCLUDES) $(OBJS) $(LIBFT) -o $@
 
 $(OBJ_DIR)/%.o: %.c
 	mkdir -p $(OBJ_DIR)
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
+$(LIBFT):
+	make -C $(LIBFT_DIR)
+
 init-submodules:
-
-
+	@if [ -z "$(shell ls -A $(LIBFT_DIR))" ]; then \
+		git submodule init $(LIBFT_DIR); \
+		git submodule update $(LIBFT_DIR); \
+	fi
 clean:
-	rm -rf OBJS
+	rm -rf $(OBJS_DIR)
 
 fclean: clean
 	make fclean -C $(LIBFT_DIR)
