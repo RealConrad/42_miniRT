@@ -1,3 +1,3 @@
 
-#include "../libraries/c-library/libft.h"
+#include "../libraries/libft/c_library.h"
 #include <stdio.h>

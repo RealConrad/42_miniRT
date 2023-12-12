@@ -27,8 +27,8 @@ $(OBJ_DIR)/%.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 init-submodules:
-	git submodule init $(LIBFT_DIR);
-	@git submodule update $(LIBFT_DIR);
+	@git submodule init $(LIBFT_DIR)
+	@git submodule update $(LIBFT_DIR)
 
 clean:
 	rm -f $(OBJS)
@@ -39,4 +39,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re $(LIBFT) $(NAME)
+.PHONY: all clean fclean re $(LIBFT) $(NAME) init-submodules
