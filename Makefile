@@ -3,9 +3,10 @@
 #                                    Config                                    #
 # ---------------------------------------------------------------------------- #
 
-NAME			:= minirt
+NAME			:= miniRT
 CC				:= cc
 CFLAGS			:= -I./includes -Wall -Wextra -Werror
+CFLAGS			+= -pthread
 LIBFT_DIR		:= ./libraries/libft
 LIBFT			:= ./libraries/libft/libft.a
 MLX_DIR			:= ./libraries/mlx
