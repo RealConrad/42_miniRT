@@ -32,6 +32,7 @@ typedef struct s_camera
 {
 	t_vector	cords;
 	t_vector	or_vect;
+	uint8_t		fov;
 }	t_camera;
 
 typedef struct s_light

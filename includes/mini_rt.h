@@ -38,7 +38,8 @@ enum e_exit_msg
 	INPUT_FILE,
 	INPUT_MISSING,
 	DUPLICATED,
-	MISSING
+	MISSING,
+	FORMAT
 };
 
 #endif /*MINI_RT_H*/
