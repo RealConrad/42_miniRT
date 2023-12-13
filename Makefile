@@ -22,6 +22,7 @@ OBJ_DIR			:= ./objs
 VPATH			:= ./src/
 
 SRC				:= main.c
+SRC				+= parser/parser.c
 
 SRCS			:= $(SRC)
 OBJS			:= $(addprefix $(OBJ_DIR)/, $(SRCS:%.c=%.o))
