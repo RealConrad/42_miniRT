@@ -10,6 +10,7 @@
 # include "../libraries/mlx/include/MLX42/MLX42.h"
 
 # include "structs.h"
+# include "parser.h"
 
 # include <stdio.h>
 # include <math.h>
