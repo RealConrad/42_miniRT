@@ -35,7 +35,7 @@ t_scene	parser(int argc, char *argv[])
 	if (scene.amb_light.light_ratio == -1 || scene.camera.fov == -1
 		|| scene.light.light_ratio == -1)
 	{
-		// free_objects(scene->objects);
+		free_objects(&(scene.objects));
 		parser_exit(MISSING, NULL);
 	}
 	return (scene);
