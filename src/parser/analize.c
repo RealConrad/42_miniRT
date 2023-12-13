@@ -2,6 +2,7 @@
 #include "../../includes/mini_rt.h"
 
 static void	input_amb(char *line, t_scene *scene, int fd);
+static void	exit_analize(char *line, t_scene *scene, int fd);
 
 void	analize_line(char *line, t_scene *scene, int fd)
 {
@@ -17,17 +18,24 @@ void	analize_line(char *line, t_scene *scene, int fd)
 		|| ft_strncmp(line, "cy", 2) == 0)
 		input_object(line, scene, fd);
 	else
-	{
-		close(fd);
-		free_objects(&(scene->objects));
-		parser_exit(FORMAT, NULL);
-	}
+		exit_analize(line, scene, fd);
 }
 
 static void	input_amb(char *line, t_scene *scene, int fd)
 {
-	if (line[1] != ' ' && line[1] != '\t')
+	int	i;
 
+	if (line[1] != ' ' && line[1] != '\t')
+		exit_analize(line, scene, fd);
+	i = 1;
+	while (ft_isblank(line[i]) == 1)
+		i++;
 }
 
-static void	exit_analize
+static void	exit_analize(char *line, t_scene *scene, int fd)
+{
+	close(fd);
+	free(line);
+	free_objects(&(scene->objects));
+	parser_exit(FORMAT, NULL);
+}

@@ -32,6 +32,7 @@ t_scene	parser(int argc, char *argv[])
 		free(line);
 		line = get_next_line(fd);
 	}
+	close(fd);
 	if (scene.amb_light.light_ratio == -1 || scene.camera.fov == -1
 		|| scene.light.light_ratio == -1)
 	{

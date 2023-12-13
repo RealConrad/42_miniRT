@@ -88,4 +88,5 @@ typedef struct s_scene
 t_scene	parser(int argc, char *argv[]);
 void	parser_exit(int error_code, void **free_me);
 void	free_objects(t_object **objects);
+void	analize_line(char *line, t_scene *scene, int fd);
 #endif /*PARSER_H*/
