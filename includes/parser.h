@@ -4,6 +4,10 @@
 
 # include <stdint.h>
 
+/* -------------------------------------------------------------------------- */
+/*                                   Structs                                  */
+/* -------------------------------------------------------------------------- */
+
 typedef struct s_colour
 {
 	uint8_t		r;
@@ -75,5 +79,12 @@ typedef struct s_scene
 	t_light		light;
 	t_object	*objects;
 }	t_scene;
+
+/* -------------------------------------------------------------------------- */
+/*                                  Functions                                 */
+/* -------------------------------------------------------------------------- */
+
+t_scene	parser(int argc, char *argv[]);
+void	parser_exit(int error_code, void **free_me);
 
 #endif /*PARSER_H*/
