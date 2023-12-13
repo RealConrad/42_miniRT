@@ -39,5 +39,7 @@ void	parser_exit(int error_code, void **free_me)
 		ft_fprintf(2, "A, L or C duplicated\n");
 	else if (error_code == MISSING)
 		ft_fprintf(2, " A, L or C is missing\n");
+	else if (error_code == INPUT_MISSING)
+		ft_fprintf(2, "No input, please provide a .rt file\n");
 	exit(1);
 }
