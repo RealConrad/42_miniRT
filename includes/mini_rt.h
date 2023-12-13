@@ -36,6 +36,7 @@ enum e_exit_msg
 	MALLOC_FAIL,
 	OPEN_FAIL,
 	INPUT_FILE,
+	INPUT,
 	DUPLICATED,
 	MISSING
 };
