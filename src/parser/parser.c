@@ -17,22 +17,27 @@ t_scene	parser(int argc, char *argv[])
 
 	if (argc != 2)
 		parser_exit(INPUT_MISSING, NULL);
-	if (ft_strncmp(argv[1] + (ft_strlen(argv[1]) - 4), ".rt", 4) != 0)
+	if (ft_strncmp(argv[1] + (ft_strlen(argv[1]) - 3), ".rt", 4) != 0)
 		parser_exit(INPUT_FILE, NULL);
 	fd = open(argv[1], O_RDONLY);
 	if (fd < 0)
 		parser_exit(OPEN_FAIL, NULL);
 	init_scene(&scene);
-	// line = get_next_line(fd);
-	// if (line == NULL)
-	// 	parser_exit(MISSING, NULL);
-	// while (line != NULL)
-	// {
-	// 	analize_line(line, &scene, fd);
-	// 	free(line);
-	// 	line = get_next_line(fd);
-	// }
-	printf("%f\n", scene.amb_light.light_ratio);
+	line = get_next_line(fd);
+	if (line == NULL)
+		parser_exit(MISSING, NULL);
+	while (line != NULL)
+	{
+		analize_line(line, &scene, fd);
+		free(line);
+		line = get_next_line(fd);
+	}
+	if (scene.amb_light.light_ratio == -1 || scene.camera.fov == -1
+		|| scene.light.light_ratio == -1)
+	{
+		// free_objects(scene->objects);
+		parser_exit(MISSING, NULL);
+	}
 	return (scene);
 }
 
