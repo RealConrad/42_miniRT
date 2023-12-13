@@ -23,6 +23,7 @@ VPATH			:= ./src/
 
 SRC				:= main.c
 SRC				+= parser/parser.c parser/objects.c parser/analize.c
+SRC				+= utils/ft_isblank.c
 
 SRCS			:= $(SRC)
 OBJS			:= $(addprefix $(OBJ_DIR)/, $(SRCS:%.c=%.o))
