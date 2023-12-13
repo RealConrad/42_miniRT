@@ -32,7 +32,7 @@ typedef struct s_camera
 {
 	t_vector		cords;
 	t_vector		or_vect;
-	uint8_t			fov;
+	int				fov;
 }	t_camera;
 
 typedef struct s_light
@@ -87,5 +87,5 @@ typedef struct s_scene
 
 t_scene	parser(int argc, char *argv[]);
 void	parser_exit(int error_code, void **free_me);
-
+void	free_objects(t_object **objects);
 #endif /*PARSER_H*/
