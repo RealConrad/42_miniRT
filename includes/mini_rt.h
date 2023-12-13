@@ -30,4 +30,14 @@
 #  define HEIGHT 1080
 # endif /*HEIGHT*/
 
+enum e_exit_msg
+{
+	NORMAL = 0,
+	MALLOC_FAIL,
+	READ_FAIL,
+	INPUT,
+	DUPLICATED,
+	MISSING
+};
+
 #endif /*MINI_RT_H*/
