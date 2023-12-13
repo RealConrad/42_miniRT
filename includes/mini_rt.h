@@ -34,8 +34,8 @@ enum e_exit_msg
 {
 	NORMAL = 0,
 	MALLOC_FAIL,
-	READ_FAIL,
-	INPUT,
+	OPEN_FAIL,
+	INPUT_FILE,
 	DUPLICATED,
 	MISSING
 };
