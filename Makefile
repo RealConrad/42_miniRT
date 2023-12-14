@@ -49,7 +49,7 @@ $(OBJ_DIR)/%.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 debug: CFLAGS += -g
-debug: all
+debug: re
 
 nflag: CFLAGS =
 nflag: all
