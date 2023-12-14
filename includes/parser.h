@@ -91,5 +91,6 @@ void	free_objects(t_object **objects);
 void	analize_line(char *line, t_scene *scene, int fd);
 bool	atof_check(char *str);
 bool	atoi_check(char *str);
+void	free_split(void **split);
 
 #endif /*PARSER_H*/

@@ -6,7 +6,7 @@ static void	exit_analize(char *line, t_scene *scene, int fd);
 
 void	analize_line(char *line, t_scene *scene, int fd)
 {
-	//!Split by whitespaces!
+	char	**split;
 	if (line[0] == '\0' || ft_strncmp(line, "\n", 2) == 0)
 		return ;
 	else if (line[0] == 'A')

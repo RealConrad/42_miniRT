@@ -40,19 +40,34 @@ bool	atof_check(char *str)
 
 	i = 0;
 	split = ft_split(str, '.');
-	if (!split || !split[0] || !split[1] || split[2] != NULL)
+	if (split == NULL)
 		return (false);
+	if (!split[0] || !split[1] || split[2] != NULL)
+		return (free_split(split), false);
 	if (split[0][0] == '-')
 		i++;
 	if (ft_strlen(split[0] + i) > 10 || ft_strlen(split[1]) > 10)
-		return (false);
+		return (free_split(split), false);
 	if (ft_strlen(split[0] + i) == 10 || ft_strlen(split[1]) > 10)
 		if ((i == 0 && ft_strncmp(split[0], 2147483647, 10) > 0)
 			|| (i == 1 && ft_strncmp(split[0] + 1, 2147483648, 10) > 0)
 			|| ft_strncmp(split[1], 2147483647, 10) > 0)
-			return (false);
+			return (free_split(split), false);
 	if (ft_isstr(split[0] + i, ft_isdigit) != 1
 		|| ft_isstr(split[1], ft_isdigit) != 1)
-		return (false);
-	return (true);
+		return (free_split(split), false);
+	return (free_split(split), true);
+}
+
+void	free_split(void **split)
+{
+	size_t	i;
+
+	i = 0;
+	while (split[i] != NULL)
+	{
+		free(split[i]);
+		i++;
+	}
+	free(split);
 }
