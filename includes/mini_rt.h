@@ -48,5 +48,6 @@ enum e_exit_msg
 
 /* ---------------------------------- Utils --------------------------------- */
 int		ft_isblank(int c);
+char	**ft_split_blank(char const *s);
 
 #endif /*MINI_RT_H*/
