@@ -6,6 +6,7 @@ static void	exit_analize(char *line, t_scene *scene, int fd);
 
 void	analize_line(char *line, t_scene *scene, int fd)
 {
+	//!Split by whitespaces!
 	if (line[0] == '\0' || ft_strncmp(line, "\n", 2) == 0)
 		return ;
 	else if (line[0] == 'A')
@@ -28,8 +29,9 @@ static void	input_amb(char *line, t_scene *scene, int fd)
 	if (line[1] != ' ' && line[1] != '\t')
 		exit_analize(line, scene, fd);
 	i = 1;
-	while (ft_isblank(line[i]) == 1)
-		i++;
+	// while (ft_isblank(line[i]) == 1)
+	// 	i++;
+	//!Split by whitespaces!
 }
 
 static void	exit_analize(char *line, t_scene *scene, int fd)

@@ -89,4 +89,7 @@ t_scene	parser(int argc, char *argv[]);
 void	parser_exit(int error_code, void **free_me);
 void	free_objects(t_object **objects);
 void	analize_line(char *line, t_scene *scene, int fd);
+bool	atof_check(char *str);
+bool	atoi_check(char *str);
+
 #endif /*PARSER_H*/
