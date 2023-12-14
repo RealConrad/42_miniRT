@@ -85,12 +85,14 @@ typedef struct s_scene
 /*                                  Functions                                 */
 /* -------------------------------------------------------------------------- */
 
-t_scene	parser(int argc, char *argv[]);
-void	parser_exit(int error_code, void **free_me);
-void	free_objects(t_object **objects);
-void	analize_line(char *line, t_scene *scene, int fd);
-bool	atof_check(char *str);
-bool	atoi_check(char *str);
-void	free_split(void **split);
+t_scene		parser(int argc, char *argv[]);
+void		parser_exit(int error_code, void **free_me);
+void		free_objects(t_object **objects);
+void		analize_line(char *line, t_scene *scene, int fd);
+bool		atof_check(char *str);
+bool		atoi_check(char *str);
+void		free_split(char **split);
+t_colour	get_colour_input(char **split, int colour_index);
+bool		legal_colour(t_colour colour);
 
 #endif /*PARSER_H*/

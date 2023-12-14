@@ -16,8 +16,8 @@ bool	atoi_check(char *str)
 	if (ft_strlen(str + i) > 10)
 		return (false);
 	if (ft_strlen(str + i) == 10)
-		if ((i == 0 && ft_strncmp(str, 2147483647, 10) > 0)
-			|| (i == 1 && ft_strncmp(str + 1, 2147483648, 10) > 0))
+		if ((i == 0 && ft_strncmp(str, "2147483647", 10) > 0)
+			|| (i == 1 && ft_strncmp(str + 1, "2147483648", 10) > 0))
 			return (false);
 	while (str[i] != '\0')
 	{
@@ -49,9 +49,9 @@ bool	atof_check(char *str)
 	if (ft_strlen(split[0] + i) > 10 || ft_strlen(split[1]) > 10)
 		return (free_split(split), false);
 	if (ft_strlen(split[0] + i) == 10 || ft_strlen(split[1]) > 10)
-		if ((i == 0 && ft_strncmp(split[0], 2147483647, 10) > 0)
-			|| (i == 1 && ft_strncmp(split[0] + 1, 2147483648, 10) > 0)
-			|| ft_strncmp(split[1], 2147483647, 10) > 0)
+		if ((i == 0 && ft_strncmp(split[0], "2147483647", 10) > 0)
+			|| (i == 1 && ft_strncmp(split[0] + 1, "2147483648""", 10) > 0)
+			|| ft_strncmp(split[1], "2147483647", 10) > 0)
 			return (free_split(split), false);
 	if (ft_isstr(split[0] + i, ft_isdigit) != 1
 		|| ft_isstr(split[1], ft_isdigit) != 1)
@@ -59,7 +59,7 @@ bool	atof_check(char *str)
 	return (free_split(split), true);
 }
 
-void	free_split(void **split)
+void	free_split(char **split)
 {
 	size_t	i;
 

@@ -22,7 +22,7 @@ OBJ_DIR			:= ./objs
 VPATH			:= ./src/
 
 SRC				:= main.c
-SRC				+= parser/parser.c parser/objects.c parser/analize.c parser/ato_check.c
+SRC				+= parser/parser.c parser/objects.c parser/analize.c parser/ato_check.c parser/analize_utils.c
 SRC				+= utils/ft_isblank.c utils/ft_split_blank.c
 
 SRCS			:= $(SRC)
