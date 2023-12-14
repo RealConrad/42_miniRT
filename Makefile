@@ -51,7 +51,7 @@ $(OBJ_DIR)/%.o: %.c
 debug: CFLAGS += -g
 debug: re
 
-nflag: CFLAGS =
+nflag: CFLAGS = -I./includes
 nflag: all
 
 .submodules_initialized:

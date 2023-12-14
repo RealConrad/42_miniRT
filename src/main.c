@@ -6,8 +6,9 @@ int	main(int argc, char *argv[])
 {
 	mlx_t		*mlx;
 	mlx_image_t	*img;
+	t_scene		scene;
 
-	parser(argc, argv);
+	scene = parser(argc, argv);
 	mlx = mlx_init(WIDTH, HEIGHT, "miniRT", true);
 	if (mlx == NULL)
 		return (1);

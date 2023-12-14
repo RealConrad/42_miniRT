@@ -6,11 +6,11 @@
 /*   By: eweiberl <eweiberl@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 14:41:01 by eweiberl          #+#    #+#             */
-/*   Updated: 2023/12/14 15:16:52 by eweiberl         ###   ########.fr       */
+/*   Updated: 2023/12/14 16:40:19 by eweiberl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/mini_rt.h"
+#include "mini_rt.h"
 
 static size_t	count_substr(char const *s);
 static char		*getstr(char const *s, size_t i);

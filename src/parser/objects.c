@@ -1,5 +1,5 @@
 
-#include "../../includes/mini_rt.h"
+#include "mini_rt.h"
 
 void	free_objects(t_object **objects)
 {

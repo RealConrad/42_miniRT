@@ -1,5 +1,5 @@
 
-#include "../../includes/mini_rt.h"
+#include "mini_rt.h"
 
 /**
  * @brief Checks if atoi would overflow

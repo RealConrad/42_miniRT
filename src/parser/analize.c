@@ -1,5 +1,5 @@
 
-#include "../../includes/mini_rt.h"
+#include "mini_rt.h"
 
 static void	input_amb(char *line, t_scene *scene, int fd, char **split);
 static void	exit_analize(char *line, t_scene *scene, int fd, char **split);

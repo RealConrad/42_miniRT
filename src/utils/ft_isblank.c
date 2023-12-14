@@ -6,11 +6,11 @@
 /*   By: eweiberl <eweiberl@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 17:44:52 by eweiberl          #+#    #+#             */
-/*   Updated: 2023/12/13 17:46:31 by eweiberl         ###   ########.fr       */
+/*   Updated: 2023/12/14 16:40:00 by eweiberl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/mini_rt.h"
+#include "mini_rt.h"
 
 /**
  * @brief checks if a char is whitespace

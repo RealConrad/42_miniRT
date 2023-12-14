@@ -13,7 +13,7 @@ t_colour	get_colour_input(char **split, int colour_index)
 	char		**clr_split;
 
 	colour.r = -1;
-	if (ft_strchr(split[colour_index], ',') != NULL)
+	if (ft_strchr(split[colour_index], ',' )!= NULL)
 	{
 		clr_split = ft_split(split[colour_index], ',');
 		if (!clr_split || !clr_split[0] || !clr_split[1] || !clr_split[2]
