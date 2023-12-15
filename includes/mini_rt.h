@@ -10,6 +10,7 @@
 # include "../libraries/mlx/include/MLX42/MLX42.h"
 
 # include "structs.h"
+# include "parser.h"
 
 # include <stdio.h>
 # include <math.h>
@@ -28,5 +29,25 @@
 # ifndef HEIGHT
 #  define HEIGHT 1080
 # endif /*HEIGHT*/
+
+enum e_exit_msg
+{
+	NORMAL = 0,
+	MALLOC_FAIL,
+	OPEN_FAIL,
+	INPUT_FILE,
+	INPUT_MISSING,
+	DUPLICATED,
+	MISSING,
+	FORMAT
+};
+
+/* -------------------------------------------------------------------------- */
+/*                                  Functions                                 */
+/* -------------------------------------------------------------------------- */
+
+/* ---------------------------------- Utils --------------------------------- */
+int		ft_isblank(int c);
+char	**ft_split_blank(char const *s);
 
 #endif /*MINI_RT_H*/

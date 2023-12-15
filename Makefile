@@ -22,6 +22,8 @@ OBJ_DIR			:= ./objs
 VPATH			:= ./src/
 
 SRC				:= main.c
+SRC				+= parser/parser.c parser/objects.c parser/analize.c parser/ato_check.c parser/analize_utils.c
+SRC				+= utils/ft_isblank.c utils/ft_split_blank.c
 
 SRCS			:= $(SRC)
 OBJS			:= $(addprefix $(OBJ_DIR)/, $(SRCS:%.c=%.o))
@@ -47,9 +49,9 @@ $(OBJ_DIR)/%.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 debug: CFLAGS += -g
-debug: all
+debug: re
 
-nflag: CFLAGS =
+nflag: CFLAGS = -I./includes
 nflag: all
 
 .submodules_initialized:
@@ -58,6 +60,10 @@ nflag: all
 	git submodule init $(MLX_DIR)
 	git submodule update $(MLX_DIR)
 	@touch .submodules_initialized
+
+wsl: LINKS := -ldl -lglfw -pthread -lm
+wsl: all
+# wsl: CFLAGS += -g
 
 clean:
 	rm -rf $(OBJS)

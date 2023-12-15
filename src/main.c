@@ -6,9 +6,10 @@ int	main(int argc, char *argv[])
 {
 	mlx_t		*mlx;
 	mlx_image_t	*img;
+	t_scene		scene;
 
-	(void)argc;
-	(void)argv;
+	scene = parser(argc, argv);
+	printf("%f\n", scene.amb_light.light_ratio);
 	mlx = mlx_init(WIDTH, HEIGHT, "miniRT", true);
 	if (mlx == NULL)
 		return (1);
