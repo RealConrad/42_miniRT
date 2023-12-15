@@ -9,6 +9,7 @@ int	main(int argc, char *argv[])
 	t_scene		scene;
 
 	scene = parser(argc, argv);
+	printf("%f\n", scene.amb_light.light_ratio);
 	mlx = mlx_init(WIDTH, HEIGHT, "miniRT", true);
 	if (mlx == NULL)
 		return (1);

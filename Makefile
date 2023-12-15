@@ -61,6 +61,10 @@ nflag: all
 	git submodule update $(MLX_DIR)
 	@touch .submodules_initialized
 
+wsl: LINKS := -ldl -lglfw -pthread -lm
+wsl: all
+# wsl: CFLAGS += -g
+
 clean:
 	rm -rf $(OBJS)
 

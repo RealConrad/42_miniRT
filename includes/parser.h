@@ -10,9 +10,9 @@
 
 typedef struct s_colour
 {
-	uint8_t			r;
-	uint8_t			g;
-	uint8_t			b;
+	int				r;
+	int				g;
+	int				b;
 }	t_colour;
 
 typedef struct s_vector
