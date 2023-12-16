@@ -19,13 +19,13 @@ MLX				:= ./libraries/mlx/build/libmlx42.a
 # ---------------------------------------------------------------------------- #
 
 OBJ_DIR			:= ./objs
-VPATH			:= ./src/
+VPATH			:= ./src/ ./src/parser/ ./src/utils/
 
 SRC				:= main.c
-SRC				+= parser/parser.c parser/objects.c parser/analize.c parser/ato_check.c parser/analize_utils.c
-SRC				+= utils/ft_isblank.c utils/ft_split_blank.c
+PARSER_SRC		+= parser.c objects.c analize.c ato_check.c analize_utils.c
+UTIL_SRC		+= ft_isblank.c ft_split_blank.c progress_bar.c
 
-SRCS			:= $(SRC)
+SRCS			:= $(SRC) $(PARSER_SRC) $(UTIL_SRC)
 OBJS			:= $(addprefix $(OBJ_DIR)/, $(SRCS:%.c=%.o))
 
 # ---------------------------------------------------------------------------- #
