@@ -6,6 +6,7 @@ int	main(int argc, char *argv[])
 {
 	mlx_t		*mlx;
 	mlx_image_t	*img;
+	int			progress;
 	t_scene		scene;
 
 	scene = parser(argc, argv);
@@ -29,8 +30,12 @@ int	main(int argc, char *argv[])
 			mlx_put_pixel(img, x, y, color);
 			x++;
 		}
+		progress = (100 * y) / HEIGHT;
+		display_render_progress(progress);
 		y++;
 	}
+	progress = (100 * y) / HEIGHT;
+	display_render_progress(progress);
 	mlx_loop(mlx);
 	return (0);
 }
