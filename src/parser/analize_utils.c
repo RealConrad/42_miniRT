@@ -76,9 +76,31 @@ bool	legal_vector(t_vector vector, double min, double max)
  * @param vec_index the start index in the split
  * @return NULL on failure, the vector
  */
-t_vector	*get_vector_input(char **split, int vec_index)
+t_vector	get_vector_input(char **split, int vec_index)
 {
 	t_vector	vector;
+	char		**vec_split;
+
+	vector.x = 0;
+	if (ft_strchr(split[vec_index], ',' ) != NULL)
+	{
+		vec_split = ft_split(split[vec_index], ',');
+		if (!vec_split || !vec_split[0] || !vec_split[1] || !vec_split[2]
+			|| vec_split[3] != NULL)
+			return (free_split(vec_split), vector);
+		vector.x = ft_atof(vec_split[0]);
+		vector.y = ft_atof(vec_split[1]);
+		vector.z = ft_atof(vec_split[2]);
+		return (free_split(vec_split), vector);
+	}
+	vector.x = ft_atof(split[vec_index]);
+	vector.y = ft_atof(split[vec_index + 1]);
+	vector.z = ft_atof(split[vec_index + 2]);
+	return (vector);
+}
+
+bool	legal_vector_input(char **split, int vec_index)
+{
 	char		**vec_split;
 
 	if (ft_strchr(split[vec_index], ',' ) != NULL)
@@ -86,20 +108,14 @@ t_vector	*get_vector_input(char **split, int vec_index)
 		vec_split = ft_split(split[vec_index], ',');
 		if (!vec_split || !vec_split[0] || !vec_split[1] || !vec_split[2]
 			|| vec_split[3] != NULL)
-			return (free_split(vec_split), NULL);
+			return (free_split(vec_split), false);
 		if (!atof_check(vec_split[0]) || !atof_check(vec_split[1])
 			|| !atof_check(vec_split[2]))
-			return (free_split(vec_split), NULL);
-		vector.x = ft_atof(vec_split[0]);
-		vector.y = ft_atof(vec_split[1]);
-		vector.z = ft_atof(vec_split[2]);
-		return (free_split(vec_split), &vector);
+			return (free_split(vec_split), false);
+		return (free_split(vec_split), true);
 	}
 	if (!atof_check(split[vec_index]) || !atof_check(split[vec_index + 1])
 		|| !atoi_check(split[vec_index + 2]))
-		return (NULL);
-	vector.x = ft_atoi(split[vec_index]);
-	vector.y = ft_atoi(split[vec_index + 1]);
-	vector.z = ft_atoi(split[vec_index + 2]);
-	return (&vector);
+		return (false);
+	return (true);
 }

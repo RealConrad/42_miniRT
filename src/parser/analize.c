@@ -32,22 +32,21 @@ void	analize_line(char *line, t_scene *scene, int fd)
 static void	input_cam(char *line, t_scene *scene, int fd, char **split)
 {
 	int			i;
-	t_vector	*vector;
 
 	i = 0;
 	while (split[i] != NULL)
 		i++;
-	if (i != 4 || i != 8)
+	if (i != 4 && i != 8)
 		exit_analize(line, scene, fd, split);
-	vector = get_vector_input(split, 1);
-	if (vector == NULL)
+	if (legal_vector_input(split, 1) == false)
 		exit_analize(line, scene, fd, split);
-	scene->camera.cords = *vector;
-	if (ft_strnchr(split[1], ",", ft_strlen(split[1])) == NULL)
-		vector = get_vector_input(split, 2);
+	scene->camera.cords = get_vector_input(split, 1);
+	if (ft_strchr(split[1], ',') == NULL && legal_vector_input(split, 2))
+		scene->camera.or_vect = get_vector_input(split, 2);
+	else if (legal_vector_input(split, 4) == true)
+		scene->camera.or_vect = get_vector_input(split, 4);
 	else
-		vector = get_vector_input(split, 4);
-	scene->camera.or_vect = *vector;
+		exit_analize(line, scene, fd, split);
 	if (legal_vector(scene->camera.or_vect, -1, 1) == false)
 		exit_analize(line, scene, fd, split);
 	if (atoi_check(split[i -1]) == false)
