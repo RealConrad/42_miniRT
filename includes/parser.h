@@ -94,5 +94,7 @@ bool		atoi_check(char *str);
 void		free_split(char **split);
 t_colour	get_colour_input(char **split, int colour_index);
 bool		legal_colour(t_colour colour);
+t_vector	*get_vector_input(char **split, int vec_index);
+bool		legal_vector(t_vector vector, double min, double max);
 
 #endif /*PARSER_H*/

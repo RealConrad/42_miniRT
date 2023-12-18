@@ -1,6 +1,7 @@
 
 #include "mini_rt.h"
 
+static void	input_cam(char *line, t_scene *scene, int fd, char **split);
 static void	input_amb(char *line, t_scene *scene, int fd, char **split);
 static void	exit_analize(char *line, t_scene *scene, int fd, char **split);
 
@@ -15,8 +16,8 @@ void	analize_line(char *line, t_scene *scene, int fd)
 		exit_analize(line, scene, fd, split);
 	else if (ft_strncmp(split[0], "A", 2) == 0)
 		input_amb(line, scene, fd, split);
-	// else if (ft_strncmp(split[0], "C", 2) == 0)
-	// 	input_cam(line, scene, fd);
+	else if (ft_strncmp(split[0], "C", 2) == 0)
+		input_cam(line, scene, fd, split);
 	// else if (ft_strncmp(split[0], "L", 2) == 0)
 	// 	input_light(line, scene, fd);
 	// else if (ft_strncmp(split[0], "pl", 3) == 0
@@ -26,6 +27,34 @@ void	analize_line(char *line, t_scene *scene, int fd)
 	else
 		exit_analize(line, scene, fd, split);
 	free_split(split);
+}
+
+static void	input_cam(char *line, t_scene *scene, int fd, char **split)
+{
+	int			i;
+	t_vector	*vector;
+
+	i = 0;
+	while (split[i] != NULL)
+		i++;
+	if (i != 4 || i != 8)
+		exit_analize(line, scene, fd, split);
+	vector = get_vector_input(split, 1);
+	if (vector == NULL)
+		exit_analize(line, scene, fd, split);
+	scene->camera.cords = *vector;
+	if (ft_strnchr(split[1], ",", ft_strlen(split[1])) == NULL)
+		vector = get_vector_input(split, 2);
+	else
+		vector = get_vector_input(split, 4);
+	scene->camera.or_vect = *vector;
+	if (legal_vector(scene->camera.or_vect, -1, 1) == false)
+		exit_analize(line, scene, fd, split);
+	if (atoi_check(split[i -1]) == false)
+		exit_analize(line, scene, fd, split);
+	scene->camera.fov = ft_atoi(split[i -1]);
+	if (scene->camera.fov > 180 || scene->camera.fov < 0)
+		exit_analize(line, scene, fd, split);
 }
 
 static void	input_amb(char *line, t_scene *scene, int fd, char **split)

@@ -25,7 +25,7 @@ int	main(int argc, char *argv[])
 		{
 			uint8_t	r = 255 * ((double)x / (WIDTH - 1));
 			uint8_t	g = 255 * ((double)y / (HEIGHT - 1));
-			uint8_t	b = 0;
+			uint8_t	b = 150;
 			uint32_t	color = ((r << 24) | (g << 16) | (b << 8) | 0xFF);
 			mlx_put_pixel(img, x, y, color);
 			x++;
