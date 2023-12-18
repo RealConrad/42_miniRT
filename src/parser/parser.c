@@ -33,12 +33,12 @@ t_scene	parser(int argc, char *argv[])
 		line = get_next_line(fd);
 	}
 	close(fd);
-	if (scene.amb_light.light_ratio == -1 || scene.camera.fov == -1
-		|| scene.light.light_ratio == -1)
-	{
-		free_objects(&(scene.objects));
-		parser_exit(MISSING, NULL);
-	}
+	// if (scene.amb_light.light_ratio == -1 || scene.camera.fov == -1
+	// 	|| scene.light.light_ratio == -1)
+	// {
+	// 	free_objects(&(scene.objects));
+	// 	parser_exit(MISSING, NULL);
+	// }
 	return (scene);
 }
 
