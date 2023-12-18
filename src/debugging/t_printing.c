@@ -1,6 +1,10 @@
 
 #include "mini_rt.h"
 
+/**
+ * @brief Prints all the values in a scene
+ * @param scene 
+ */
 void	t_print_scene(t_scene scene)
 {
 	t_object	*current;
@@ -24,17 +28,29 @@ void	t_print_scene(t_scene scene)
 	}
 }
 
+/**
+ * @brief Prints the values of a colour vector
+ * @param colour 
+ */
 void	t_print_colour(t_colour colour)
 {
 	printf("Colour: %d, %d, %d\n", colour.r, colour.g, colour.b);
 }
 
+/**
+ * @brief Prints the values of a vector
+ * @param vector 
+ */
 void	t_print_vector(t_vector vector)
 {
 	printf("Vector coordinates xyz: %f, %f, %f\n",
 		vector.x, vector.y, vector.z);
 }
 
+/**
+ * @brief Prints all the values of an object
+ * @param object 
+ */
 void	t_print_object(t_object *object)
 {
 	if (object->sphere != NULL)
