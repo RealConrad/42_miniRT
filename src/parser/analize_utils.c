@@ -115,7 +115,7 @@ bool	legal_vector_input(char **split, int vec_index)
 		return (free_split(vec_split), true);
 	}
 	if (!atof_check(split[vec_index]) || !atof_check(split[vec_index + 1])
-		|| !atoi_check(split[vec_index + 2]))
+		|| !atof_check(split[vec_index + 2]))
 		return (false);
 	return (true);
 }

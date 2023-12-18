@@ -9,6 +9,7 @@ int	main(int argc, char *argv[])
 	int			progress;
 	t_scene		scene;
 
+	scene.objects = NULL;
 	scene = parser(argc, argv);
 	t_print_scene(scene);
 	mlx = mlx_init(WIDTH, HEIGHT, "miniRT", true);

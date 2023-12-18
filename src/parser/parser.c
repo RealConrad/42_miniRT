@@ -28,6 +28,8 @@ t_scene	parser(int argc, char *argv[])
 		parser_exit(MISSING, NULL);
 	while (line != NULL)
 	{
+		if (line[ft_strlen(line) - 1] == '\n')
+			line[ft_strlen(line) - 1] = '\0';
 		analize_line(line, &scene, fd);
 		free(line);
 		line = get_next_line(fd);

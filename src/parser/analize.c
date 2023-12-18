@@ -36,12 +36,12 @@ static void	input_cam(char *line, t_scene *scene, int fd, char **split)
 	i = 0;
 	while (split[i] != NULL)
 		i++;
-	if (i != 4 && i != 8)
+	if (i != 4 && i != 8 && i != 6)
 		exit_analize(line, scene, fd, split);
 	if (legal_vector_input(split, 1) == false)
 		exit_analize(line, scene, fd, split);
 	scene->camera.cords = get_vector_input(split, 1);
-	if (ft_strchr(split[1], ',') == NULL && legal_vector_input(split, 2))
+	if (ft_strchr(split[1], ',') != NULL && legal_vector_input(split, 2))
 		scene->camera.or_vect = get_vector_input(split, 2);
 	else if (legal_vector_input(split, 4) == true)
 		scene->camera.or_vect = get_vector_input(split, 4);
@@ -81,6 +81,6 @@ static void	exit_analize(char *line, t_scene *scene, int fd, char **split)
 	free(line);
 	if (split != NULL)
 		free_split(split);
-	free_objects(&(scene->objects));
+	// free_objects(&(scene->objects));
 	parser_exit(FORMAT, NULL);
 }
