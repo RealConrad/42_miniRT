@@ -22,8 +22,10 @@ OBJ_DIR			:= ./objs
 VPATH			:= ./src/ ./src/parser/ ./src/utils/ ./src/debugging/
 
 SRC				:= main.c
-PARSER_SRC		:= parser.c objects.c analize.c ato_check.c analize_utils.c object_utils.c
-UTIL_SRC		:= ft_isblank.c ft_split_blank.c progress_bar.c
+# OLD_PARSER_SRC		:= parser.c objects.c analize.c ato_check.c analize_utils.c object_utils.c
+# OLD_UTIL_SRC		:= ft_isblank.c ft_split_blank.c progress_bar.c split_line.c
+PARSER_SRC		:= parser.c init_scene.c parser_utils.c init_objects.c input_check.c
+UTIL_SRC		:= progress_bar.c split_line.c
 DEBUGGING_SRC	:= t_printing.c
 
 SRCS			:= $(SRC) $(PARSER_SRC) $(UTIL_SRC) $(DEBUGGING_SRC)
