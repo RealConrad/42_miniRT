@@ -18,15 +18,42 @@ void	analize_line(char *line, t_scene *scene, int fd)
 		input_amb(line, scene, fd, split);
 	else if (ft_strncmp(split[0], "C", 2) == 0)
 		input_cam(line, scene, fd, split);
-	// else if (ft_strncmp(split[0], "L", 2) == 0)
-	// 	input_light(line, scene, fd);
-	// else if (ft_strncmp(split[0], "pl", 3) == 0
-	// 	|| ft_strncmp(split[0], "sp", 3) == 0
-	// 	|| ft_strncmp(split[0], "cy", 3) == 0)
-	// 	input_object(line, scene, fd);
+	else if (ft_strncmp(split[0], "L", 2) == 0)
+		input_light(line, scene, fd);
+	else if (ft_strncmp(split[0], "pl", 3) == 0
+		|| ft_strncmp(split[0], "sp", 3) == 0
+		|| ft_strncmp(split[0], "cy", 3) == 0)
+		input_object(line, scene, fd, split);
 	else
 		exit_analize(line, scene, fd, split);
 	free_split(split);
+}
+
+static void	input_light(char *line, t_scene *scene, int fd, char **split)
+{
+	int	i;
+
+	i = 0;
+	while (split[i] != NULL)
+		i++;
+	if (i != 4 && i != 6 && i != 8)
+		exit_analize(line, scene, fd, split);
+	if (legal_vector_input(split, 1) == false)
+		exit_analize(line, scene, fd, split);
+	scene->light.cords = get_vector_input(split, 1);
+	if (ft_strchr(split[1], ',') != NULL && atof_check(split[2]))
+		scene->light.light_ratio = atof(split[2]);
+	else if (atof_check(split[4]) == true)
+		scene->light.light_ratio = atof(split[4]);
+	else
+		exit_analize(line, scene, fd, split);
+	if (ft_strchr(split[i - 1], ',') != NULL)
+		scene->light.colour = get_colour_input(split, i - 3);
+	else
+		scene->light.colour = get_colour_input(split, i - 1);
+	if (legal_colour(scene->light.colour) == false
+		|| scene->light.light_ratio < 0.0 || scene->light.light_ratio > 1.0)
+		exit_analize(line, scene, fd, split);
 }
 
 static void	input_cam(char *line, t_scene *scene, int fd, char **split)
