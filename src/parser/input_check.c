@@ -37,7 +37,6 @@ bool	atof_check(char *str)
 		return (free_2d_array(tokens), false);
 	if (tokens[1])
 	{
-		printf("HELLO!\n");
 		if (ft_strlen(tokens[1]) > 10 || ft_isstr(tokens[1], ft_isdigit) != 1)
 			return (free_2d_array(tokens), false);
 	}
