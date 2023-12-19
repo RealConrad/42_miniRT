@@ -1,7 +1,5 @@
 #include "mini_rt.h"
 
-// static int	escape(keys_t keycode, void *param);
-
 int	main(int argc, char *argv[])
 {
 	// mlx_t		*mlx;
@@ -40,12 +38,4 @@ int	main(int argc, char *argv[])
 	// mlx_loop(mlx);
 	return (0);
 }
-
-// static int	escape(keys_t keycode, void *param)
-// {
-// 	(void)param;
-// 	if (keycode == MLX_KEY_ESCAPE)
-// 		exit(0);
-// 	return (0);
-// }
 
