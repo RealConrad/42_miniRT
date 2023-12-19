@@ -13,7 +13,6 @@
 /*                                  Includes                                  */
 /* -------------------------------------------------------------------------- */
 
-# include "structs.h"
 # include "parser.h"
 # include "testing.h"
 
@@ -29,11 +28,11 @@
 
 # ifndef WIDTH
 #  define WIDTH 1920
-# endif /*WIDTH*/
+# endif
 
 # ifndef HEIGHT
 #  define HEIGHT 1080
-# endif /*HEIGHT*/
+# endif
 
 enum e_exit_msg
 {
@@ -52,8 +51,8 @@ enum e_exit_msg
 /* -------------------------------------------------------------------------- */
 
 /* ---------------------------------- Utils --------------------------------- */
-int		ft_isblank(int c);
-char	**ft_split_blank(char const *s);
+// int		ft_isblank(int c);
+// char	**ft_split_blank(char const *s);
 void	display_render_progress(int percent);
 
 #endif /*MINI_RT_H*/
