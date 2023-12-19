@@ -51,8 +51,8 @@ enum e_exit_msg
 /* -------------------------------------------------------------------------- */
 
 /* ---------------------------------- Utils --------------------------------- */
-// int		ft_isblank(int c);
-// char	**ft_split_blank(char const *s);
+
+int	escape(keys_t keycode, void *param);
 void	display_render_progress(int percent);
 
 #endif /*MINI_RT_H*/
