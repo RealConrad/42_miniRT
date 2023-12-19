@@ -3,8 +3,14 @@
 
 static void	input_cam(char *line, t_scene *scene, int fd, char **split);
 static void	input_amb(char *line, t_scene *scene, int fd, char **split);
-static void	exit_analize(char *line, t_scene *scene, int fd, char **split);
 
+/**
+ * @brief Analizes the input line and calls the respective function, exits on
+ * wrong input
+ * @param line the input line from the parser
+ * @param scene the scene to write to
+ * @param fd the open file, only needed to close on exit
+ */
 void	analize_line(char *line, t_scene *scene, int fd)
 {
 	char	**split;
@@ -14,12 +20,14 @@ void	analize_line(char *line, t_scene *scene, int fd)
 	split = ft_split_blank(line);
 	if (split == NULL)
 		exit_analize(line, scene, fd, split);
-	else if (ft_strncmp(split[0], "A", 2) == 0)
+	else if (ft_strncmp(split[0], "A", 2) == 0
+		&& scene->amb_light.light_ratio == -1)
 		input_amb(line, scene, fd, split);
-	else if (ft_strncmp(split[0], "C", 2) == 0)
+	else if (ft_strncmp(split[0], "C", 2) == 0 && scene->camera.fov == -1)
 		input_cam(line, scene, fd, split);
-	else if (ft_strncmp(split[0], "L", 2) == 0)
-		input_light(line, scene, fd);
+	else if (ft_strncmp(split[0], "L", 2) == 0
+		&& scene->light.light_ratio == -1)
+		input_light(line, scene, fd, split);
 	else if (ft_strncmp(split[0], "pl", 3) == 0
 		|| ft_strncmp(split[0], "sp", 3) == 0
 		|| ft_strncmp(split[0], "cy", 3) == 0)
@@ -29,6 +37,13 @@ void	analize_line(char *line, t_scene *scene, int fd)
 	free_split(split);
 }
 
+/**
+ * @brief Inputs the light values, exiting on wrong input
+ * @param line the line allocated by the parser, only needed for exiting
+ * @param scene the scene to write data to
+ * @param fd the file opened in the parser, needed only to close on exit
+ * @param split the split containing the data
+ */
 static void	input_light(char *line, t_scene *scene, int fd, char **split)
 {
 	int	i;
@@ -56,6 +71,14 @@ static void	input_light(char *line, t_scene *scene, int fd, char **split)
 		exit_analize(line, scene, fd, split);
 }
 
+/**
+ * @brief Writes the camera input to the scene and exits on wrong input
+ * @param line the line allocated by the parser, only needed for exiting
+ * @param scene the scene to write data to
+ * @param fd the file opened in the parser, needed only to close on exit
+ * @param split the split containing the data
+ * 
+ */
 static void	input_cam(char *line, t_scene *scene, int fd, char **split)
 {
 	int			i;
@@ -83,6 +106,13 @@ static void	input_cam(char *line, t_scene *scene, int fd, char **split)
 		exit_analize(line, scene, fd, split);
 }
 
+/**
+ * @brief Inputs the ambient light values, exiting on wrong input
+ * @param line the line allocated by the parser, only needed for exiting
+ * @param scene the scene to write data to
+ * @param fd the file opened in the parser, needed only to close on exit
+ * @param split the split containing the data
+ */
 static void	input_amb(char *line, t_scene *scene, int fd, char **split)
 {
 	int	i;
@@ -102,7 +132,14 @@ static void	input_amb(char *line, t_scene *scene, int fd, char **split)
 		exit_analize(line, scene, fd, split);
 }
 
-static void	exit_analize(char *line, t_scene *scene, int fd, char **split)
+/**
+ * @brief Exits the program and frees all memory
+ * @param line the line allocated in the parser
+ * @param scene the scene struct containing the allocated objects
+ * @param fd the open file to close
+ * @param split the splitted line
+ */
+void	exit_analize(char *line, t_scene *scene, int fd, char **split)
 {
 	close(fd);
 	free(line);
