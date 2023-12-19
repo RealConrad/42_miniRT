@@ -9,8 +9,9 @@ int	main(int argc, char *argv[])
 	int			progress;
 	t_scene		scene;
 
+	scene.objects = NULL;
 	scene = parser(argc, argv);
-	printf("%f\n", scene.amb_light.light_ratio);
+	t_print_scene(scene);
 	mlx = mlx_init(WIDTH, HEIGHT, "miniRT", true);
 	if (mlx == NULL)
 		return (1);
@@ -25,7 +26,7 @@ int	main(int argc, char *argv[])
 		{
 			uint8_t	r = 255 * ((double)x / (WIDTH - 1));
 			uint8_t	g = 255 * ((double)y / (HEIGHT - 1));
-			uint8_t	b = 0;
+			uint8_t	b = 150;
 			uint32_t	color = ((r << 24) | (g << 16) | (b << 8) | 0xFF);
 			mlx_put_pixel(img, x, y, color);
 			x++;

@@ -28,20 +28,26 @@ t_scene	parser(int argc, char *argv[])
 		parser_exit(MISSING, NULL);
 	while (line != NULL)
 	{
+		if (line[ft_strlen(line) - 1] == '\n')
+			line[ft_strlen(line) - 1] = '\0';
 		analize_line(line, &scene, fd);
 		free(line);
 		line = get_next_line(fd);
 	}
 	close(fd);
-	// if (scene.amb_light.light_ratio == -1 || scene.camera.fov == -1
-	// 	|| scene.light.light_ratio == -1)
-	// {
-	// 	free_objects(&(scene.objects));
-	// 	parser_exit(MISSING, NULL);
-	// }
+	if (scene.amb_light.light_ratio == -1 || scene.camera.fov == -1
+		|| scene.light.light_ratio == -1)
+	{
+		free_objects(&(scene.objects));
+		parser_exit(MISSING, NULL);
+	}
 	return (scene);
 }
 
+/**
+ * @brief Initialises the scene to check for double/missing input
+ * @param scene the scene to initialise
+ */
 static void	init_scene(t_scene *scene)
 {
 	scene->amb_light.light_ratio = -1;

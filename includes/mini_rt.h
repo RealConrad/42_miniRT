@@ -9,8 +9,13 @@
 # include "../libraries/libft/libft.h"
 # include "../libraries/mlx/include/MLX42/MLX42.h"
 
+/* -------------------------------------------------------------------------- */
+/*                                  Includes                                  */
+/* -------------------------------------------------------------------------- */
+
 # include "structs.h"
 # include "parser.h"
+# include "testing.h"
 
 # include <stdio.h>
 # include <math.h>
@@ -40,6 +45,12 @@ enum e_exit_msg
 	DUPLICATED,
 	MISSING,
 	FORMAT
+};
+
+typedef enum e_object {
+	SPHERE,
+	PLANE,
+	CYLINDER
 };
 
 /* -------------------------------------------------------------------------- */

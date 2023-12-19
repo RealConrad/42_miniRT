@@ -42,20 +42,22 @@ bool	atof_check(char *str)
 	split = ft_split(str, '.');
 	if (split == NULL)
 		return (false);
-	if (!split[0] || !split[1] || split[2] != NULL)
+	if (!split[0] || (split[1] && split[2] != NULL))
 		return (free_split(split), false);
 	if (split[0][0] == '-')
 		i++;
-	if (ft_strlen(split[0] + i) > 10 || ft_strlen(split[1]) > 10)
+	if (ft_strlen(split[0] + i) > 10)
 		return (free_split(split), false);
-	if (ft_strlen(split[0] + i) == 10 || ft_strlen(split[1]) > 10)
+	if (ft_strlen(split[0] + i) == 10)
 		if ((i == 0 && ft_strncmp(split[0], "2147483647", 10) > 0)
-			|| (i == 1 && ft_strncmp(split[0] + 1, "2147483648""", 10) > 0)
+			|| (i == 1 && ft_strncmp(split[0] + 1, "2147483648""", 10) > 0))
+			return (free_split(split), false);
+	if (ft_isstr(split[0] + i, ft_isdigit) != 1)
+		return (free_split(split), false);
+	if (split[1] != NULL)
+		if (ft_strlen(split[1]) > 10 || ft_isstr(split[1], ft_isdigit) != 1
 			|| ft_strncmp(split[1], "2147483647", 10) > 0)
 			return (free_split(split), false);
-	if (ft_isstr(split[0] + i, ft_isdigit) != 1
-		|| ft_isstr(split[1], ft_isdigit) != 1)
-		return (free_split(split), false);
 	return (free_split(split), true);
 }
 
