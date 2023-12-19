@@ -10,9 +10,7 @@ bool	is_valid_numbers(char **tokens)
 	while (tokens[i])
 	{
 		if (!atof_check(tokens[i]))
-		{
 			return (false);
-		}
 		i++;
 	}
 	return (true);
@@ -39,6 +37,7 @@ bool	atof_check(char *str)
 		return (free_2d_array(tokens), false);
 	if (tokens[1])
 	{
+		printf("HELLO!\n");
 		if (ft_strlen(tokens[1]) > 10 || ft_isstr(tokens[1], ft_isdigit) != 1)
 			return (free_2d_array(tokens), false);
 	}
@@ -62,6 +61,8 @@ static bool	is_valid_int(char *str, bool is_negative)
 	int		len;
 	char	*max;
 
+	if (ft_isstr(str, ft_isdigit) != 1)
+		return (false);
 	len = ft_strlen(str);
 	if (len > 10)
 		return (false);
