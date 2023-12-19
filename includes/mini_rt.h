@@ -52,7 +52,7 @@ enum e_exit_msg
 
 /* ---------------------------------- Utils --------------------------------- */
 
-int	escape(keys_t keycode, void *param);
+int		escape(keys_t keycode, void *param);
 void	display_render_progress(int percent);
 
 #endif /*MINI_RT_H*/
