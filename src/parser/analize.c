@@ -99,9 +99,9 @@ static void	input_cam(char *line, t_scene *scene, int fd, char **split)
 		exit_analize(line, scene, fd, split);
 	if (legal_vector(scene->camera.or_vect, -1, 1) == false)
 		exit_analize(line, scene, fd, split);
-	if (atoi_check(split[i -1]) == false)
+	if (atoi_check(split[i - 1]) == false)
 		exit_analize(line, scene, fd, split);
-	scene->camera.fov = ft_atoi(split[i -1]);
+	scene->camera.fov = ft_atoi(split[i - 1]);
 	if (scene->camera.fov > 180 || scene->camera.fov < 0)
 		exit_analize(line, scene, fd, split);
 }
