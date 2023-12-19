@@ -49,17 +49,3 @@ int	main(int argc, char *argv[])
 // 	return (0);
 // }
 
-// int main(void)
-// {
-// 	int	i = 0;
-// 	char *str = "cy 50.0,0.0,20.6 0.0,0.0,1.0 14.2 21.42 10,0,255";
-// 	char **split = split_line(str);
-// 	printf("ORIGINAL: %s", str);
-// 	printf("\nNEW:\n");
-// 	while (split[i])
-// 	{
-// 		printf("%s\n", split[i]);
-// 		i++;
-// 	}
-// 	return (0);
-// }
