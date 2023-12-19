@@ -22,7 +22,7 @@ OBJ_DIR			:= ./objs
 VPATH			:= ./src/ ./src/parser/ ./src/utils/ ./src/debugging/
 
 SRC				:= main.c
-PARSER_SRC		:= parser.c objects.c analize.c ato_check.c analize_utils.c
+PARSER_SRC		:= parser.c objects.c analize.c ato_check.c analize_utils.c object_utils.c
 UTIL_SRC		:= ft_isblank.c ft_split_blank.c progress_bar.c
 DEBUGGING_SRC	:= t_printing.c
 
