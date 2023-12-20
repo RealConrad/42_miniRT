@@ -28,6 +28,7 @@ t_scene	parser(int argc, char **argv)
 		if (!tokens)
 			parser_exit(MALLOC_FAIL, NULL);
 		analize_line(&scene, tokens, fd);
+		free_2d_array(tokens);
 	}
 	return (close(fd), scene);
 }
@@ -60,6 +61,7 @@ static void	init_scene_default(t_scene *scene)
 	scene->amb_light.light_ratio = -1;
 	scene->camera.fov = -1;
 	scene->light.light_ratio = -1;
+	scene->objects = NULL;
 }
 
 void	parser_exit(int error_code, void **free_me)
