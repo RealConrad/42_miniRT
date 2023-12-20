@@ -4,8 +4,7 @@ void	free_objects(t_object *objects)
 {
 	t_object	*temp;
 
-	temp = objects;
-	while (temp)
+	while (objects)
 	{
 		temp = objects->next;
 		if (objects->cylinder)
