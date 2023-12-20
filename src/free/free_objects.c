@@ -1,5 +1,9 @@
 #include "mini_rt.h"
 
+/**
+ * @brief Frees a linked list of objects.
+ * @param objects The head node of the object linked list.
+ */
 void	free_objects(t_object *objects)
 {
 	t_object	*temp;
