@@ -96,6 +96,7 @@ void		exit_analize(t_scene *scene, char **tokens, int fd);
 void		init_amb(t_scene *scene, char **tokens, int fd);
 void		init_cam(t_scene *scene, char **tokens, int fd);
 void		init_light(t_scene *scene, char **tokens, int fd);
+bool		legal_vector(t_vector vector, double min, double max);
 
 // OLD:
 // t_scene		parser(int argc, char *argv[]);
@@ -108,7 +109,6 @@ void		init_light(t_scene *scene, char **tokens, int fd);
 // t_colour	get_colour_input(char **split, int colour_index);
 // bool		legal_colour(t_colour colour);
 // t_vector	get_vector_input(char **split, int vec_index);
-// bool		legal_vector(t_vector vector, double min, double max);
 // bool		legal_vector_input(char **split, int vec_index);
 // void		exit_analize(char *line, t_scene *scene, int fd, char **split);
 // void		add_object_to_linked_list(t_scene *scene, t_object *object);

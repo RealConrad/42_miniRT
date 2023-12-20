@@ -22,7 +22,7 @@ char	**split_line(char *line)
 	free(temp);
 	if (!tokens)
 		return (NULL);
-	return (tokens);	
+	return (tokens);
 }
 
 void	free_2d_array(char **tokens)
