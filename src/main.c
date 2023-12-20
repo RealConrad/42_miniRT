@@ -12,7 +12,7 @@ int	main(int argc, char *argv[])
 	if (ft_strncmp(argv[1] + (ft_strlen(argv[1]) - 3), ".rt", 4) != 0)
 		parser_exit(INPUT_FILE, NULL);
 	scene = (t_scene){};
-	scene = parser(argc, argv);
+	scene = parser(argv);
 	
 	t_print_scene(scene);
 	free_objects(scene.objects);
