@@ -55,6 +55,7 @@ static void	add_object_to_linked_list(t_scene *scene, t_object *object)
 {
 	t_object	*temp;
 
+	object->next = NULL;
 	if (!scene->objects)
 		scene->objects = object;
 	else
