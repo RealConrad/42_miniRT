@@ -3,6 +3,13 @@
 static void	add_object_to_linked_list(t_scene *scene, t_object *object);
 static t_object	*common_init_object(char **tokens, t_object_type type);
 
+/**
+ * @brief Initializes a plane object and adds to the linked list
+ * contained in `scene`.
+ * @param scene The struct that holds all data regarding the scene
+ * @param tokens An array of strings that contain the plane data.
+ * @param fd The file desciptor of the scene file.
+ */
 void	init_plane(t_scene *scene, char **tokens, int fd)
 {
 	t_object	*object;
@@ -19,6 +26,13 @@ void	init_plane(t_scene *scene, char **tokens, int fd)
 	add_object_to_linked_list(scene, object);
 }
 
+/**
+ * @brief Initializes a sphere object and adds to the linked list
+ * contained in `scene`.
+ * @param scene The struct that holds all data regarding the scene
+ * @param tokens An array of strings that contain the sphere data.
+ * @param fd The file desciptor of the scene file.
+ */
 void	init_sphere(t_scene *scene, char **tokens, int fd)
 {
 	t_object	*object;
@@ -34,6 +48,13 @@ void	init_sphere(t_scene *scene, char **tokens, int fd)
 	add_object_to_linked_list(scene, object);
 }
 
+/**
+ * @brief Initializes a cylinder object and adds to the linked list
+ * contained in `scene`.
+ * @param scene The struct that holds all data regarding the scene
+ * @param tokens An array of strings that contain the cylinder data.
+ * @param fd The file desciptor of the scene file.
+ */
 void	init_cylinder(t_scene *scene, char **tokens, int fd)
 {
 	t_object	*object;
@@ -51,6 +72,11 @@ void	init_cylinder(t_scene *scene, char **tokens, int fd)
 	add_object_to_linked_list(scene, object);
 }
 
+/**
+ * @brief Adds the given `object` to the end of the linked list.
+ * @param scene Struct that holds all the scene objects.
+ * @param object The object to add to the linked list.
+ */
 static void	add_object_to_linked_list(t_scene *scene, t_object *object)
 {
 	t_object	*temp;
@@ -67,6 +93,14 @@ static void	add_object_to_linked_list(t_scene *scene, t_object *object)
 	}
 }
 
+/**
+ * @brief Allocates memory for the given object and does malloc checks.
+ * It also checks if the given tokens are valid.
+ * @param tokens The tokens to check if are valid or not.
+ * @param type The type of object to allocate memory for.
+ * @return A newly allocated `t_object` or NULL if allocation fails or if
+ * tokens are invalid.
+ */
 static t_object	*common_init_object(char **tokens, t_object_type type)
 {
 	t_object	*object;
