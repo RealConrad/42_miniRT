@@ -14,6 +14,7 @@
 /* -------------------------------------------------------------------------- */
 
 # include "parser.h"
+# include "structs.h"
 # include "testing.h"
 
 # include <stdio.h>
