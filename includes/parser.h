@@ -96,5 +96,7 @@ void		exit_analize(t_scene *scene, char **tokens, int fd);
 void		init_amb(t_scene *scene, char **tokens, int fd);
 void		init_cam(t_scene *scene, char **tokens, int fd);
 void		init_light(t_scene *scene, char **tokens, int fd);
+bool		legal_vector(t_vector vector, double min, double max);
+
 
 #endif /*PARSER_H*/
