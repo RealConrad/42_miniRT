@@ -1,6 +1,13 @@
 
 #include "mini_rt.h"
 
+/**
+ * @brief Initializes the ambient light for the scene
+ * @param scene Struct that contains the ambient light settings
+ * @param tokens An array of strings representing the ambient lights
+ * parameters
+ * @param fd The file descriptor of the scene file
+ */
 void	init_amb(t_scene *scene, char **tokens, int fd)
 {
 	if (!is_valid_numbers(tokens))
@@ -13,6 +20,13 @@ void	init_amb(t_scene *scene, char **tokens, int fd)
 		exit_analyse(scene, tokens, fd, NULL);
 }
 
+/**
+ * @brief Initializes the camera settings for the scene
+ * @param scene Struct that contains the camera
+ * @param tokens An array of strings that represent the camera's
+ * parameters
+ * @param fd The file descriptor of the scene file
+ */
 void	init_cam(t_scene *scene, char **tokens, int fd)
 {
 	if (!is_valid_numbers(tokens))
@@ -25,6 +39,12 @@ void	init_cam(t_scene *scene, char **tokens, int fd)
 		exit_analyse(scene, tokens, fd, NULL);
 }
 
+/**
+ * @brief Initializes the light element for the given scene
+ * @param scene The scene
+ * @param tokens The tokens that contain data regarding the light
+ * @param fd The file descriptor for input file
+ */
 void	init_light(t_scene *scene, char **tokens, int fd)
 {
 	if (!is_valid_numbers(tokens))
