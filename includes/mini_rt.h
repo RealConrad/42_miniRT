@@ -46,6 +46,13 @@ enum e_exit_msg
 	FORMAT
 };
 
+typedef enum e_object_type
+{
+	SPHERE,
+	CYLINDER,
+	PLANE
+}	t_object_type;
+
 /* -------------------------------------------------------------------------- */
 /*                                  Functions                                 */
 /* -------------------------------------------------------------------------- */
@@ -54,5 +61,7 @@ enum e_exit_msg
 
 int		escape(keys_t keycode, void *param);
 void	display_render_progress(int percent);
+
+void	free_objects(t_object *objects);
 
 #endif /*MINI_RT_H*/
