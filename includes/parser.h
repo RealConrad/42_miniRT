@@ -86,7 +86,7 @@ typedef struct s_scene
 /* -------------------------------------------------------------------------- */
 
 char		**split_line(char *line);
-t_scene		parser(int argc, char **argv);
+t_scene		parser(char **argv);
 void		parser_exit(int error_code, void **free_me);
 void		free_2d_array(char **tokens);
 bool		atof_check(char *str);
