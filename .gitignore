@@ -1,5 +1,5 @@
 objs/
-minirt
+miniRT
 .submodules_initialized
 *.o
 *.out
