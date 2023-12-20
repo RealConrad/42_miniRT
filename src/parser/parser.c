@@ -3,17 +3,13 @@
 static void	analize_line(t_scene *scene, char **tokens, int fd);
 static void	init_scene_default(t_scene *scene);
 
-t_scene	parser(int argc, char **argv)
+t_scene	parser(char **argv)
 {
 	t_scene	scene;
 	int		fd;
 	char	*line;
 	char	**tokens;
 
-	if (argc != 2)
-		parser_exit(INPUT_MISSING, NULL);
-	if (ft_strncmp(argv[1] + (ft_strlen(argv[1]) - 3), ".rt", 4) != 0)
-		parser_exit(INPUT_FILE, NULL);
 	fd = open(argv[1], O_RDONLY);
 	init_scene_default(&scene);
 	while (true)
