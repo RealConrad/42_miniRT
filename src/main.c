@@ -9,7 +9,9 @@ int	main(int argc, char *argv[])
 
 	scene = (t_scene){};
 	scene = parser(argc, argv);
+	
 	t_print_scene(scene);
+	free_objects(scene.objects);
 	// mlx = mlx_init(WIDTH, HEIGHT, "miniRT", true);
 	// if (mlx == NULL)
 	// 	return (1);
