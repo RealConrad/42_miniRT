@@ -4,12 +4,12 @@ static void	analyse_line(t_scene *scene, char **tokens, int fd);
 static void	init_scene_default(t_scene *scene);
 
 /**
- * @brief Parses/Creates a scene from the given file stored in `argv`
+ * @brief Parses/Creates a scene from the given file stored in `argv`.
  * 
  * This function opens the given file and reads it line by line. Each line is split
- * into tokens to analyse 
- * @param argv 
- * @return 
+ * into tokens to analyse different scene elements.
+ * @param argv The command line input that holds the file.
+ * @return The scene based on the file contents.
  */
 t_scene	parser(char **argv)
 {
@@ -38,6 +38,15 @@ t_scene	parser(char **argv)
 	return (scene);
 }
 
+/**
+ * @brief Analyses a line of the scene file and initializes the scene element.
+ * 
+ * The different scene elements can be: `Ambient light (A)`, `Camera (C)`,
+ * `Lighting (L)`, `Sphere (sp)`, `Plane (pl)`, `Cylinder (cy)`.
+ * @param scene A pointer to the scene to be modified.
+ * @param tokens Array of strings from the line of the scene file
+ * @param fd File descriptor of the scene file
+ */
 static void	analyse_line(t_scene *scene, char **tokens, int fd)
 {
 	int	i;
@@ -61,6 +70,10 @@ static void	analyse_line(t_scene *scene, char **tokens, int fd)
 		exit_analyse(scene, tokens, fd, NULL);
 }
 
+/**
+ * @brief Initializes the scene to default values.
+ * @param scene The scene to be initialized.
+ */
 static void	init_scene_default(t_scene *scene)
 {
 	scene->amb_light.light_ratio = -1;
@@ -69,6 +82,12 @@ static void	init_scene_default(t_scene *scene)
 	scene->objects = NULL;
 }
 
+/**
+ * @brief Handles exit situations for the parser with the optional
+ * memory cleanup and error message.
+ * @param error_code Used to print out a specific error message
+ * @param free_me An array of pointers that need to be freed before exiting.
+ */
 void	parser_exit(int error_code, void **free_me)
 {
 	int	i;
