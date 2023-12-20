@@ -1,6 +1,6 @@
 #include "mini_rt.h"
 
-void	exit_analize(t_scene *scene, char **tokens, int fd, t_object *object)
+void	exit_analyse(t_scene *scene, char **tokens, int fd, t_object *object)
 {
 	if (object)
 	{

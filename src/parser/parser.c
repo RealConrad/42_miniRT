@@ -1,8 +1,16 @@
 #include "mini_rt.h"
 
-static void	analize_line(t_scene *scene, char **tokens, int fd);
+static void	analyse_line(t_scene *scene, char **tokens, int fd);
 static void	init_scene_default(t_scene *scene);
 
+/**
+ * @brief Parses/Creates a scene from the given file stored in `argv`
+ * 
+ * This function opens the given file and reads it line by line. Each line is split
+ * into tokens to analyse 
+ * @param argv 
+ * @return 
+ */
 t_scene	parser(char **argv)
 {
 	t_scene	scene;
@@ -23,13 +31,14 @@ t_scene	parser(char **argv)
 		free(line);
 		if (!tokens)
 			parser_exit(MALLOC_FAIL, NULL);
-		analize_line(&scene, tokens, fd);
+		analyse_line(&scene, tokens, fd);
 		free_2d_array(tokens);
 	}
-	return (close(fd), scene);
+	close(fd);
+	return (scene);
 }
 
-static void	analize_line(t_scene *scene, char **tokens, int fd)
+static void	analyse_line(t_scene *scene, char **tokens, int fd)
 {
 	int	i;
 
@@ -49,7 +58,7 @@ static void	analize_line(t_scene *scene, char **tokens, int fd)
 	else if (i == 12 && ft_strncmp(tokens[0], "cy", 3) == 0)
 		init_cylinder(scene, tokens, fd);
 	else
-		exit_analize(scene, tokens, fd, NULL);
+		exit_analyse(scene, tokens, fd, NULL);
 }
 
 static void	init_scene_default(t_scene *scene)

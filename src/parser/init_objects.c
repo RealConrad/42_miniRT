@@ -9,13 +9,13 @@ void	init_plane(t_scene *scene, char **tokens, int fd)
 
 	object = common_init_object(tokens, PLANE);
 	if (!object)
-		exit_analize(scene, tokens, fd, object);
+		exit_analyse(scene, tokens, fd, object);
 	assign_vector(&(object->plane->cords), tokens, 1);
 	assign_vector(&(object->plane->threed_vec), tokens, 4);
 	assign_colour(&(object->plane->colour), tokens, 7);
 	if (!legal_vector(object->plane->threed_vec, -1, 1)
 		|| !legal_colour(object->plane->colour))
-		exit_analize(scene, tokens, fd, object);
+		exit_analyse(scene, tokens, fd, object);
 	add_object_to_linked_list(scene, object);
 }
 
@@ -25,12 +25,12 @@ void	init_sphere(t_scene *scene, char **tokens, int fd)
 
 	object = common_init_object(tokens, SPHERE);
 	if (!object)
-		exit_analize(scene, tokens, fd, object);
+		exit_analyse(scene, tokens, fd, object);
 	assign_vector(&(object->sphere->cords), tokens, 1);
 	object->sphere->diameter = ft_atof(tokens[4]);
 	assign_colour(&(object->sphere->colour), tokens, 5);
 	if (!legal_colour(object->sphere->colour))
-		exit_analize(scene, tokens, fd, object);
+		exit_analyse(scene, tokens, fd, object);
 	add_object_to_linked_list(scene, object);
 }
 
@@ -40,14 +40,14 @@ void	init_cylinder(t_scene *scene, char **tokens, int fd)
 
 	object = common_init_object(tokens, CYLINDER);
 	if (!object)
-		exit_analize(scene, tokens, fd, object);
+		exit_analyse(scene, tokens, fd, object);
 	assign_vector(&(object->cylinder->cords), tokens, 1);
 	assign_vector(&(object->cylinder->axis), tokens, 4);
 	object->cylinder->diameter = ft_atof(tokens[7]);
 	object->cylinder->height = ft_atof(tokens[8]);
 	assign_colour(&(object->cylinder->colour), tokens, 9);
 	if (!legal_colour(object->cylinder->colour) || ! legal_vector(object->cylinder->axis, -1, 1))
-		exit_analize(scene, tokens, fd, object);
+		exit_analyse(scene, tokens, fd, object);
 	add_object_to_linked_list(scene, object);
 }
 

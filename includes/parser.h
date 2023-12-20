@@ -92,7 +92,7 @@ void		free_2d_array(char **tokens);
 bool		atof_check(char *str);
 bool		is_valid_numbers(char **tokens);
 bool		legal_colour(t_colour colour);
-void		exit_analize(t_scene *scene, char **tokens, int fd, t_object *object);
+void		exit_analyse(t_scene *scene, char **tokens, int fd, t_object *object);
 void		init_amb(t_scene *scene, char **tokens, int fd);
 void		init_cam(t_scene *scene, char **tokens, int fd);
 void		init_light(t_scene *scene, char **tokens, int fd);
