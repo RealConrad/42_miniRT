@@ -2,6 +2,16 @@
 
 static bool	is_valid_int(char *str, bool is_negative);
 
+/**
+ * @brief Checks if all the strings are valid numbers
+ * 
+ * The function iterates through the 2D string array (starting from the second index).
+ * We skip the first index because it will be the type of element, 
+ * e.g. `C` for the camera.
+ * @param tokens An array of tokens to be checked.
+ * @return `True` if all tokens from the 2nd element onwards are valid numbers,
+ * else `False`.
+ */
 bool	is_valid_numbers(char **tokens)
 {
 	int	i;
@@ -16,6 +26,11 @@ bool	is_valid_numbers(char **tokens)
 	return (true);
 }
 
+/**
+ * @brief Validates if a string is a properly formatted float number.
+ * @param str The string to be checked.
+ * @return `True` if the string represents a valid float number, else `false`.
+ */
 bool	atof_check(char *str)
 {
 	char	**tokens;
@@ -44,6 +59,12 @@ bool	atof_check(char *str)
 	return (true);
 }
 
+/**
+ * @brief Checks if the given colour is in the correct range (0-255).
+ * @param colour The colour to check.
+ * @return `True` if all colours (red, blue, green) are within the range 0-255,
+ * else `false`.
+ */
 bool	legal_colour(t_colour colour)
 {
 	if (colour.r > 255 || colour.r < 0)
@@ -55,6 +76,12 @@ bool	legal_colour(t_colour colour)
 	return (true);
 }
 
+/**
+ * @brief Checks if the string is a valid int.
+ * @param str The string to be checked.
+ * @param is_negative A boolean indicating if the number is negative or not.
+ * @return `True` if the string is a valid int, else `false`.
+ */
 static bool	is_valid_int(char *str, bool is_negative)
 {
 	int		len;
