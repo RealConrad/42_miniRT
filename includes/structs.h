@@ -4,6 +4,25 @@
 
 # include <stdint.h>
 
+enum e_exit_msg
+{
+	NORMAL = 0,
+	MALLOC_FAIL,
+	OPEN_FAIL,
+	INPUT_FILE,
+	INPUT_MISSING,
+	DUPLICATED,
+	MISSING,
+	FORMAT
+};
+
+typedef enum e_object_type
+{
+	SPHERE,
+	CYLINDER,
+	PLANE
+}	t_object_type;
+
 typedef struct s_colour
 {
 	int				r;
