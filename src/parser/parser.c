@@ -45,12 +45,14 @@ static void	analize_line(t_scene *scene, char **tokens, int fd)
 		init_cam(scene, tokens, fd);
 	else if (i == 8 && ft_strncmp(tokens[0], "L", 2) == 0)
 		init_light(scene, tokens, fd);
-	// else if (ft_strncmp(tokens[0], "pl", 3 == 0)
-	// 	&& ft_strncmp(tokens[0], "sp", 3 == 0)
-	// 	&& ft_strncmp(tokens[0], "cy", 3 == 0))
-	// 	init_object(scene, tokens, fd);
-	// else
-	// 	exit_analize(scene, tokens, fd);
+	else if (i == 10 && ft_strncmp(tokens[0], "pl", 3) == 0)
+		init_plane(scene, tokens, fd);
+	else if (i == 8 && ft_strncmp(tokens[0], "sp", 3) == 0)
+		init_sphere(scene, tokens, fd);
+	else if (i == 12 && ft_strncmp(tokens[0], "cy", 3) == 0)
+		init_cylinder(scene, tokens, fd);
+	else
+		exit_analize(scene, tokens, fd, NULL);
 }
 
 static void	init_scene_default(t_scene *scene)
