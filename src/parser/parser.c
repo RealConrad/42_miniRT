@@ -29,8 +29,7 @@ t_scene	parser(int argc, char **argv)
 			parser_exit(MALLOC_FAIL, NULL);
 		analize_line(&scene, tokens, fd);
 	}
-	close(fd);
-	return (scene);
+	return (close(fd), scene);
 }
 
 static void	analize_line(t_scene *scene, char **tokens, int fd)
@@ -67,10 +66,8 @@ void	parser_exit(int error_code, void **free_me)
 
 	i = -1;
 	if (free_me != NULL)
-	{
 		while (free_me[++i] != NULL)
 			free(free_me[i]);
-	}
 	if (error_code == NORMAL)
 		exit(0);
 	ft_fprintf(2, "Error\n");
