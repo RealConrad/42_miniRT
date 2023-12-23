@@ -21,11 +21,11 @@ void	t_print_scene(t_scene scene)
 	t_print_vector(scene.light.cords);
 	printf("Light brightness ration %f\n", scene.light.light_ratio);
 	t_print_colour(scene.light.colour);
-	// while (current != NULL)
-	// {
-	// 	t_print_object(current);
-	// 	current = current->next;
-	// }
+	while (current != NULL)
+	{
+		t_print_object(current);
+		current = current->next;
+	}
 }
 
 /**
