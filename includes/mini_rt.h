@@ -15,6 +15,7 @@
 
 # include "parser.h"
 # include "structs.h"
+# include "renderer.h"
 # include "testing.h"
 
 # include <stdio.h>
@@ -28,11 +29,11 @@
 /* -------------------------------------------------------------------------- */
 
 # ifndef WIDTH
-#  define WIDTH 1920
+#  define WIDTH 500
 # endif
 
 # ifndef HEIGHT
-#  define HEIGHT 1080
+#  define HEIGHT 500
 # endif
 
 /* -------------------------------------------------------------------------- */
@@ -41,7 +42,7 @@
 
 /* ---------------------------------- Utils --------------------------------- */
 
-int		escape(keys_t keycode, void *param);
+void	escape(keys_t keycode, void *param);
 void	display_render_progress(int percent);
 
 void	free_objects(t_object *objects);

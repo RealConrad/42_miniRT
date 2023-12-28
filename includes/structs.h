@@ -88,8 +88,16 @@ typedef struct s_object
 	struct s_object	*next;
 }	t_object;
 
+typedef struct s_ray
+{
+	t_vector	origin;
+	t_vector	direction;
+}	t_ray;
+
 typedef struct s_scene
 {
+	mlx_t			*mlx;
+	mlx_image_t		*img;
 	t_amb_light		amb_light;
 	t_camera		camera;
 	t_light			light;

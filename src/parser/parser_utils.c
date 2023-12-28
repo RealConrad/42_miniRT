@@ -1,7 +1,8 @@
 #include "mini_rt.h"
 
 /**
- * @brief Exits the program and cleansup any memory.
+ * @brief Exits the program and cleansup any memory. This function
+ * is only used for the parser.
  * @param scene The scene which holds the objects to be freed
  * @param tokens An array of strings that need to be freed
  * @param fd The scene file descriptor to be closed
