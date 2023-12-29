@@ -9,6 +9,7 @@ void		render_cylinder(t_scene *scene, t_cylinder *cylinder);
 void		render_plane(t_scene *scene, t_plane *plane);
 void		render_sphere(t_scene *scene, t_sphere *sphere);
 uint32_t	get_rgb(t_colour colour);
+t_colour	get_ray_colour(t_ray ray);
 
 t_vector	vec_add(t_vector v1, t_vector v2);
 t_vector	vec_subtract(t_vector v1, t_vector v2);

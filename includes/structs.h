@@ -71,6 +71,12 @@ typedef struct s_plane
 	t_colour		colour;
 }	t_plane;
 
+typedef struct s_ray
+{
+	t_vector	origin;
+	t_vector	direction;
+}	t_ray;
+
 typedef struct s_cylinder
 {
 	t_vector		cords;
@@ -87,12 +93,6 @@ typedef struct s_object
 	t_cylinder		*cylinder;
 	struct s_object	*next;
 }	t_object;
-
-typedef struct s_ray
-{
-	t_vector	origin;
-	t_vector	direction;
-}	t_ray;
 
 typedef struct s_scene
 {
