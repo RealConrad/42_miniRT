@@ -23,6 +23,7 @@ typedef enum e_object_type
 	PLANE
 }	t_object_type;
 
+/* ------------------------------ Vector/Colour ----------------------------- */
 typedef struct s_colour
 {
 	int				r;
@@ -36,6 +37,8 @@ typedef struct s_vector
 	double			y;
 	double			z;
 }	t_vector;
+
+/* ------------------------------- Environment ------------------------------ */
 
 typedef struct s_amb_light
 {
@@ -57,6 +60,8 @@ typedef struct s_light
 	t_colour		colour;
 }	t_light;
 
+/* --------------------------------- Objects -------------------------------- */
+
 typedef struct s_sphere
 {
 	t_vector		cords;
@@ -71,11 +76,6 @@ typedef struct s_plane
 	t_colour		colour;
 }	t_plane;
 
-typedef struct s_ray
-{
-	t_vector	origin;
-	t_vector	direction;
-}	t_ray;
 
 typedef struct s_cylinder
 {
@@ -94,6 +94,23 @@ typedef struct s_object
 	struct s_object	*next;
 }	t_object;
 
+/* ----------------------------------- Ray ---------------------------------- */
+typedef struct s_ray
+{
+	t_vector	origin;
+	t_vector	direction;
+}	t_ray;
+
+/* -------------------------------- Viewport -------------------------------- */
+
+typedef struct s_viewport
+{
+	t_vector	camera_direction;
+	t_vector	horizontal;
+	t_vector	vertical;
+	t_vector	lower_left_corner;	
+}	t_viewport;
+
 typedef struct s_scene
 {
 	mlx_t			*mlx;
@@ -104,4 +121,4 @@ typedef struct s_scene
 	t_object		*objects;
 }	t_scene;
 
-#endif 
+#endif

@@ -11,7 +11,7 @@ int	main(int argc, char *argv[])
 	scene = (t_scene){};
 	scene = parser(argv);
 	
-	t_print_scene(scene);
+	// t_print_scene(scene);
 	render_scene(&scene);
 	mlx_loop(scene.mlx);
 	return (0);
