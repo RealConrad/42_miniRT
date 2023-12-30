@@ -41,7 +41,6 @@ static void	calculate_ray_and_draw(t_scene *scene, t_viewport viewport, int y, i
 	v = (double)y / (HEIGHT - 1) * 2 - 1;
 	ray_direction = vec_add(vec_add(viewport.lower_left_corner, vec_multiply(viewport.horizontal, (t_vector){u, u, u})), vec_multiply(viewport.vertical, (t_vector){v, v, v}));
 	ray_direction = vec_subtract(ray_direction, scene->camera.cords);
-
 	ray.origin = scene->camera.cords;
 	ray.direction = ray_direction;
 	pixel_colour = get_ray_colour(ray, scene->objects);
@@ -62,7 +61,7 @@ static t_viewport	calculate_viewport(t_scene *scene)
 	viewport.lower_left_corner = vec_subtract(
 		vec_subtract(
 			vec_subtract(scene->camera.cords, 
-						vec_divide(viewport.horizontal, (t_vector){2, 2, 2})),
+				vec_divide(viewport.horizontal, (t_vector){2, 2, 2})),
 			vec_divide(viewport.vertical, (t_vector){2, 2, 2})), 
 		viewport.camera_direction);
 
