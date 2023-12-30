@@ -54,15 +54,9 @@ static t_viewport	calculate_viewport(t_scene *scene)
 	double		vp_height;
 	double		vp_width;
 
-	// Calculate the viewport height of the camera
-	// tan(FOV / 2) = tangent of half of the FOV angle, which is why we multiply by 2 to give full
 	vp_height = 2.0 * tan((scene->camera.fov * (M_PI / 180.0)) / 2.0);
-	// calculate the width in regards to aspect ratio
 	vp_width = vp_height * ((double)WIDTH / (double)HEIGHT);
-	// Get the direction the camera is facing
 	viewport.camera_direction = normalize_vector(scene->camera.or_vect);
-	
-	// viewport vectors:
 	viewport.horizontal = (t_vector){vp_width, 0, 0};
 	viewport.vertical = (t_vector){0, vp_height, 0};
 	viewport.lower_left_corner = vec_subtract(
