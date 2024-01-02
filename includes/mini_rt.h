@@ -47,4 +47,6 @@ void	display_render_progress(int percent);
 
 void	free_objects(t_object *objects);
 
+double	ft_dabs(double nb);
+
 #endif /*MINI_RT_H*/
