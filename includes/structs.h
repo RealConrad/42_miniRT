@@ -76,7 +76,6 @@ typedef struct s_plane
 	t_colour		colour;
 }	t_plane;
 
-
 typedef struct s_cylinder
 {
 	t_vector		cords;
@@ -108,7 +107,7 @@ typedef struct s_viewport
 	t_vector	camera_direction;
 	t_vector	horizontal;
 	t_vector	vertical;
-	t_vector	lower_left_corner;	
+	t_vector	lower_left_corner;
 }	t_viewport;
 
 typedef struct s_scene

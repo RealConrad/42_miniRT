@@ -58,12 +58,19 @@ static t_viewport	calculate_viewport(t_scene *scene)
 	viewport.camera_direction = normalize_vector(scene->camera.or_vect);
 	viewport.horizontal = (t_vector){vp_width, 0, 0};
 	viewport.vertical = (t_vector){0, vp_height, 0};
-	viewport.lower_left_corner = vec_subtract(
-		vec_subtract(
-			vec_subtract(scene->camera.cords, 
-				vec_divide(viewport.horizontal, (t_vector){2, 2, 2})),
-			vec_divide(viewport.vertical, (t_vector){2, 2, 2})), 
-		viewport.camera_direction);
-
+	viewport.lower_left_corner = vec_subtract(scene->camera.cords,
+			vec_divide(viewport.horizontal, (t_vector){2, 2, 2}));
+	viewport.lower_left_corner = vec_subtract(viewport.lower_left_corner,
+			vec_divide(viewport.vertical, (t_vector){2, 2, 2}));
+	viewport.lower_left_corner = vec_add(viewport.lower_left_corner,
+			viewport.camera_direction);
+	t_print_vector(viewport.camera_direction);
+	printf("\n\n\n");
+	t_print_vector(viewport.horizontal);
+	printf("\n\n\n");
+	t_print_vector(viewport.vertical);
+	printf("\n\n\n");
+	t_print_vector(viewport.lower_left_corner);
+	printf("\n\n\n");
 	return (viewport);
 }
