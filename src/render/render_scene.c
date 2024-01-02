@@ -30,7 +30,8 @@ void	render_scene(t_scene *scene)
 	}
 }
 
-static void	calculate_ray_and_draw(t_scene *scene, t_viewport viewport, int y, int x) {
+static void	calculate_ray_and_draw(t_scene *scene, t_viewport viewport, int y, int x)
+{
 	t_ray		ray;
 	t_colour	pixel_colour;
 	t_vector	u;
