@@ -10,10 +10,6 @@ bool	check_object_intersection(t_object *object, t_ray ray)
 	result = false;
 	if (object->sphere)
 		result = check_sphere_intersection(object->sphere, ray);
-	// else if (object->cylinder)
-	// 	result = check_cylinder_intersection(object->cylinder, ray);
-	// else if (object->plane)
-	// 	result = check_plane_intersection(object->plane, ray);
 	return (result);
 }
 
