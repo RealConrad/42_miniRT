@@ -26,7 +26,7 @@ PARSER_SRC		:= parser.c init_scene.c parser_utils.c init_objects.c input_check.c
 UTIL_SRC		:= progress_bar.c split_line.c colour_utils.c ft_dabs.c
 FREE_SRC		:= free_objects.c
 INPUT_SRC		:= input.c
-RENDER_SRC		:= render_scene.c render_objects.c pixel_colour.c amb_light.c vector_operations.c intersection.c
+RENDER_SRC		:= render_scene.c pixel_colour.c amb_light.c vector_operations.c intersection.c
 DEBUGGING_SRC	:= t_printing.c
 
 SRCS			:= $(SRC) $(PARSER_SRC) $(UTIL_SRC) $(DEBUGGING_SRC) $(INPUT_SRC) $(FREE_SRC) $(RENDER_SRC)
