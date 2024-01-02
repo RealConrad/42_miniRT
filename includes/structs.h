@@ -107,7 +107,8 @@ typedef struct s_viewport
 	t_vector	camera_direction;
 	t_vector	horizontal;
 	t_vector	vertical;
-	t_vector	lower_left_corner;
+	t_vector	upper_left_corner;
+	t_vector	pixel00_loc;
 }	t_viewport;
 
 typedef struct s_scene
