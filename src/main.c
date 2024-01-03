@@ -10,10 +10,8 @@ int	main(int argc, char *argv[])
 		parser_exit(INPUT_FILE, NULL);
 	scene = (t_scene){};
 	scene = parser(argv);
-	
 	// t_print_scene(scene);
 	render_scene(&scene);
 	mlx_loop(scene.mlx);
 	return (0);
 }
-
