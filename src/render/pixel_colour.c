@@ -8,7 +8,7 @@ t_colour	get_ray_colour(t_ray ray, t_object *objects)
 	t_vector	normalized_ray_direction;
 	double		ratio;
 	t_colour	ray_colour;
-	
+
 	ray_colour = get_object_colour(ray, objects);
 	if (legal_colour(ray_colour))
 	{
@@ -33,11 +33,17 @@ static t_colour	get_object_colour(t_ray ray, t_object *objects)
 	while (temp)
 	{
 		t = hit_object(temp, ray);
-		if (t > 0.0 && temp->sphere)
+		if (t > 0.0 && temp->sphere != NULL)
 		{
 			hit_point = ray_at(ray, t);
 			n = normalize_vector(vec_subtract(hit_point, temp->sphere->cords));
 			return ((t_colour){0.5 * (n.x + 1) * 255, 0.5 * (n.y + 1) * 255, 0.5 * (n.z + 1) * 255});
+		}
+		else if (t > 0.0 && temp->plane != NULL)
+		{
+			// hit_point = ray_at(ray, t);
+			// n = normalize_vector(vec_subtract(hit_point, temp->plane->cords));
+			return (temp->plane->colour);
 		}
 		temp = temp->next;
 	}
