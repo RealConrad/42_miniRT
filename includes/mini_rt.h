@@ -17,6 +17,7 @@
 # include "structs.h"
 # include "renderer.h"
 # include "testing.h"
+# include "vector.h"
 
 # include <stdio.h>
 # include <math.h>
