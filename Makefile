@@ -19,17 +19,20 @@ MLX				:= ./libraries/mlx/build/libmlx42.a
 # ---------------------------------------------------------------------------- #
 
 OBJ_DIR			:= ./objs
-VPATH			:= ./src/ ./src/parser/ ./src/utils/ ./src/debugging/ ./src/input/ ./src/free/ ./src/render/
+VPATH			:= ./src/ ./src/parser/ ./src/utils/ ./src/debugging/ ./src/input/
+VPATH			+= ./src/free/ ./src/render/ ./src/vec_utils.c
 
 SRC				:= main.c
 PARSER_SRC		:= parser.c init_scene.c parser_utils.c init_objects.c input_check.c
 UTIL_SRC		:= progress_bar.c split_line.c colour_utils.c ft_dabs.c
 FREE_SRC		:= free_objects.c
 INPUT_SRC		:= input.c
-RENDER_SRC		:= render_scene.c pixel_colour.c amb_light.c vector_operations.c intersection.c ray_calculations.c
+RENDER_SRC		:= render_scene.c pixel_colour.c amb_light.c intersection.c ray_calculations.c
 DEBUGGING_SRC	:= t_printing.c
+VEC_UTILS_SRC	:= vector_operations.c vector_operations2.c
 
-SRCS			:= $(SRC) $(PARSER_SRC) $(UTIL_SRC) $(DEBUGGING_SRC) $(INPUT_SRC) $(FREE_SRC) $(RENDER_SRC)
+SRCS			:= $(SRC) $(PARSER_SRC) $(UTIL_SRC) $(DEBUGGING_SRC) $(INPUT_SRC)
+SRCS			+= $(FREE_SRC) $(RENDER_SRC) $(VEC_UTILS_SRC)
 OBJS			:= $(addprefix $(OBJ_DIR)/, $(SRCS:%.c=%.o))
 
 # ---------------------------------------------------------------------------- #

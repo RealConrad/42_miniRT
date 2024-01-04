@@ -14,10 +14,4 @@ t_colour	get_ray_colour(t_ray ray, t_object *objects);
 double		hit_object(t_object *object, t_ray ray);
 t_vector	ray_at(t_ray ray, double t);
 
-t_vector	vec_add(t_vector v1, t_vector v2);
-t_vector	vec_subtract(t_vector v1, t_vector v2);
-t_vector	vec_divide(t_vector v1, t_vector v2);
-t_vector	vec_multiply(t_vector v1, t_vector v2);
-t_vector	normalize_vector(t_vector v);
-
-#endif 
+#endif /*RENDERER_H*/

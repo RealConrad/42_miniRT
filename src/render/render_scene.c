@@ -42,7 +42,6 @@ static void	calculate_ray_and_draw(t_scene *scene, t_viewport viewport, int y, i
 	v = vec_divide(viewport.vertical, (t_vector){HEIGHT, HEIGHT, HEIGHT});
 	// Get center pos of x,y in 3D worldd :)))))
 	pixel_center = vec_add(viewport.pixel00_loc, vec_add(vec_multiply(u, (t_vector){x, x, x}), vec_multiply(v, (t_vector){y, y, y})));
-
 	ray.origin = scene->camera.cords;
 	ray.direction = normalize_vector(vec_subtract(pixel_center, scene->camera.cords));
 	pixel_colour = get_ray_colour(ray, scene->objects);
@@ -70,6 +69,9 @@ static void	assign_viewport_vectors(t_viewport *viewport, t_scene *scene, double
 
 	focal_length = 1.0;
 	viewport->camera_direction = normalize_vector(scene->camera.or_vect);
+	viewport->camera_direction.x *= -1;
+	viewport->camera_direction.y *= -1;
+	viewport->camera_direction.z *= -1;
 	viewport->horizontal = (t_vector){vp_width, 0, 0};
 	viewport->vertical = (t_vector){0, -vp_height, 0};
 	// Get lower upper corner

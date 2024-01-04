@@ -1,12 +1,14 @@
 #include "mini_rt.h"
 
 static double		hit_sphere(t_sphere *sphere, t_ray ray);
-static double		dot_product(t_vector v1, t_vector v2);
+static double		hit_plane(t_plane *plane, t_ray ray);
 
 double	hit_object(t_object *object, t_ray ray)
 {
-	if (object->sphere)
+	if (object->sphere != NULL)
 		return (hit_sphere(object->sphere, ray));
+	else if (object->plane != NULL)
+		return (hit_plane(object->plane, ray));
 	return (-5.0);
 }
 
@@ -28,14 +30,17 @@ static double	hit_sphere(t_sphere *sphere, t_ray ray)
 	return ((-b - sqrt(discriminant)) / (2.0 * a));
 }
 
-/**
- * @brief Takes 2 vectors and returns a single scalar value. This works
- * by multiplying the 2 vectors elements.
- * @param v1 
- * @param v2 
- * @return 
- */
-static double	dot_product(t_vector v1, t_vector v2)
+static double	hit_plane(t_plane *plane, t_ray ray)
 {
-	return ((v1.x * v2.x) + (v1.y * v2.y) + (v1.z * v2.z));
+	double	d_pro;
+	double	t;
+
+	d_pro = dot_product(plane->threed_vec, ray.direction);
+	if (ft_dabs(d_pro) < EPSILON)
+		return (-1.0);
+	t = dot_product(vec_subtract(plane->cords, ray.origin),
+			plane->threed_vec) / d_pro;
+	if (t < 0)
+		return (-1.0);
+	return (t);
 }
