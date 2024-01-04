@@ -54,11 +54,14 @@ static void	analyse_line(t_scene *scene, char **tokens, int fd)
 	i = 0;
 	while (tokens[i])
 		i++;
-	if (i == 5 && ft_strncmp(tokens[0], "A", 2) == 0)
+	if (i == 5 && ft_strncmp(tokens[0], "A", 2) == 0
+		&& scene->amb_light.light_ratio == -1)
 		init_amb(scene, tokens, fd);
-	else if (i == 8 && ft_strncmp(tokens[0], "C", 2) == 0)
+	else if (i == 8 && ft_strncmp(tokens[0], "C", 2) == 0
+		&& scene->camera.fov == -1)
 		init_cam(scene, tokens, fd);
-	else if (i == 8 && ft_strncmp(tokens[0], "L", 2) == 0)
+	else if (i == 8 && ft_strncmp(tokens[0], "L", 2) == 0
+		&& scene->light.light_ratio == -1)
 		init_light(scene, tokens, fd);
 	else if (i == 10 && ft_strncmp(tokens[0], "pl", 3) == 0)
 		init_plane(scene, tokens, fd);
