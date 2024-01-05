@@ -28,10 +28,12 @@ void	render_scene(t_scene *scene)
 		while (x < WIDTH)
 		{
 			calculate_ray_and_draw(scene, viewport, y, x);
+			display_render_progress((y * 100) / HEIGHT);
 			x++;
 		}
 		y++;
 	}
+	display_render_progress(100);
 }
 
 /**
@@ -46,18 +48,39 @@ static void	calculate_ray_and_draw(t_scene *scene, t_viewport viewport, int y, i
 {
 	t_ray		ray;
 	t_colour	pixel_colour;
+	t_colour	temp;
 	t_vector	horiz_scale;
 	t_vector	vert_scale;
 	t_vector	pixel_center;
+	int			i;
 
+	i = 0;
+	pixel_colour = (t_colour){0, 0 , 0};
 	horiz_scale = vec_divide(viewport.horizontal, to_vec(WIDTH));
 	vert_scale = vec_divide(viewport.vertical, to_vec(HEIGHT));
-	// Get center pos of x,y in 3D worldd :)
-	pixel_center = vec_add(vec_multiply(horiz_scale, to_vec(x)), vec_multiply(vert_scale, to_vec(y)));
-	pixel_center = vec_add(pixel_center, viewport.pixel00_loc);
-	ray.origin = scene->camera.cords;
-	ray.direction = normalize_vector(vec_subtract(pixel_center, scene->camera.cords));
-	pixel_colour = get_ray_colour(ray, scene->objects);
+	while (i < RPP)
+	{
+		double random_u = random_double();
+        double random_v = random_double();
+
+        // Offset pixel center randomly within the pixel's area
+        t_vector random_offset = vec_add(vec_multiply(horiz_scale, to_vec(random_u)), vec_multiply(vert_scale, to_vec(random_v)));
+        pixel_center = vec_add(vec_add(viewport.pixel00_loc, vec_multiply(horiz_scale, to_vec(x))), vec_multiply(vert_scale, to_vec(y)));
+        pixel_center = vec_add(pixel_center, random_offset);
+
+        ray.origin = scene->camera.cords;
+        ray.direction = normalize_vector(vec_subtract(pixel_center, scene->camera.cords));
+
+        // Accumulate color
+        temp = get_ray_colour(ray, scene->objects);
+        pixel_colour.r += temp.r;
+        pixel_colour.g += temp.g;
+        pixel_colour.b += temp.b;
+		i++;
+	}
+	pixel_colour.r /= RPP;
+	pixel_colour.g /= RPP;
+	pixel_colour.b /= RPP;
 	mlx_put_pixel(scene->img, x, y, get_rgb(pixel_colour));
 }
 

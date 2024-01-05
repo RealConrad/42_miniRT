@@ -15,6 +15,6 @@ void	exit_render(t_scene *scene, char *msg)
 {
 	free_objects(scene->objects);
 	ft_fprintf(2, "Error\n");
-	ft_fprint(2, "%s\n", msg);
+	ft_fprintf(2, "%s\n", msg);
 	exit(1);
 }
