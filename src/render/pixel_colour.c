@@ -11,9 +11,7 @@ t_colour	get_ray_colour(t_ray ray, t_object *objects)
 
 	ray_colour = get_object_colour(ray, objects);
 	if (legal_colour(ray_colour))
-	{
 		return (ray_colour);
-	}
 	normalized_ray_direction = normalize_vector(ray.direction);
 	ratio = 0.5  * (-normalized_ray_direction.y + 1.0);
 	ray_colour = blend_colour((t_colour){128, 178, 255}, (t_colour){255, 255, 255}, ratio);
