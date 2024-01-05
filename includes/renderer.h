@@ -14,4 +14,9 @@ t_colour	get_ray_colour(t_ray ray, t_object *objects);
 double		hit_object(t_object *object, t_ray ray);
 t_vector	ray_at(t_ray ray, double t);
 
+/* ----------------------------------- MLX ---------------------------------- */
+
+void		init_mlx(t_scene *scene);
+void		exit_render(t_scene *scene, char *msg);
+
 #endif /*RENDERER_H*/

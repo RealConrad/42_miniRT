@@ -28,6 +28,7 @@ UTIL_SRC		:= progress_bar.c split_line.c colour_utils.c ft_dabs.c
 FREE_SRC		:= free_objects.c
 INPUT_SRC		:= input.c
 RENDER_SRC		:= render_scene.c pixel_colour.c amb_light.c intersection.c ray_calculations.c
+RENDER_SRC		+= mlx.c
 DEBUGGING_SRC	:= t_printing.c
 VEC_UTILS_SRC	:= vector_operations.c vector_operations2.c
 
