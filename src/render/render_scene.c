@@ -28,9 +28,9 @@ void	render_scene(t_scene *scene)
 		while (x < WIDTH)
 		{
 			calculate_ray_and_draw(scene, viewport, y, x);
-			display_render_progress((y * 100) / HEIGHT);
 			x++;
 		}
+		display_render_progress((y * 100) / HEIGHT);
 		y++;
 	}
 	display_render_progress(100);
