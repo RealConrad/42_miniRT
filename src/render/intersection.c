@@ -9,7 +9,7 @@ double	hit_object(t_object *object, t_ray ray)
 		return (hit_sphere(object->sphere, ray));
 	else if (object->plane != NULL)
 		return (hit_plane(object->plane, ray));
-	return (-5.0);
+	return (-1.0);
 }
 
 static double	hit_sphere(t_sphere *sphere, t_ray ray)
