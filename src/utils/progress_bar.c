@@ -14,8 +14,7 @@ void	display_render_progress(int percent)
 	bar_width = 20;
 	current_pos = bar_width * percent / 100;
 	i = 0;
-	ft_fprintf(STDOUT_FILENO, "\r");
-	ft_fprintf(STDOUT_FILENO, "[");
+	ft_fprintf(STDOUT_FILENO, "\r[");
 	while (i < bar_width)
 	{
 		if (i < current_pos)

@@ -20,6 +20,7 @@
 # include "vector.h"
 
 # include <stdio.h>
+# include <stdlib.h>
 # include <math.h>
 # include <fcntl.h>
 # include <stdbool.h>
@@ -37,6 +38,10 @@
 #  define HEIGHT 1000
 # endif
 
+# ifndef RPP
+#  define RPP 100
+# endif
+
 /* -------------------------------------------------------------------------- */
 /*                                  Functions                                 */
 /* -------------------------------------------------------------------------- */
@@ -45,6 +50,7 @@
 
 void	escape(keys_t keycode, void *param);
 void	display_render_progress(int percent);
+double	random_double(void);
 
 void	free_objects(t_object *objects);
 
