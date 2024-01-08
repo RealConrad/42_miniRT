@@ -4,8 +4,8 @@ static bool	is_valid_int(char *str, bool is_negative);
 
 /**
  * @brief Checks if all the strings are valid numbers
- * 
- * The function iterates through the 2D string array (starting from the second index).
+ * The function iterates through the 2D string array
+ * (starting from the second index).
  * We skip the first index because it will be the type of element, 
  * e.g. `C` for the camera.
  * @param tokens An array of tokens to be checked.

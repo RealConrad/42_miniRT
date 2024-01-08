@@ -13,6 +13,7 @@ t_colour	get_ray_colour(t_ray ray, t_object *objects);
 
 double		hit_object(t_object *object, t_ray ray);
 t_vector	ray_at(t_ray ray, double t);
+t_colour	anti_aliasing(t_scene *scene, t_viewport vp, int x, int y);
 
 /* ----------------------------------- MLX ---------------------------------- */
 

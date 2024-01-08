@@ -1,6 +1,6 @@
 #include "mini_rt.h"
 
-static void	add_object_to_linked_list(t_scene *scene, t_object *object);
+static void		add_object_to_linked_list(t_scene *scene, t_object *object);
 static t_object	*common_init_object(char **tokens, t_object_type type);
 
 /**
@@ -67,7 +67,8 @@ void	init_cylinder(t_scene *scene, char **tokens, int fd)
 	object->cylinder->diameter = ft_atof(tokens[7]);
 	object->cylinder->height = ft_atof(tokens[8]);
 	assign_colour(&(object->cylinder->colour), tokens, 9);
-	if (!legal_colour(object->cylinder->colour) || ! legal_vector(object->cylinder->axis, -1, 1))
+	if (!legal_colour(object->cylinder->colour)
+		|| !legal_vector(object->cylinder->axis, -1, 1))
 		exit_analyse(scene, tokens, fd, object);
 	add_object_to_linked_list(scene, object);
 }

@@ -1,8 +1,10 @@
 #include "mini_rt.h"
 
 static t_viewport	calculate_viewport(t_scene *scene);
-static void			calculate_ray_and_draw(t_scene *scene, t_viewport viewport, int y, int x);
-static void			assign_viewport_vectors(t_viewport *viewport, t_scene *scene, double vp_height, double vp_width);
+static void			calculate_ray_and_draw(t_scene *scene,
+						t_viewport viewport, int y, int x);
+static void			assign_viewport_vectors(t_viewport *viewport,
+						t_scene *scene, double vp_height, double vp_width);
 
 /**
  * @brief Renders an entire scene.
@@ -37,16 +39,15 @@ void	render_scene(t_scene *scene)
 }
 
 /**
- * @brief Calculates the ray direction, origin and colour and then draws it to the mlx
- * window.
+ * @brief Calculates the ray direction, origin and colour and then
+ * draws it to the mlx window.
  * @param scene Contains info about the scene, camera and other elements.
  * @param viewport The viewport used to calculate the ray direction
  * @param y The current y pixel position
  * @param x The current x pixel position 
  */
-t_colour	anti_aliasing(t_scene *scene, t_viewport vp, int x, int y);
-
-static void	calculate_ray_and_draw(t_scene *scene, t_viewport viewport, int y, int x)
+static void	calculate_ray_and_draw(t_scene *scene,
+	t_viewport viewport, int y, int x)
 {
 	t_colour	pixel_colour;
 
@@ -55,7 +56,8 @@ static void	calculate_ray_and_draw(t_scene *scene, t_viewport viewport, int y, i
 }
 
 /**
- * @brief Calculates the viewport based on the camera FOV (stored in the scene `stuct`).
+ * @brief Calculates the viewport based on the camera FOV
+ * (stored in the scene `stuct`).
  * @param scene Pointer to the t_scene struct containing the camera and other
  * scene elements
  * @return A viewport struct containing all viewport information.
@@ -79,9 +81,11 @@ static t_viewport	calculate_viewport(t_scene *scene)
  * @param scene Contains scene related info.
  * @param vp_height The viewport height
  * @param vp_width The viewport width
- * @note This function is a helper function for `static t_viewport	calculate_viewport(t_scene *scene);`
+ * @note This function is a helper function for
+ * `static t_viewport	calculate_viewport(t_scene *scene);`
  */
-static void	assign_viewport_vectors(t_viewport *viewport, t_scene *scene, double vp_height, double vp_width)
+static void	assign_viewport_vectors(t_viewport *viewport, t_scene *scene,
+	double vp_height, double vp_width)
 {
 	t_vector	backward;
 	t_vector	pixel_delta_u;
@@ -95,14 +99,16 @@ static void	assign_viewport_vectors(t_viewport *viewport, t_scene *scene, double
 	viewport->camera_direction.z *= -1;
 	viewport->horizontal = (t_vector){vp_width, 0, 0};
 	viewport->vertical = (t_vector){0, -vp_height, 0};
-	// Get lower upper corner
 	backward = vec_multiply(viewport->camera_direction, to_vec(-focal_length));
 	viewport->upper_left_corner = vec_add(scene->camera.cords, backward);
-	viewport->upper_left_corner = vec_subtract(viewport->upper_left_corner, vec_divide(viewport->horizontal, (t_vector){2, 2, 2}));
-	viewport->upper_left_corner = vec_subtract(viewport->upper_left_corner, vec_divide(viewport->vertical, (t_vector){2, 2, 2}));
-	// Get first pixel (0,0) in viewport
+	viewport->upper_left_corner = vec_subtract(viewport->upper_left_corner,
+			vec_divide(viewport->horizontal, (t_vector){2, 2, 2}));
+	viewport->upper_left_corner = vec_subtract(viewport->upper_left_corner,
+			vec_divide(viewport->vertical, (t_vector){2, 2, 2}));
 	pixel_delta_u = vec_divide(viewport->horizontal, to_vec(WIDTH));
 	pixel_delta_v = vec_divide(viewport->vertical, to_vec(HEIGHT));
-	viewport->pixel00_loc = vec_multiply(vec_add(pixel_delta_u, pixel_delta_v), to_vec(0.5));
-	viewport->pixel00_loc = vec_add(viewport->upper_left_corner, viewport->pixel00_loc);
+	viewport->pixel00_loc = vec_multiply(vec_add(pixel_delta_u, pixel_delta_v),
+			to_vec(0.5));
+	viewport->pixel00_loc = vec_add(viewport->upper_left_corner,
+			viewport->pixel00_loc);
 }
