@@ -6,10 +6,10 @@ static t_colour	get_sphere_colour(t_object *closest, t_ray ray);
 static t_colour	get_plane_colour(t_object *closest, t_ray ray);
 
 /**
- * @brief Checks if 
- * @param ray 
- * @param objects 
- * @return 
+ * @brief Checks the colour of the ray
+ * @param ray the ray to check
+ * @param objects the list of objects
+ * @return the colour of what the ray hits or the background colour
  */
 t_colour	get_ray_colour(t_ray ray, t_object *objects)
 {
@@ -30,6 +30,12 @@ t_colour	get_ray_colour(t_ray ray, t_object *objects)
 	return (ray_colour);
 }
 
+/**
+ * @brief Gets the colour of the first object the ray hits
+ * @param ray the ray to check
+ * @param objects the objects to check
+ * @return the colour of the object or -1 if there's no hit
+ */
 static t_colour	get_object_colour(t_ray ray, t_object *objects)
 {
 	t_object	*temp;
@@ -57,6 +63,13 @@ static t_colour	get_object_colour(t_ray ray, t_object *objects)
 	return ((t_colour){-1, -1, -1});
 }
 
+/**
+ * @brief Calculates the colour of the plane
+ * @param closest the plane it hits
+ * @param ray the ray to check
+ * @return the plane colour
+ * @note Placeholder for now
+ */
 static t_colour	get_plane_colour(t_object *closest, t_ray ray)
 {
 	double		t;
@@ -76,6 +89,13 @@ static t_colour	get_plane_colour(t_object *closest, t_ray ray)
 	return (plane_color);
 }
 
+/**
+ * @brief Calculates the colour of the circle
+ * @param closest the plane it hits
+ * @param ray the ray to check
+ * @return the plane colour
+ * @note Placeholder for now
+ */
 static t_colour	get_sphere_colour(t_object *closest, t_ray ray)
 {
 	t_vector	hit_point;
