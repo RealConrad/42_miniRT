@@ -5,18 +5,28 @@ static t_colour	get_object_colour(t_ray ray, t_object *objects);
 static t_colour	get_sphere_colour(t_object *closest, t_ray ray);
 static t_colour	get_plane_colour(t_object *closest, t_ray ray);
 
+/**
+ * @brief Checks if 
+ * @param ray 
+ * @param objects 
+ * @return 
+ */
 t_colour	get_ray_colour(t_ray ray, t_object *objects)
 {
 	t_vector	normalized_ray_direction;
 	double		ratio;
 	t_colour	ray_colour;
+	t_colour	sky1;
+	t_colour	sky2;
 
 	ray_colour = get_object_colour(ray, objects);
 	if (legal_colour(ray_colour))
 		return (ray_colour);
 	normalized_ray_direction = normalize_vector(ray.direction);
-	ratio = 0.5  * (-normalized_ray_direction.y + 1.0);
-	ray_colour = blend_colour((t_colour){128, 178, 255}, (t_colour){255, 255, 255}, ratio);
+	ratio = 0.5 * (-normalized_ray_direction.y + 1.0);
+	sky1 = (t_colour){128, 178, 255};
+	sky2 = (t_colour){255, 255, 255};
+	ray_colour = blend_colour(sky1, sky2, ratio);
 	return (ray_colour);
 }
 

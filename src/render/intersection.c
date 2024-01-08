@@ -23,7 +23,8 @@ static double	hit_sphere(t_sphere *sphere, t_ray ray)
 	oc = vec_subtract(ray.origin, sphere->cords);
 	a = dot_product(ray.direction, ray.direction);
 	b = 2.0 * dot_product(oc, ray.direction);
-	c = dot_product(oc, oc) -( sphere->diameter / 2) * (sphere->diameter / 2);
+	c = dot_product(oc, oc) - (sphere->diameter / 2)
+		* (sphere->diameter / 2);
 	discriminant = b * b - 4 * a * c;
 	if (discriminant < 0)
 		return (-1.0);
