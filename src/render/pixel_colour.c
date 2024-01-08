@@ -2,6 +2,8 @@
 
 static t_colour	blend_colour(t_colour c1, t_colour c2, double t);
 static t_colour	get_object_colour(t_ray ray, t_object *objects);
+static t_colour	get_sphere_colour(t_object *closest, t_ray ray);
+static t_colour	get_plane_colour(t_object *closest, t_ray ray);
 
 t_colour	get_ray_colour(t_ray ray, t_object *objects)
 {
@@ -21,16 +23,11 @@ t_colour	get_ray_colour(t_ray ray, t_object *objects)
 static t_colour	get_object_colour(t_ray ray, t_object *objects)
 {
 	t_object	*temp;
-	t_vector	hit_point;
-	t_vector	n;
 	double		t;
-	t_colour	colour;
-
 	t_object	*closest;
 	double		old_hit;
 
 	closest = NULL;
-	colour = (t_colour){-1, -1, -1};
 	temp = objects;
 	old_hit = 0;
 	while (temp)
@@ -44,27 +41,42 @@ static t_colour	get_object_colour(t_ray ray, t_object *objects)
 		temp = temp->next;
 	}
 	if (closest != NULL && closest->sphere != NULL)
-	{
-		t = hit_object(closest, ray);
-		hit_point = ray_at(ray, t);
-		n = normalize_vector(vec_subtract(hit_point, closest->sphere->cords));
-		return ((t_colour){0.5 * (n.x + 1) * 255, 0.5 * (n.y + 1) * 255, 0.5 * (n.z + 1) * 255});
-	}
+		return (get_sphere_colour(closest, ray));
 	else if (closest != NULL && closest->plane != NULL)
-	{
-		// hit_point = ray_at(ray, t);
-		// n = normalize_vector(vec_subtract(hit_point, temp->plane->cords));
-		// return (closest->plane->colour);
-		double falloff = 1.0 / (1.0 + old_hit * old_hit * 0.01);  // Example falloff function
-		t_colour plane_color = closest->plane->colour;
-		double base_brightness = 0.2;
-		double adjusted_brightness = base_brightness + (1.0 - base_brightness) * falloff;
-		plane_color.r = (int)(plane_color.r * adjusted_brightness);
-		plane_color.g = (int)(plane_color.g * adjusted_brightness);
-		plane_color.b = (int)(plane_color.b * adjusted_brightness);
-		 return (plane_color);
-	}
-	return (colour);
+		return (get_plane_colour(closest, ray));
+	return ((t_colour){-1, -1, -1});
+}
+
+static t_colour	get_plane_colour(t_object *closest, t_ray ray)
+{
+	double		t;
+	double		falloff;
+	t_colour	plane_color;
+	double		base_brightness;
+	double		adjusted_brightness;
+
+	t = hit_object(closest, ray);
+	falloff = 1.0 / (1.0 + t * t * 0.01);
+	plane_color = closest->plane->colour;
+	base_brightness = 0.2;
+	adjusted_brightness = base_brightness + (1.0 - base_brightness) * falloff;
+	plane_color.r = (int)(plane_color.r * adjusted_brightness);
+	plane_color.g = (int)(plane_color.g * adjusted_brightness);
+	plane_color.b = (int)(plane_color.b * adjusted_brightness);
+	return (plane_color);
+}
+
+static t_colour	get_sphere_colour(t_object *closest, t_ray ray)
+{
+	t_vector	hit_point;
+	t_vector	n;
+	double		t;
+
+	t = hit_object(closest, ray);
+	hit_point = ray_at(ray, t);
+	n = normalize_vector(vec_subtract(hit_point, closest->sphere->cords));
+	return ((t_colour){0.5 * (n.x + 1) * 255, 0.5 * (n.y + 1)
+		* 255, 0.5 * (n.z + 1) * 255});
 }
 
 /**
