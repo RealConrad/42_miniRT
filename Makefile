@@ -5,7 +5,8 @@
 
 NAME			:= miniRT
 CC				:= cc
-CFLAGS			:= -I./includes -Wall -Wextra -Werror
+RPP				:= 10
+CFLAGS			:= -I./includes -Wall -Wextra -Werror -DRPP=$(RPP)
 LINKS			= -Iinclude -lglfw -L"/Users/$(USER)/.brew/opt/glfw/lib/"
 LINKS			+= -framework Cocoa -framework OpenGL -framework IOKit
 LINKS			+= -pthread
