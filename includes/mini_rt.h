@@ -18,6 +18,7 @@
 # include "renderer.h"
 # include "testing.h"
 # include "vector.h"
+# include "lighting.h"
 
 # include <stdio.h>
 # include <stdlib.h>
