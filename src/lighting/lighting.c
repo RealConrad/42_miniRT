@@ -14,7 +14,8 @@ t_colour	lighting(t_colour ray_col, t_scene *scene, t_ray ray)
 		return (get_ambient_light(ray_col, scene->amb_light));
 	light_ray = get_light_ray(scene->light, hit_point);
 	if (light_hit(light_ray, scene->objects, hit_point) == true)
-		return ((t_colour){255, 255, 0});
+		return (ray_col);
+		// return ((t_colour){255, 255, 0});
 	return ((t_colour){0, 0, 0});
 }
 
