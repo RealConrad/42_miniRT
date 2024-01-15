@@ -80,13 +80,50 @@ double hit_cylinder(t_cylinder *cylinder, t_ray ray)
 		within_bounds_t0 = true;
 	if (m1 >= -half_height && m1 <= half_height)
 		within_bounds_t1 = true;
-	if (within_bounds_t0 && t0 > 0)
-	{
-		if (within_bounds_t1 && t1 > 0)
-			return fmin(t0, t1); // Both are within bounds, return the closest one
-		return t0; // Only t0 is within bounds
+
+	// Calculate the planes for the caps
+	t_vector cap_top_center = vec_add(cylinder->cords, vec_scalar_multiply(V, half_height));
+	t_vector cap_bottom_center = vec_subtract(cylinder->cords, vec_scalar_multiply(V, half_height));
+
+	// Intersection with the top cap
+	double t_top_cap = (dot_product(cap_top_center, V) - dot_product(ray.origin, V)) / dot_product(ray.direction, V);
+	t_vector P_top_cap = vec_add(ray.origin, vec_scalar_multiply(ray.direction, t_top_cap));
+	t_vector P_top_cap_to_center = vec_subtract(P_top_cap, cap_top_center);
+	bool intersects_top_cap = dot_product(P_top_cap_to_center, P_top_cap_to_center) <= (r * r) && t_top_cap > 0;
+
+	// Intersection with the bottom cap
+	double t_bottom_cap = (dot_product(cap_bottom_center, V) - dot_product(ray.origin, V)) / dot_product(ray.direction, V);
+	t_vector P_bottom_cap = vec_add(ray.origin, vec_scalar_multiply(ray.direction, t_bottom_cap));
+	t_vector P_bottom_cap_to_center = vec_subtract(P_bottom_cap, cap_bottom_center);
+	bool intersects_bottom_cap = dot_product(P_bottom_cap_to_center, P_bottom_cap_to_center) <= (r * r) && t_bottom_cap > 0;
+
+	// Determine the closest intersection point
+	double t_cap = -1.0;
+	if (intersects_top_cap && (!intersects_bottom_cap || t_top_cap < t_bottom_cap)) {
+		t_cap = t_top_cap;
+	} else if (intersects_bottom_cap) {
+		t_cap = t_bottom_cap;
 	}
-	if (within_bounds_t1 && t1 > 0)
-		return t1; // Only t1 is within bounds
-	return -1.0; // No valid intersection within bounds
+
+	// Compare with side intersection
+	if (within_bounds_t0 && t0 > 0) {
+		if (t_cap > 0 && t_cap < t0) {
+			return t_cap; // Cap intersection is closer
+		}
+		if (within_bounds_t1 && t1 > 0 && t1 < t0) {
+			return t1; // Bottom of the side intersection is closer
+		}
+		return t0; // Top of the side intersection is closer
+	}
+	if (within_bounds_t1 && t1 > 0) {
+		if (t_cap > 0 && t_cap < t1) {
+			return t_cap; // Cap intersection is closer
+		}
+		return t1; // Only the side intersection is within bounds
+	}
+	if (t_cap > 0) {
+		return t_cap; // Only the cap intersection is within bounds
+	}
+
+	return -1.0; // No valid intersection within bounds or with caps
 }
