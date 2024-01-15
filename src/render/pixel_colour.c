@@ -89,7 +89,8 @@ static t_colour	get_plane_colour(t_object *closest, t_ray ray)
 	plane_color.r = (int)(plane_color.r * adjusted_brightness);
 	plane_color.g = (int)(plane_color.g * adjusted_brightness);
 	plane_color.b = (int)(plane_color.b * adjusted_brightness);
-	return (plane_color);
+	// return (plane_color);
+	return (closest->plane->colour);
 }
 
 /**

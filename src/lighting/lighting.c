@@ -1,6 +1,8 @@
 
 #include "mini_rt.h"
 
+static bool	get_hit_point(t_ray ray, t_object *objects, t_vector *hit_point);
+
 t_colour	lighting(t_colour ray_col, t_scene *scene, t_ray ray)
 {
 	t_vector	hit_point;
