@@ -9,6 +9,7 @@ t_colour	lighting(t_colour ray_col, t_scene *scene, t_ray ray)
 
 	if (get_hit_point(ray, scene->objects, &hit_point) == false)
 		return (get_ambient_light(ray_col, scene->amb_light));
+	return ((t_colour){0, 0, 0});
 }
 
 static bool	get_hit_point(t_ray ray, t_object *objects, t_vector *hit_point)
@@ -19,6 +20,7 @@ static bool	get_hit_point(t_ray ray, t_object *objects, t_vector *hit_point)
 
 	temp = objects;
 	old_hit = 0;
+	while (temp != NULL)
 	{
 		distance = hit_object(temp, ray);
 		if ((distance < old_hit || old_hit == 0) && distance > 0.0)
