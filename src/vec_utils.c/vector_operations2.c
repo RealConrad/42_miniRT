@@ -24,3 +24,13 @@ t_vector	to_vec(double n)
 {
 	return ((t_vector){n, n, n});
 }
+
+t_vector vec_scalar_multiply(t_vector v, double scalar)
+{
+	return ((t_vector){v.x * scalar, v.y * scalar, v.z * scalar});
+}
+
+double vec_length(t_vector v)
+{
+	return (sqrt(v.x * v.x + v.y * v.y + v.z * v.z));
+}
