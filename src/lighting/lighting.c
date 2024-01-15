@@ -58,6 +58,7 @@ static bool	light_hit(t_ray ray, t_object *objects, t_vector hit_point)
 
 	temp = objects;
 	old_hit = 0;
+	(void)hit_point;
 	while (temp != NULL)
 	{
 		distance = hit_object(temp, ray);
