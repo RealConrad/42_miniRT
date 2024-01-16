@@ -1,6 +1,12 @@
 
 #include "mini_rt.h"
 
+/**
+ * @brief Checks if a ray intersects->hits an object
+ * @param object the list of objects
+ * @param ray the ray to check
+ * @return the distance from the ray origin to the hit point, -1 for no hit
+ */
 double	hit_object(t_object *object, t_ray *ray)
 {
 	if (object->sphere != NULL)

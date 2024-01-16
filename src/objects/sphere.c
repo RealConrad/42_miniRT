@@ -1,6 +1,12 @@
 
 #include "mini_rt.h"
 
+/**
+ * @brief Checks if a ray hits a specific sphere object
+ * @param sphere the sphere object to check
+ * @param ray the ray to check
+ * @return sets the distance to -1 in case of no hit
+ */
 void	hit_sphere(t_sphere *sphere, t_ray *ray)
 {
 	t_vector	sphere_to_ray_origin;
@@ -12,8 +18,8 @@ void	hit_sphere(t_sphere *sphere, t_ray *ray)
 	sphere_to_ray_origin = vec_subtract(ray->origin, sphere->cords);
 	dir_len_sq = dot_product(ray->direction, ray->direction);
 	projection_len = 2.0 * dot_product(sphere_to_ray_origin, ray->direction);
-	radius_sq = dot_product(sphere_to_ray_origin, sphere_to_ray_origin) - (sphere->diameter / 2)
-		* (sphere->diameter / 2);
+	radius_sq = dot_product(sphere_to_ray_origin, sphere_to_ray_origin)
+		- (sphere->diameter / 2) * (sphere->diameter / 2);
 	discriminant = projection_len * projection_len - 4 * dir_len_sq * radius_sq;
 	if (discriminant < 0)
 	{

@@ -1,6 +1,12 @@
 
 #include "mini_rt.h"
 
+/**
+ * @brief Checks if a ray hits a specific plane object
+ * @param plane the plane object to check
+ * @param ray the ray to check
+ * @return sets the distance to -1 in case of no hit
+ */
 void	hit_plane(t_plane *plane, t_ray *ray)
 {
 	double	d_pro;
