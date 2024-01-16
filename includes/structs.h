@@ -98,6 +98,9 @@ typedef struct s_ray
 {
 	t_vector	origin;
 	t_vector	direction;
+	t_vector	hit_point;
+	double		distance;
+	t_colour	ray_colour;
 }	t_ray;
 
 /* -------------------------------- Viewport -------------------------------- */
