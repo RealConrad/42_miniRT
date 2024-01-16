@@ -20,7 +20,7 @@ FREE_SRC		:= free_objects.c
 INPUT_SRC		:= input.c
 
 RENDER_SRC		:= render_scene.c ray_hit.c ray_calculations.c
-RENDER_SRC		+= mlx.c anti_aliasing.c cylinder.c
+RENDER_SRC		+= mlx.c anti_aliasing.c cylinder.c viewport.c
 
 DEBUGGING_SRC	:= t_printing.c
 

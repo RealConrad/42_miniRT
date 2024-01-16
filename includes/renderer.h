@@ -1,3 +1,4 @@
+
 #ifndef RENDERER_H
 # define RENDERER_H
 
@@ -25,5 +26,11 @@ void		hit_sphere(t_sphere *sphere, t_ray *ray);
 
 void		init_mlx(t_scene *scene);
 void		exit_render(t_scene *scene, char *msg);
+
+/* -------------------------------- Viewport -------------------------------- */
+
+t_viewport	calculate_viewport(t_scene *scene);
+void		assign_viewport_vectors(t_viewport *viewport, t_scene *scene,
+				double vp_height, double vp_width);
 
 #endif /*RENDERER_H*/
