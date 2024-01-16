@@ -4,7 +4,7 @@
 static t_colour	blend_colour(t_colour pixel_colour, t_colour temp_colour);
 static t_vector	get_random_offset(t_vector horiz_scale, t_vector vert_scale);
 static t_vector	get_pixel_center(t_viewport vp, int *cords,
-		t_vector horiz_scale, t_vector vert_scale);
+					t_vector horiz_scale, t_vector vert_scale);
 
 t_colour	anti_aliasing(t_scene *scene, t_viewport vp, int x, int y)
 {
