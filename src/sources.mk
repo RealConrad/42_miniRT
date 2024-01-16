@@ -28,7 +28,7 @@ VEC_UTILS_SRC	:= vector_operations.c vector_operations2.c
 
 LIGHTING_SRC	:= amb_light.c lighting.c
 
-OBJECTS_SRC		:= cylinder.c plane.c sphere.c
+OBJECTS_SRC		:= cylinder.c plane.c sphere.c objects.c
 
 SRCS			:= $(SRC) $(PARSER_SRC) $(UTIL_SRC) $(DEBUGGING_SRC) $(INPUT_SRC)
 SRCS			+= $(FREE_SRC) $(RENDER_SRC) $(VEC_UTILS_SRC) $(LIGHTING_SRC)
