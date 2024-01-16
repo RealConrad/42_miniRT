@@ -1,71 +1,57 @@
 #include "mini_rt.h"
 
-static void		hit_sphere(t_sphere *sphere, t_ray *ray);
-static void		hit_plane(t_plane *plane, t_ray *ray);
-static void		hit_cylinder(t_cylinder *cylinder, t_ray *ray);
+static void		init_cy_data(t_cy_data *data, t_ray *ray, t_cylinder *cylinder);
+static void 	check_cap_intersection(t_ray *ray, t_cylinder *cylinder, t_cy_data *cy_data);
 
-double	hit_object(t_object *object, t_ray *ray)
+void hit_cylinder(t_cylinder *cylinder, t_ray *ray)
 {
-	if (object->sphere != NULL)
-		return (hit_sphere(object->sphere, ray), ray->distance);
-	else if (object->cylinder != NULL)
+	t_cy_data	cy_data;
+	
+	init_cy_data(&cy_data, );
+	if (cy_data.discriminant < 0)
 	{
-		hit_cylinder(object->cylinder, ray);
-		ray->ray_colour = object->cylinder->colour;
-		ray->hit_point = ray_at(*ray, ray->distance);
-		return (ray->distance);
+		ray->distance = -1;
+		return ;
 	}
-	else if (object->plane != NULL)
-		return (hit_plane(object->plane, ray), ray->distance);
-	return (-1.0);
+	check_side_intersection(ray, cylinder, &cy_data);
 }
 
-static void	hit_sphere(t_sphere *sphere, t_ray *ray)
+/*
+typedef struct s_cy_data
 {
-	t_vector	sphere_to_ray_origin;
-	double		dir_len_sq;
-	double		projection_len;
-	double		radius_sq;
+	t_vector	ray_origin_to_cy_center;
+	double		quad_coeff_a;
+	double		quad_coeff_b;
+	double		quad_coeff_c;
+	double		radius;
 	double		discriminant;
+	double		d0;
+	double		d1;
+	double		t_cap;
+	bool		within_bounds_d0;
+	bool		within_bounds_d1;
+	bool		side_hit;
+	bool		cap_hit;
+}	t_cy_data;
+*/
 
-	sphere_to_ray_origin = vec_subtract(ray->origin, sphere->cords);
-	dir_len_sq = dot_product(ray->direction, ray->direction);
-	projection_len = 2.0 * dot_product(sphere_to_ray_origin, ray->direction);
-	radius_sq = dot_product(sphere_to_ray_origin, sphere_to_ray_origin) - (sphere->diameter / 2)
-		* (sphere->diameter / 2);
-	discriminant = projection_len * projection_len - 4 * dir_len_sq * radius_sq;
-	if (discriminant < 0)
-	{
-		ray->distance = -1;
-		return ;
-	}
-	ray->distance = (-projection_len - sqrt(discriminant)) / (2.0 * dir_len_sq);
-	ray->ray_colour = sphere->colour;
-	ray->hit_point = ray_at(*ray, ray->distance);
-}
-
-static void	hit_plane(t_plane *plane, t_ray *ray)
+static void	init_cy_data(t_cy_data *data, t_ray *ray, t_cylinder *cylinder)
 {
-	double	d_pro;
-	double	distance;
-
-	d_pro = dot_product(plane->threed_vec, ray->direction);
-	if (ft_dabs(d_pro) < EPSILON)
-	{
-		ray->distance = -1;
-		return ;
-	}
-	distance = dot_product(vec_subtract(plane->cords, ray->origin),
-			plane->threed_vec) / d_pro;
-	if (distance < 0)
-	{
-		ray->distance = -1;
-		return ;
-	}
-	ray->distance = distance;
-	ray->ray_colour = plane->colour;
-	ray->hit_point = ray_at(*ray, ray->distance);
+	data->ray_origin_to_cy_center = vec_subtract(ray->origin, cylinder->cords);
+	data->radius = cylinder->diameter / 2.0;
+	data->quad_coeff_a = dot_product(ray->direction, ray->direction) - pow(dot_product(ray->direction, cylinder->axis), 2);
+	data->quad_coeff_b = dot_product(ray->direction, data->ray_origin_to_cy_center);
+	data->quad_coeff_b = data->quad_coeff_b - (dot_product(ray->direction, cylinder->axis) * dot_product(data->ray_origin_to_cy_center, cylinder->axis));
+	data->quad_coeff_c = dot_product(data->ray_origin_to_cy_center, data->ray_origin_to_cy_center);
+	data->quad_coeff_c = data->quad_coeff_c - pow(dot_product(data->ray_origin_to_cy_center, cylinder->axis), 2);
 }
+
+static void check_side_intersection(t_ray *ray, t_cylinder *cylinder, t_cy_data *cy_data)
+{
+	cy_data->ray_origin_to_cy_center = vec_subtract(ray->origin, cylinder->cords);
+	cy_data->d0 = vec_subtract(ray->origin, cylinder->cords);
+}
+
 
 static void hit_cylinder(t_cylinder *cylinder, t_ray *ray)
 {

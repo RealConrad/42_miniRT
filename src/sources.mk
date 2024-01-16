@@ -19,7 +19,7 @@ FREE_SRC		:= free_objects.c
 
 INPUT_SRC		:= input.c
 
-RENDER_SRC		:= render_scene.c ray_hit.c intersection.c ray_calculations.c
+RENDER_SRC		:= render_scene.c ray_hit.c ray_calculations.c
 RENDER_SRC		+= mlx.c anti_aliasing.c cylinder.c
 
 DEBUGGING_SRC	:= t_printing.c
@@ -28,7 +28,7 @@ VEC_UTILS_SRC	:= vector_operations.c vector_operations2.c
 
 LIGHTING_SRC	:= amb_light.c lighting.c
 
-OBJECTS_SRC		:= cylinder.c
+OBJECTS_SRC		:= cylinder.c plane.c sphere.c
 
 SRCS			:= $(SRC) $(PARSER_SRC) $(UTIL_SRC) $(DEBUGGING_SRC) $(INPUT_SRC)
 SRCS			+= $(FREE_SRC) $(RENDER_SRC) $(VEC_UTILS_SRC) $(LIGHTING_SRC)
