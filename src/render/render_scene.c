@@ -1,10 +1,7 @@
 #include "mini_rt.h"
 
-static t_viewport	calculate_viewport(t_scene *scene);
 static void			calculate_ray_and_draw(t_scene *scene,
 						t_viewport viewport, int y, int x);
-static void			assign_viewport_vectors(t_viewport *viewport,
-						t_scene *scene, double vp_height, double vp_width);
 
 /**
  * @brief Renders an entire scene.
