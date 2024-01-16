@@ -6,6 +6,14 @@ static t_vector	get_random_offset(t_vector horiz_scale, t_vector vert_scale);
 static t_vector	get_pixel_center(t_viewport vp, int *cords,
 					t_vector horiz_scale, t_vector vert_scale);
 
+/**
+ * @brief Sends multiple rays per pixel and averages the colour
+ * @param scene the scene
+ * @param vp the viewport
+ * @param x the x coordinate of the pixel
+ * @param y the y coordinate of the pixel
+ * @return the colour of the pixel
+ */
 t_colour	anti_aliasing(t_scene *scene, t_viewport vp, int x, int y)
 {
 	int			i;
@@ -52,9 +60,19 @@ static t_vector	get_pixel_center(t_viewport vp, int *cords,
 	return (pixel_center);
 }
 
+/**
+ * @brief Adds to colours together
+ * @param pixel_colour 
+ * @param temp_colour 
+ * @return the colours added together
+ * @note The new colour will potentially be bigger than 255
+ * and needs to be divided by the amount of colours added
+ * @throw Adding way too many colours will result in an integer overflow
+ */
 static t_colour	blend_colour(t_colour pixel_colour, t_colour temp_colour)
 {
 	t_colour	new_colour;
+
 	new_colour.r = pixel_colour.r + temp_colour.r;
 	new_colour.g = pixel_colour.g + temp_colour.g;
 	new_colour.b = pixel_colour.b + temp_colour.b;

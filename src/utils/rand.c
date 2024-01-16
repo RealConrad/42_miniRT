@@ -1,3 +1,4 @@
+
 #include "mini_rt.h"
 
 double	random_double(void)
