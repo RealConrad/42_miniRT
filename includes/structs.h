@@ -23,6 +23,7 @@ typedef enum e_object_type
 	PLANE
 }	t_object_type;
 
+
 /* ------------------------------ Vector/Colour ----------------------------- */
 typedef struct s_colour
 {
@@ -37,6 +38,24 @@ typedef struct s_vector
 	double			y;
 	double			z;
 }	t_vector;
+
+typedef struct s_cy_data
+{
+	t_vector	ray_origin_to_cy_center;
+	double		quad_coeff_a;
+	double		quad_coeff_b;
+	double		quad_coeff_c;
+	double		radius;
+	double		discriminant;
+	double		d0;
+	double		d1;
+	double		top_cap;
+	double		bot_cap;
+	bool		within_bounds_d0;
+	bool		within_bounds_d1;
+	bool		top_cap_hit;
+	bool		bot_cap_hit;
+}	t_cy_data;
 
 /* ------------------------------- Environment ------------------------------ */
 
