@@ -1,21 +1,26 @@
 #include "mini_rt.h"
 
-static double		hit_sphere(t_sphere *sphere, t_ray ray);
-static double		hit_plane(t_plane *plane, t_ray ray);
-static double		hit_cylinder(t_cylinder *cylinder, t_ray ray);
+static void		hit_sphere(t_sphere *sphere, t_ray *ray);
+static void		hit_plane(t_plane *plane, t_ray *ray);
+static void		hit_cylinder(t_cylinder *cylinder, t_ray *ray);
 
-double	hit_object(t_object *object, t_ray ray)
+double	hit_object(t_object *object, t_ray *ray)
 {
 	if (object->sphere != NULL)
-		return (hit_sphere(object->sphere, ray));
+		return (hit_sphere(object->sphere, ray), ray->distance);
 	else if (object->cylinder != NULL)
-		return (hit_cylinder(object->cylinder, ray));
+	{
+		hit_cylinder(object->cylinder, ray);
+		ray->ray_colour = object->cylinder->colour;
+		ray->hit_point = ray_at(*ray, ray->distance);
+		return (ray->distance);
+	}
 	else if (object->plane != NULL)
-		return (hit_plane(object->plane, ray));
+		return (hit_plane(object->plane, ray), ray->distance);
 	return (-1.0);
 }
 
-static double	hit_sphere(t_sphere *sphere, t_ray ray)
+static void	hit_sphere(t_sphere *sphere, t_ray *ray)
 {
 	t_vector	sphere_to_ray_origin;
 	double		dir_len_sq;
@@ -23,36 +28,49 @@ static double	hit_sphere(t_sphere *sphere, t_ray ray)
 	double		radius_sq;
 	double		discriminant;
 
-	sphere_to_ray_origin = vec_subtract(ray.origin, sphere->cords);
-	dir_len_sq = dot_product(ray.direction, ray.direction);
-	projection_len = 2.0 * dot_product(sphere_to_ray_origin, ray.direction);
+	sphere_to_ray_origin = vec_subtract(ray->origin, sphere->cords);
+	dir_len_sq = dot_product(ray->direction, ray->direction);
+	projection_len = 2.0 * dot_product(sphere_to_ray_origin, ray->direction);
 	radius_sq = dot_product(sphere_to_ray_origin, sphere_to_ray_origin) - (sphere->diameter / 2)
 		* (sphere->diameter / 2);
 	discriminant = projection_len * projection_len - 4 * dir_len_sq * radius_sq;
 	if (discriminant < 0)
-		return (-1.0);
-	return ((-projection_len - sqrt(discriminant)) / (2.0 * dir_len_sq));
+	{
+		ray->distance = -1;
+		return ;
+	}
+	ray->distance = (-projection_len - sqrt(discriminant)) / (2.0 * dir_len_sq);
+	ray->ray_colour = sphere->colour;
+	ray->hit_point = ray_at(*ray, ray->distance);
 }
 
-static double	hit_plane(t_plane *plane, t_ray ray)
+static void	hit_plane(t_plane *plane, t_ray *ray)
 {
 	double	d_pro;
 	double	distance;
 
-	d_pro = dot_product(plane->threed_vec, ray.direction);
+	d_pro = dot_product(plane->threed_vec, ray->direction);
 	if (ft_dabs(d_pro) < EPSILON)
-		return (-1.0);
-	distance = dot_product(vec_subtract(plane->cords, ray.origin),
+	{
+		ray->distance = -1;
+		return ;
+	}
+	distance = dot_product(vec_subtract(plane->cords, ray->origin),
 			plane->threed_vec) / d_pro;
 	if (distance < 0)
-		return (-1.0);
-	return (distance);
+	{
+		ray->distance = -1;
+		return ;
+	}
+	ray->distance = distance;
+	ray->ray_colour = plane->colour;
+	ray->hit_point = ray_at(*ray, ray->distance);
 }
 
-double hit_cylinder(t_cylinder *cylinder, t_ray ray)
+static void hit_cylinder(t_cylinder *cylinder, t_ray *ray)
 {
-	t_vector X = vec_subtract(ray.origin, cylinder->cords);  // Vector from ray origin to cylinder center
-	t_vector D = normalize_vector(ray.direction);  // Ray direction
+	t_vector X = vec_subtract(ray->origin, cylinder->cords);  // Vector from ray origin to cylinder center
+	t_vector D = normalize_vector(ray->direction);  // Ray direction
 	t_vector V = normalize_vector(cylinder->axis);  // Cylinder axis
 	double r = cylinder->diameter / 2.0;  // Cylinder radius
 	double half_height = cylinder->height / 2.0; // Half of the cylinder's height
@@ -62,8 +80,10 @@ double hit_cylinder(t_cylinder *cylinder, t_ray ray)
 	double c = dot_product(X, X) - pow(dot_product(X, V), 2) - r * r;
 
 	double discriminant = b * b - 4 * a * c;
-	if (discriminant < 0) {
-		return -1.0; // No intersection with the cylinder's side
+	if (discriminant < 0)
+	{
+		ray->distance = -1;
+		return ; // No intersection with the cylinder's side
 	}
 
 	double t0 = (-b - sqrt(discriminant)) / (2 * a);
@@ -86,44 +106,53 @@ double hit_cylinder(t_cylinder *cylinder, t_ray ray)
 	t_vector cap_bottom_center = vec_subtract(cylinder->cords, vec_scalar_multiply(V, half_height));
 
 	// Intersection with the top cap
-	double t_top_cap = (dot_product(cap_top_center, V) - dot_product(ray.origin, V)) / dot_product(ray.direction, V);
-	t_vector P_top_cap = vec_add(ray.origin, vec_scalar_multiply(ray.direction, t_top_cap));
+	double t_top_cap = (dot_product(cap_top_center, V) - dot_product(ray->origin, V)) / dot_product(ray->direction, V);
+	t_vector P_top_cap = vec_add(ray->origin, vec_scalar_multiply(ray->direction, t_top_cap));
 	t_vector P_top_cap_to_center = vec_subtract(P_top_cap, cap_top_center);
 	bool intersects_top_cap = dot_product(P_top_cap_to_center, P_top_cap_to_center) <= (r * r) && t_top_cap > 0;
 
 	// Intersection with the bottom cap
-	double t_bottom_cap = (dot_product(cap_bottom_center, V) - dot_product(ray.origin, V)) / dot_product(ray.direction, V);
-	t_vector P_bottom_cap = vec_add(ray.origin, vec_scalar_multiply(ray.direction, t_bottom_cap));
+	double t_bottom_cap = (dot_product(cap_bottom_center, V) - dot_product(ray->origin, V)) / dot_product(ray->direction, V);
+	t_vector P_bottom_cap = vec_add(ray->origin, vec_scalar_multiply(ray->direction, t_bottom_cap));
 	t_vector P_bottom_cap_to_center = vec_subtract(P_bottom_cap, cap_bottom_center);
 	bool intersects_bottom_cap = dot_product(P_bottom_cap_to_center, P_bottom_cap_to_center) <= (r * r) && t_bottom_cap > 0;
 
 	// Determine the closest intersection point
 	double t_cap = -1.0;
-	if (intersects_top_cap && (!intersects_bottom_cap || t_top_cap < t_bottom_cap)) {
+	if (intersects_top_cap && (!intersects_bottom_cap || t_top_cap < t_bottom_cap))
 		t_cap = t_top_cap;
-	} else if (intersects_bottom_cap) {
+	else if (intersects_bottom_cap)
 		t_cap = t_bottom_cap;
-	}
 
 	// Compare with side intersection
 	if (within_bounds_t0 && t0 > 0) {
-		if (t_cap > 0 && t_cap < t0) {
-			return t_cap; // Cap intersection is closer
+		if (t_cap > 0 && t_cap < t0)
+		{
+			ray->distance = t_cap; // Cap intersection is closer
+			return ;
 		}
-		if (within_bounds_t1 && t1 > 0 && t1 < t0) {
-			return t1; // Bottom of the side intersection is closer
+		if (within_bounds_t1 && t1 > 0 && t1 < t0)
+		{
+			ray->distance = t1;
+			return ; // Bottom of the side intersection is closer
 		}
-		return t0; // Top of the side intersection is closer
+		ray->distance = t0;
+		return ; // Top of the side intersection is closer
 	}
-	if (within_bounds_t1 && t1 > 0) {
-		if (t_cap > 0 && t_cap < t1) {
-			return t_cap; // Cap intersection is closer
+	if (within_bounds_t1 && t1 > 0)
+	{
+		if (t_cap > 0 && t_cap < t1)
+		{
+			ray->distance = t_cap;
+			return ; // Cap intersection is closer
 		}
-		return t1; // Only the side intersection is within bounds
+		ray->distance = t1;
+		return ; // Only the side intersection is within bounds
 	}
-	if (t_cap > 0) {
-		return t_cap; // Only the cap intersection is within bounds
+	if (t_cap > 0)
+	{
+		ray->distance = t_cap;
+		return ; // Only the cap intersection is within bounds
 	}
-
-	return -1.0; // No valid intersection within bounds or with caps
+	ray->distance = -1.0; // no valid intersection
 }

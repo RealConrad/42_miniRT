@@ -24,9 +24,9 @@ t_colour	anti_aliasing(t_scene *scene, t_viewport vp, int x, int y)
 		ray.direction = normalize_vector(vec_subtract(
 					get_pixel_center(vp, (int[]){x, y}, horiz_scale, vert_scale),
 					scene->camera.cords));
-		t_colour	ray_col = get_ray_colour(ray, scene->objects);
-		ray_col = lighting(ray_col, scene, ray);
-		pixel_colour = blend_colour(pixel_colour, ray_col);
+		get_ray_intersection(&ray, scene->objects);
+		lighting(scene, &ray);
+		pixel_colour = blend_colour(pixel_colour, ray.ray_colour);
 		i++;
 	}
 	pixel_colour.r /= RPP;
