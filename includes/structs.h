@@ -39,22 +39,43 @@ typedef struct s_vector
 	double			z;
 }	t_vector;
 
+/**
+ * @brief Cylinder data struct
+ * @param x ector difference between the ray origin and cylinder center
+ * @param d Ray direction (normalized)
+ * @param v Cylinder axis (normalized)
+ * @param a Coefficient `a` in quadratic equation for intersection
+ * @param b Coefficient `b` in quadratic equation for intersection
+ * @param c Coefficient `c` in quadratic equation for intersection
+ * @param radius Radius of the cylinder
+ * @param discriminant Result of quadratic equation, used to determine intersections
+ * @param d0 Distance of first potentional intersection
+ * @param d1 Distance of second potentional intersection
+ * @param d_top_cap Distance to the top caps intersection
+ * @param d_bot_cap Distance to bot caps intersection
+ * @param within_bounds_d0 Used to determine if `d0` is within cy bounds
+ * @param within_bounds_d1 Used to determine if `d1` is within cy bounds
+ * @param hit_top_cap Boolean indicating if top cap is intersected
+ * @param hit_bot_cap Boolean indicating if bot cap is intersected
+ */
 typedef struct s_cy_data
 {
-	t_vector	ray_origin_to_cy_center;
-	double		quad_coeff_a;
-	double		quad_coeff_b;
-	double		quad_coeff_c;
+	t_vector	x;
+	t_vector	d;
+	t_vector	v;
+	double		a;
+	double		b;
+	double		c;
 	double		radius;
 	double		discriminant;
 	double		d0;
 	double		d1;
-	double		top_cap;
-	double		bot_cap;
+	double		d_top_cap;
+	double		d_bot_cap;
 	bool		within_bounds_d0;
 	bool		within_bounds_d1;
-	bool		top_cap_hit;
-	bool		bot_cap_hit;
+	bool		hit_top_cap;
+	bool		hit_bot_cap;
 }	t_cy_data;
 
 /* ------------------------------- Environment ------------------------------ */
