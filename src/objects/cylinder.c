@@ -6,6 +6,11 @@ static void 	check_cap_intersection(t_cy_data *data, t_cylinder *cylinder, t_ray
 static bool 	check_cap(t_cy_data *data, t_vector cap_center, double t_cap, t_ray *ray);
 static void 	find_closest_intersection(t_ray *ray, t_cy_data *data);
 
+/**
+ * @brief Checks if given `ray` intersects or hits the given `cylinder`
+ * @param cylinder The cylinder to check if the ray hits
+ * @param ray The ray to check if it intersects with a cylinder
+ */
 void	hit_cylinder(t_cylinder *cylinder, t_ray *ray)
 {
 	t_cy_data	data;
@@ -23,6 +28,16 @@ void	hit_cylinder(t_cylinder *cylinder, t_ray *ray)
 	ray->hit_point = ray_at(*ray, ray->distance);
 }
 
+/**
+ * @brief Initializes data for the given `data` variable.
+ * 
+ * This function calculates the discriminant, radius and normalizes
+ * cylinder axis and ray direction.
+ * 
+ * @param data The data to be initialzed
+ * @param ray The given ray we checking for intersection
+ * @param cylinder The given cylinder to check for intersection
+ */
 static void init_cy_data(t_cy_data *data, t_ray *ray, t_cylinder *cylinder)
 {
 	data->x = vec_subtract(ray->origin, cylinder->cords);
@@ -36,6 +51,11 @@ static void init_cy_data(t_cy_data *data, t_ray *ray, t_cylinder *cylinder)
 }
 
 
+/**
+ * @brief Checks if the ray intersects a cylinder side
+ * @param data The data which contains discriminant and cylidner data
+ * @param cylinder The cylinder to check if side is intersected or not
+ */
 static void check_side_intersection(t_cy_data *data, t_cylinder *cylinder)
 {
 	double	half_height;
@@ -55,6 +75,12 @@ static void check_side_intersection(t_cy_data *data, t_cylinder *cylinder)
 		data->within_bounds_d1 = true;
 }
 
+/**
+ * @brief Checks if the given ray intersects a cylinder caps
+ * @param data The data which contains discriminant and cylinder data
+ * @param cylinder The cylinder to check if the ray hits the caps
+ * @param ray The ray to check if it intersects a cap
+ */
 static void check_cap_intersection(t_cy_data *data, t_cylinder *cylinder, t_ray *ray)
 {
 	double		half_height;
@@ -71,6 +97,14 @@ static void check_cap_intersection(t_cy_data *data, t_cylinder *cylinder, t_ray 
 }
 
 
+/**
+ * @brief Checks if the ray intersects/hits is within the cap
+ * @param data The data that contains the discriminant and cylinder data
+ * @param cap_center The center of the cap to be checked
+ * @param t_cap The distance to the cap
+ * @param ray The ray to check if it intersects a cap
+ * @return True if the ray intersects a cap, else false
+ */
 static bool check_cap(t_cy_data *data, t_vector cap_center, double t_cap, t_ray *ray)
 {
 	t_vector	p_cap;
@@ -84,6 +118,12 @@ static bool check_cap(t_cy_data *data, t_vector cap_center, double t_cap, t_ray 
 }
 
 
+/**
+ * @brief Finds which intersection is closer, side or cap and
+ * then sets the `ray->distance` to the closer one.
+ * @param ray The ray to set the distance for
+ * @param data The data used to determine which is closer
+ */
 static void find_closest_intersection(t_ray *ray, t_cy_data *data)
 {
 	double	d_cap;
