@@ -1,111 +1,105 @@
 #include "mini_rt.h"
 
 static void		init_cy_data(t_cy_data *data, t_ray *ray, t_cylinder *cylinder);
-static void 	check_cap_intersection(t_ray *ray, t_cylinder *cylinder, t_cy_data *data);
+static void 	check_side_intersection(t_cy_data *data, t_cylinder *cylinder);
+static void 	check_cap_intersection(t_cy_data *data, t_cylinder *cylinder, t_ray *ray);
+static bool 	check_cap(t_cy_data *data, t_vector cap_center, double t_cap, t_ray *ray);
 static void 	find_closest_intersection(t_ray *ray, t_cy_data *data);
-static void 	check_side_intersection(t_ray *ray, t_cylinder *cylinder, t_cy_data *data);
 
 void	hit_cylinder(t_cylinder *cylinder, t_ray *ray)
 {
-	t_cy_data	cy_data;
+	t_cy_data	data;
 	
-	init_cy_data(&cy_data, ray, cylinder);
-	if (cy_data.discriminant < 0)
+	init_cy_data(&data, ray, cylinder);
+	if (data.discriminant < 0)
 	{
 		ray->distance = -1;
 		return ;
 	}
-	check_side_intersection(ray, cylinder, &cy_data);
-	check_cap_intersection(ray, cylinder, &cy_data);
-	find_closest_intersection(ray, &cy_data);
+	check_side_intersection(&data, cylinder);
+	check_cap_intersection(&data, cylinder, ray);
+	find_closest_intersection(ray, &data);
+	ray->ray_colour = cylinder->colour;
+	ray->hit_point = ray_at(*ray, ray->distance);
 }
 
-static void	find_closest_intersection(t_ray *ray, t_cy_data *data)
+static void init_cy_data(t_cy_data *data, t_ray *ray, t_cylinder *cylinder)
 {
-	double closest_intersection;
-
-	closest_intersection = INFINITY;
-	if (data->top_cap_hit && (!data->bot_cap_hit || data->top_cap < data->bot_cap))
-		closest_intersection = data->top_cap;
-	else if (data->bot_cap_hit)
-		closest_intersection = data->bot_cap;
-
-	if (data->within_bounds_d0 && data->d0 > 0 && data->d0 < closest_intersection)
-		closest_intersection = data->d0;
-	if (data->within_bounds_d1 && data->d1 > 0 && data->d1 < closest_intersection)
-		closest_intersection = data->d1;
-
-
-	if (closest_intersection == INFINITY)
-		ray->distance = -1.0;
-	else
-		ray->distance = closest_intersection;
-}
-
-
-
-static void	init_cy_data(t_cy_data *data, t_ray *ray, t_cylinder *cylinder)
-{
-	data->ray_origin_to_cy_center = vec_subtract(ray->origin, cylinder->cords);
+	data->x = vec_subtract(ray->origin, cylinder->cords);
+	data->d = normalize_vector(ray->direction);
+	data->v = normalize_vector(cylinder->axis);
 	data->radius = cylinder->diameter / 2.0;
-	data->quad_coeff_a = dot_product(ray->direction, ray->direction) - pow(dot_product(ray->direction, cylinder->axis), 2);
-	data->quad_coeff_b = dot_product(ray->direction, data->ray_origin_to_cy_center);
-	data->quad_coeff_b = data->quad_coeff_b - (dot_product(ray->direction, cylinder->axis) * dot_product(data->ray_origin_to_cy_center, cylinder->axis));
-	data->quad_coeff_c = dot_product(data->ray_origin_to_cy_center, data->ray_origin_to_cy_center);
-	data->quad_coeff_c = data->quad_coeff_c - pow(dot_product(data->ray_origin_to_cy_center, cylinder->axis), 2) - data->radius * data->radius;
-	data->discriminant = data->quad_coeff_b * data->quad_coeff_b - 4 * data->quad_coeff_a * data->quad_coeff_c;
-
-	data->d0 = (-data->quad_coeff_b - sqrt(data->discriminant)) / (2 * data->quad_coeff_a);
-	data->d1 = (-data->quad_coeff_b + sqrt(data->discriminant)) / (2 * data->quad_coeff_a);
-	data->within_bounds_d0 = false;
-	data->within_bounds_d1 = false;
+	data->a = dot_product(data->d, data->d) - pow(dot_product(data->d, data->v), 2);
+	data->b = 2 * (dot_product(data->d, data->x) - (dot_product(data->d, data->v) * dot_product(data->x, data->v)));
+	data->c = dot_product(data->x, data->x) - pow(dot_product(data->x, data->v), 2) - data->radius * data->radius;
+	data->discriminant = data->b * data->b - 4 * data->a * data->c;
 }
 
-static void	check_side_intersection(t_ray *ray, t_cylinder *cylinder,
-	t_cy_data *data)
+
+static void check_side_intersection(t_cy_data *data, t_cylinder *cylinder)
 {
+	double	half_height;
 	double	m0;
 	double	m1;
-	double	half_height;
 
 	half_height = cylinder->height / 2.0;
-	m0 = dot_product(ray->direction, cylinder->axis) * data->d0;
-	m0 = m0 + dot_product(data->ray_origin_to_cy_center, cylinder->axis);
-	m1 = dot_product(ray->direction, cylinder->axis) * data->d1;
-	m1 = m1 + dot_product(data->ray_origin_to_cy_center, cylinder->axis);
-
+	data->within_bounds_d0 = false;
+	data->within_bounds_d1 = false;
+	data->d0 = (-data->b - sqrt(data->discriminant)) / (2 * data->a);
+	data->d1 = (-data->b + sqrt(data->discriminant)) / (2 * data->a);
+	m0 = dot_product(data->d, data->v) * data->d0 + dot_product(data->x, data->v);
+	m1 = dot_product(data->d, data->v) * data->d1 + dot_product(data->x, data->v);
 	if (m0 >= -half_height && m0 <= half_height)
 		data->within_bounds_d0 = true;
 	if (m1 >= -half_height && m1 <= half_height)
 		data->within_bounds_d1 = true;
 }
 
-static void	check_cap_intersection(t_ray *ray, t_cylinder *cylinder,
-	t_cy_data *data)
+static void check_cap_intersection(t_cy_data *data, t_cylinder *cylinder, t_ray *ray)
 {
-	t_vector	cap_center;
-	t_vector	top_cap;
-	t_vector	bottom_cap;
+	double		half_height;
+	t_vector	cap_top_center;
+	t_vector	cap_bottom_center;
 
-	data->top_cap_hit = false;
-	data->bot_cap_hit = false;
-	cap_center = vec_add(cylinder->cords, vec_scalar_multiply(cylinder->axis, cylinder->height / 2));
-	data->top_cap = dot_product(cap_center, cylinder->axis) - dot_product(ray->origin, cylinder->axis);
-	data->top_cap = data->top_cap / dot_product(ray->direction, cylinder->axis);
-	top_cap = vec_add(ray->origin, vec_scalar_multiply(ray->direction, data->top_cap));
-	top_cap = vec_subtract(top_cap, cap_center);
-	if (dot_product(top_cap, top_cap) <= (data->radius * data->radius) && data->top_cap > 0)
-		data->top_cap_hit = true;
-	cap_center = vec_subtract(cylinder->cords, vec_scalar_multiply(cylinder->axis, cylinder->height / 2));
-	data->bot_cap = dot_product(cap_center, cylinder->axis) - dot_product(ray->origin, cylinder->axis);
-	data->bot_cap = data->bot_cap / dot_product(ray->direction, cylinder->axis);
-	bottom_cap = vec_add(ray->origin, vec_scalar_multiply(ray->direction, data->bot_cap));
-	bottom_cap = vec_subtract(bottom_cap, cap_center);
-	if (dot_product(bottom_cap, bottom_cap) <= (data->radius * data->radius) && data->bot_cap > 0)
-		data->bot_cap_hit = true;
+	half_height = cylinder->height / 2.0;
+	cap_top_center = vec_add(cylinder->cords, vec_scalar_multiply(data->v, half_height));
+	cap_bottom_center = vec_subtract(cylinder->cords, vec_scalar_multiply(data->v, half_height));
+	data->d_top_cap = (dot_product(cap_top_center, data->v) - dot_product(ray->origin, data->v)) / dot_product(ray->direction, data->v);
+	data->d_bot_cap = (dot_product(cap_bottom_center, data->v) - dot_product(ray->origin, data->v)) / dot_product(ray->direction, data->v);
+	data->hit_top_cap = check_cap(data, cap_top_center, data->d_top_cap, ray);
+	data->hit_bot_cap = check_cap(data, cap_bottom_center, data->d_bot_cap, ray);
 }
 
 
+static bool check_cap(t_cy_data *data, t_vector cap_center, double t_cap, t_ray *ray)
+{
+	t_vector	p_cap;
+	t_vector	p_cap_to_center;
+
+	p_cap = vec_add(ray->origin, vec_scalar_multiply(ray->direction, t_cap));
+	p_cap_to_center = vec_subtract(p_cap, cap_center);
+	if (dot_product(p_cap_to_center, p_cap_to_center) <= (data->radius * data->radius) && t_cap > 0)
+		return (true);
+	return (false);
+}
+
+
+static void find_closest_intersection(t_ray *ray, t_cy_data *data)
+{
+	double	d_cap;
+	double	d_side;
+
+	d_cap = find_closest_cap(data);
+	d_side = find_closest_side(data);
+	if (d_cap > 0 && (d_cap < d_side || d_side <= 0))
+		ray->distance = d_cap;
+	else if (d_side > 0)
+		ray->distance = d_side;
+	else
+		ray->distance = -1.0;
+}
+
+/*
 static void hit_cylinder(t_cylinder *cylinder, t_ray *ray)
 {
 	t_vector X = vec_subtract(ray->origin, cylinder->cords);  // Vector from ray origin to cylinder center
