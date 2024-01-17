@@ -22,6 +22,8 @@ void		hit_sphere(t_sphere *sphere, t_ray *ray);
 void		hit_cylinder(t_cylinder *cylinder, t_ray *ray);
 double		find_closest_cap(t_cy_data *data);
 double		find_closest_side(t_cy_data *data);
+t_vector	get_cylinder_surface_norm(t_cy_data data, t_ray *ray,
+				t_cylinder *cylinder);
 
 /* ----------------------------------- MLX ---------------------------------- */
 

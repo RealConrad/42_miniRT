@@ -26,7 +26,7 @@ void	hit_cylinder(t_cylinder *cylinder, t_ray *ray)
 	find_closest_intersection(ray, &data);
 	ray->ray_colour = cylinder->colour;
 	ray->hit_point = ray_at(*ray, ray->distance);
-	// ray->surface_norm = get_cylinder_surface_norm();
+	ray->surface_norm = get_cylinder_surface_norm(data);
 }
 
 /**

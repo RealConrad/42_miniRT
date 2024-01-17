@@ -33,3 +33,36 @@ double	find_closest_side(t_cy_data *data)
 		return (data->d1);
 	return (-1.0);
 }
+
+/**
+ * @brief Calculates the surface normal at the point of intersection
+ * 
+ * It handles 2 cases: Intersection with the caps and sides.
+ * For the sides, the normal is calculated as the normalized vector form
+ * axis to hit point. For the caps the normal is just the axis 
+ * (positive if top cap, negative for bottom cap). 
+ * @param data cylinder related data
+ * @param ray The ray which contains the hit point
+ * @param cylinder The cylinder to calculate the surface normal for
+ * @return The calculated surface normal
+ */
+t_vector	get_cylinder_surface_norm(t_cy_data data, t_ray *ray, t_cylinder *cylinder)
+{
+	t_vector	norm;
+	t_vector	axis_to_intersection;
+	t_vector	closest_point;
+	double		proj_length;
+	
+	if (ray->distance == data.d_bot_cap || ray->distance == data.d_top_cap)
+	{
+		if (ray->distance == data.d_top_cap)
+			return (cylinder->axis);
+		else
+			return ((t_vector){-cylinder->axis.x, -cylinder->axis.y, -cylinder->axis.z});
+	}
+	axis_to_intersection = vec_subtract(ray->hit_point, cylinder->cords);
+	proj_length = dot_product(axis_to_intersection, cylinder->axis);
+	closest_point = vec_add(cylinder->cords, vec_scalar_multiply(cylinder->axis, proj_length));
+	norm = normalize_vector(vec_subtract(ray->hit_point, closest_point));
+	return (norm);
+}
