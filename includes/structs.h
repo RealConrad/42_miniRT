@@ -140,6 +140,7 @@ typedef struct s_ray
 	t_vector	direction;
 	t_vector	hit_point;
 	double		distance;
+	t_vector	surface_norm;
 	t_colour	ray_colour;
 }	t_ray;
 

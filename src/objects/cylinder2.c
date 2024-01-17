@@ -33,4 +33,3 @@ double	find_closest_side(t_cy_data *data)
 		return (data->d1);
 	return (-1.0);
 }
-

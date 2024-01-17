@@ -28,4 +28,5 @@ void	hit_plane(t_plane *plane, t_ray *ray)
 	ray->distance = distance;
 	ray->ray_colour = plane->colour;
 	ray->hit_point = ray_at(*ray, ray->distance);
+	ray->surface_norm = normalize_vector(plane->threed_vec);
 }

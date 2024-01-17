@@ -29,4 +29,5 @@ void	hit_sphere(t_sphere *sphere, t_ray *ray)
 	ray->distance = (-projection_len - sqrt(discriminant)) / (2.0 * dir_len_sq);
 	ray->ray_colour = sphere->colour;
 	ray->hit_point = ray_at(*ray, ray->distance);
+	ray->surface_norm = normalize_vector(vec_subtract(ray->hit_point, sphere->cords));
 }
