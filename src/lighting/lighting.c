@@ -141,25 +141,25 @@ double	clamp(double value, double min, double max)
 	return fmin(fmax(value, min), max);
 }
 
-t_colour calculate_phong_reflection(t_ray *ray, t_light light, t_ambient_light amb_light)
-{
-    t_colour ambient = calculate_ambient(ray->object->material.ambient, amb_light.intensity);
-    t_colour diffuse = calculate_diffuse(ray, light);
-    t_colour specular = calculate_specular(ray, light);
+// t_colour calculate_phong_reflection(t_ray *ray, t_light light, t_ambient_light amb_light)
+// {
+//     t_colour ambient = calculate_ambient(ray->object->material.ambient, amb_light.intensity);
+//     t_colour diffuse = calculate_diffuse(ray, light);
+//     t_colour specular = calculate_specular(ray, light);
 
-    // Add up the components
-    t_colour result;
-    result.r = ambient.r + diffuse.r + specular.r;
-    result.g = ambient.g + diffuse.g + specular.g;
-    result.b = ambient.b + diffuse.b + specular.b;
+//     // Add up the components
+//     t_colour result;
+//     result.r = ambient.r + diffuse.r + specular.r;
+//     result.g = ambient.g + diffuse.g + specular.g;
+//     result.b = ambient.b + diffuse.b + specular.b;
 
-    // Ensure color components are within the valid range (0-255)
-    result.r = clamp(result.r, 0, 255);
-    result.g = clamp(result.g, 0, 255);
-    result.b = clamp(result.b, 0, 255);
+//     // Ensure color components are within the valid range (0-255)
+//     result.r = clamp(result.r, 0, 255);
+//     result.g = clamp(result.g, 0, 255);
+//     result.b = clamp(result.b, 0, 255);
 
-    return result;
-}
+//     return result;
+// }
 
 /*
 ** 

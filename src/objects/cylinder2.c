@@ -16,25 +16,6 @@ double	find_closest_cap(t_cy_data *data)
 }
 
 /**
- * @brief Returns the closest side hit
- * @param data The data that contains the discriminant and
- * cylinder data
- * @return The closer hit distance or -1 if no intersection
- */
-double	find_closest_side(t_cy_data *data)
-{
-	if (data->within_bounds_d0 && data->d0 > 0)
-	{
-		if (data->within_bounds_d1 && data->d1 > 0 && data->d1 < data->d0)
-			return (data->d1);
-		return (data->d0);
-	}
-	else if (data->within_bounds_d1 && data->d1 > 0)
-		return (data->d1);
-	return (-1.0);
-}
-
-/**
  * @brief Calculates the surface normal at the point of intersection
  * 
  * It handles 2 cases: Intersection with the caps and sides.
