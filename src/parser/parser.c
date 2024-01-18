@@ -19,6 +19,8 @@ t_scene	parser(char **argv)
 	char	**tokens;
 
 	fd = open(argv[1], O_RDONLY);
+	if (fd == -1)
+		parser_exit(OPEN_FAIL, NULL);
 	init_scene_default(&scene);
 	while (true)
 	{
