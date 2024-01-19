@@ -2,7 +2,7 @@
 #include "mini_rt.h"
 
 static t_ray	get_light_ray(t_light light, t_vector hit_point);
-static bool		light_hit(t_ray ray, t_object *objects, t_vector hit_point);
+static bool		light_hit(t_ray ray, t_object *objects);
 
 static t_colour calc_phong_reflection(t_ray *ray, t_light light, t_amb_light amb_light);
 static t_colour	get_ambient_diffusion(t_amb_light amb, double obj_coefficient);
@@ -20,7 +20,7 @@ void	lighting(t_scene *scene, t_ray *ray)
 	else
 	{
 		light_ray = get_light_ray(scene->light, ray->hit_point);
-		if ((light_hit(light_ray, scene->objects, ray->hit_point)))
+		if (light_hit(light_ray, scene->objects))
 			ray->ray_colour = calc_phong_reflection(ray, scene->light, scene->amb_light);
 		else
 		{
@@ -53,7 +53,7 @@ static t_ray	get_light_ray(t_light light, t_vector hit_point)
 	return (light_ray);
 }
 
-static bool	light_hit(t_ray ray, t_object *objects, t_vector hit_point)
+static bool	light_hit(t_ray ray, t_object *objects)
 {
 	t_object	*temp;
 	double		old_hit;
@@ -61,7 +61,6 @@ static bool	light_hit(t_ray ray, t_object *objects, t_vector hit_point)
 
 	temp = objects;
 	old_hit = 0;
-	(void)hit_point;
 	while (temp != NULL)
 	{
 		distance = hit_object(temp, &ray);
@@ -162,8 +161,8 @@ static t_colour calc_phong_reflection(t_ray *ray, t_light light, t_amb_light amb
 	t_colour	result;
 
 	ambient = get_ambient_diffusion(amb_light, amb_light.light_ratio);
-	diffuse = calc_diffuse(ray, light, 0.1);
-	specular = calc_specular(ray, light, 0.1, 0.1);
+	diffuse = calc_diffuse(ray, light, OBJ_COEFF);
+	specular = calc_specular(ray, light, OBJ_SHINY, OBJ_COEFF);
 
 	// Add up the components
 	result.r = ambient.r + diffuse.r + specular.r;
