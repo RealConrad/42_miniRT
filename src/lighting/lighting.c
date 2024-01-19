@@ -3,6 +3,9 @@
 
 static t_ray	get_light_ray(t_light light, t_vector hit_point);
 static bool		light_hit(t_ray ray, t_object *objects, t_vector hit_point);
+static t_colour calc_phong_reflection(t_ray *ray, t_light light, t_amb_light amb_light);
+static t_colour	calc_specular(t_ray *ray, t_light light, double obj_shiny, double obj_specular);
+static t_colour	calc_diffuse(t_ray *ray, t_light light, double obj_diff_co);
 
 void	lighting(t_scene *scene, t_ray *ray)
 {
@@ -16,7 +19,7 @@ void	lighting(t_scene *scene, t_ray *ray)
 	light_ray = get_light_ray(scene->light, ray->hit_point);
 	if (light_hit(light_ray, scene->objects, ray->hit_point) == true)
 	{
-		ray->ray_colour = (t_colour){255, 255, 0};
+		ray->ray_colour = calc_phong_reflection(ray, scene->light, scene->amb_light);
 		return ;
 	}
 	ray->ray_colour = (t_colour){0, 0, 0};
@@ -62,7 +65,7 @@ static bool	light_hit(t_ray ray, t_object *objects, t_vector hit_point)
  * @param obj_coefficient the way the object diffuses light (between 0 and 1)
  * @return the ambient diffusion colour
  */
-t_colour	get_ambient_diffusion(t_amb_light amb, double obj_coefficient)
+static t_colour	get_ambient_diffusion(t_amb_light amb, double obj_coefficient)
 {
 	t_colour ambient;
 
@@ -79,7 +82,7 @@ t_colour	get_ambient_diffusion(t_amb_light amb, double obj_coefficient)
  * @param obj_diff_co material's diffuse reflection coefficient (between 0 and 1)
  * @return the diffusion colour
  */
-t_colour	get_diffuse(t_ray *ray, t_light light, double obj_diff_co)
+static t_colour	calc_diffuse(t_ray *ray, t_light light, double obj_diff_co)
 {
 	t_vector	hp_to_light;
 	double		dot_diff;
@@ -116,7 +119,7 @@ t_vector reflect(t_vector incident, t_vector normal)
  * @param obj_specular material's specular coefficient (between 0 and 1)
  * @return the diffusion colour
  */
-t_colour	calculate_specular(t_ray *ray, t_light light, double obj_shiny, double obj_specular)
+static t_colour	calc_specular(t_ray *ray, t_light light, double obj_shiny, double obj_specular)
 {
 	t_vector	reflect_dir;
 	double		dot_rv;
@@ -135,31 +138,26 @@ t_colour	calculate_specular(t_ray *ray, t_light light, double obj_shiny, double 
 	return (specular);
 }
 
-// Helper function to clamp a value within a specified range
-double	clamp(double value, double min, double max)
+
+static t_colour calc_phong_reflection(t_ray *ray, t_light light, t_amb_light amb_light)
 {
-	return fmin(fmax(value, min), max);
+    t_colour ambient = get_ambient_diffusion(amb_light, amb_light.light_ratio);
+    t_colour diffuse = calc_diffuse(ray, light, 1);
+    t_colour specular = calc_specular(ray, light, 1, 1);
+
+    // Add up the components
+    t_colour result;
+    result.r = ambient.r + diffuse.r + specular.r;
+    result.g = ambient.g + diffuse.g + specular.g;
+    result.b = ambient.b + diffuse.b + specular.b;
+
+    // Ensure color components are within the valid range (0-255)
+    result.r = clamp(result.r, 0, 255);
+    result.g = clamp(result.g, 0, 255);
+    result.b = clamp(result.b, 0, 255);
+
+    return result;
 }
-
-// t_colour calculate_phong_reflection(t_ray *ray, t_light light, t_ambient_light amb_light)
-// {
-//     t_colour ambient = calculate_ambient(ray->object->material.ambient, amb_light.intensity);
-//     t_colour diffuse = calculate_diffuse(ray, light);
-//     t_colour specular = calculate_specular(ray, light);
-
-//     // Add up the components
-//     t_colour result;
-//     result.r = ambient.r + diffuse.r + specular.r;
-//     result.g = ambient.g + diffuse.g + specular.g;
-//     result.b = ambient.b + diffuse.b + specular.b;
-
-//     // Ensure color components are within the valid range (0-255)
-//     result.r = clamp(result.r, 0, 255);
-//     result.g = clamp(result.g, 0, 255);
-//     result.b = clamp(result.b, 0, 255);
-
-//     return result;
-// }
 
 /*
 ** 
