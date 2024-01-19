@@ -27,6 +27,7 @@ void	hit_cylinder(t_cylinder *cylinder, t_ray *ray)
 	ray->ray_colour = cylinder->colour;
 	ray->hit_point = ray_at(*ray, ray->distance);
 	ray->surface_norm = get_cylinder_surface_norm(data, ray, cylinder);
+	ray->ray_colour = cylinder->colour;
 }
 
 /**
