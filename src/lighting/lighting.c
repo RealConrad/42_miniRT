@@ -145,7 +145,7 @@ static t_colour	calc_specular(t_ray *ray, t_light light, double obj_shiny, doubl
 	reflect_dir.y *= -1;
 	reflect_dir.z *= -1;
 	dot_rv = dot_product(reflect_dir, ray->direction);
-	spec_factor = fmax(dot_rv, 0);
+	spec_factor = fmax(dot_rv, 0.0);
 	spec_factor = pow(spec_factor, obj_shiny);
 
 	spec_factor = obj_specular * (light.light_ratio * spec_factor);
@@ -164,24 +164,31 @@ static t_colour calc_phong_reflection(t_ray *ray, t_light light, t_amb_light amb
 	t_colour	result;
 
 	ambient = get_ambient_diffusion(amb_light, amb_light.light_ratio);
-	diffuse = calc_diffuse(ray, light, OBJ_COEFF);
-	specular = calc_specular(ray, light, OBJ_SHINY, OBJ_COEFF);
+	diffuse = calc_diffuse(ray, light, 0.008);
+	specular = calc_specular(ray, light, 0.08, 0.008);
 	(void)calc_specular;
 
 	// Add up the components
-	result.r = ambient.r + diffuse.r + specular.r;
-	result.g = ambient.g + diffuse.g + specular.g;
-	result.b = ambient.b + diffuse.b + specular.b;
+	// result.r = ambient.r + diffuse.r + specular.r;
+	// result.g = ambient.g + diffuse.g + specular.g;
+	// result.b = ambient.b + diffuse.b + specular.b;
 
-	// Ensure color components are within the valid range (0-255)
-	result.r = clamp(result.r, 0, 255);
-	result.g = clamp(result.g, 0, 255);
-	result.b = clamp(result.b, 0, 255);
+	result.r = ambient.r / 3 + diffuse.r / 3 + specular.r / 3;
+	result.g = ambient.g / 3 + diffuse.g / 3 + specular.g / 3;
+	result.b = ambient.b / 3 + diffuse.b / 3 + specular.b / 3;
+	// result.r /= 3;
+	// result.g /= 3;
+	// result.b /= 3;
 
+	// result.r = clamp(result.r, 0, 255);
+	// result.g = clamp(result.g, 0, 255);
+	// result.b = clamp(result.b, 0, 255);
 	return result;
 }
 
 /*
+
+	// Ensure color components are within the valid range (0-255)
 ** 
 ** Ip​=ka​⋅Ia​+kd​⋅Id​⋅(N⋅L)+ks​⋅Is​⋅(R⋅V)n
 ** 
