@@ -12,7 +12,7 @@ void	hit_plane(t_plane *plane, t_ray *ray)
 	double	d_pro;
 	double	distance;
 
-	d_pro = dot_product(plane->threed_vec, ray->direction);
+	d_pro = dot_product(normalize_vector(plane->threed_vec), normalize_vector(ray->direction));
 	if (ft_dabs(d_pro) < EPSILON)
 	{
 		ray->distance = -1;
@@ -21,12 +21,12 @@ void	hit_plane(t_plane *plane, t_ray *ray)
 	distance = dot_product(vec_subtract(plane->cords, ray->origin),
 			plane->threed_vec) / d_pro;
 	if (distance < 0)
-	{
 		ray->distance = -1;
-		return ;
+	else
+	{
+		ray->distance = distance;
+		ray->ray_colour = plane->colour;
+		ray->hit_point = ray_at(*ray, ray->distance);
+		ray->surface_norm = normalize_vector(plane->threed_vec);
 	}
-	ray->distance = distance;
-	ray->ray_colour = plane->colour;
-	ray->hit_point = ray_at(*ray, ray->distance);
-	ray->surface_norm = normalize_vector(plane->threed_vec);
 }

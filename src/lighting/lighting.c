@@ -141,6 +141,9 @@ static t_colour	calc_specular(t_ray *ray, t_light light, double obj_shiny, doubl
 	t_colour	specular;
 
 	reflect_dir = reflect(ray->direction, ray->surface_norm);
+	reflect_dir.x *= -1;
+	reflect_dir.y *= -1;
+	reflect_dir.z *= -1;
 	dot_rv = dot_product(reflect_dir, ray->direction);
 	spec_factor = fmax(dot_rv, 0);
 	spec_factor = pow(spec_factor, obj_shiny);
@@ -163,6 +166,7 @@ static t_colour calc_phong_reflection(t_ray *ray, t_light light, t_amb_light amb
 	ambient = get_ambient_diffusion(amb_light, amb_light.light_ratio);
 	diffuse = calc_diffuse(ray, light, OBJ_COEFF);
 	specular = calc_specular(ray, light, OBJ_SHINY, OBJ_COEFF);
+	(void)calc_specular;
 
 	// Add up the components
 	result.r = ambient.r + diffuse.r + specular.r;
