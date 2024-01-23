@@ -98,19 +98,18 @@ static t_colour	get_ambient_diffusion(t_amb_light amb, double obj_coefficient)
  */
 static t_colour	calc_diffuse(t_ray *ray, t_light light, double obj_diff_co)
 {
-	t_vector	hp_to_light;
-	double		dot_diff;
-	double		diffuse;
 	t_colour	diff_colour;
+	t_vector	hp_to_light;
+	// double		dot_diff;
+	// double		diffuse;
 
 	hp_to_light = vec_subtract(light.cords, ray->hit_point);
 	hp_to_light = normalize_vector(hp_to_light);
-	dot_diff = dot_product(ray->surface_norm, hp_to_light);
-
-	diffuse = obj_diff_co * (light.light_ratio * fmax(dot_diff, 0));
-	diff_colour.r = light.colour.r * diffuse * ray->ray_colour.r;
-	diff_colour.g = light.colour.g * diffuse * ray->ray_colour.g;
-	diff_colour.b = light.colour.b * diffuse * ray->ray_colour.b;
+	double	dotLN = dot_product(hp_to_light, ray->surface_norm);
+	dotLN = clamp(dotLN, 0.0, 1.0);
+	diff_colour.r = obj_diff_co * dotLN * ray->ray_colour.r;
+	diff_colour.g = obj_diff_co * dotLN * ray->ray_colour.g;
+	diff_colour.b = obj_diff_co * dotLN * ray->ray_colour.b;
 	return (diff_colour);
 }
 
@@ -118,7 +117,7 @@ t_vector reflect(t_vector incident, t_vector normal)
 {
 	double		d_product;
 	t_vector	reflection;
-	
+
 	d_product = dot_product(incident, normal);
 	d_product = d_product * 2;
 	reflection = vec_subtract(incident, vec_scalar_multiply(normal, d_product));
@@ -135,23 +134,19 @@ t_vector reflect(t_vector incident, t_vector normal)
  */
 static t_colour	calc_specular(t_ray *ray, t_light light, double obj_shiny, double obj_specular)
 {
-	t_vector	reflect_dir;
-	double		dot_rv;
-	double		spec_factor;
 	t_colour	specular;
+	t_vector	hp_to_light;
+	t_vector	ref;
+	double		dotRV;
 
-	reflect_dir = reflect(ray->direction, ray->surface_norm);
-	reflect_dir.x *= -1;
-	reflect_dir.y *= -1;
-	reflect_dir.z *= -1;
-	dot_rv = dot_product(reflect_dir, ray->direction);
-	spec_factor = fmax(dot_rv, 0.0);
-	spec_factor = pow(spec_factor, obj_shiny);
-
-	spec_factor = obj_specular * (light.light_ratio * spec_factor);
-	specular.r = light.colour.r * spec_factor;
-	specular.g = light.colour.g * spec_factor;
-	specular.b = light.colour.b * spec_factor;
+	hp_to_light = vec_subtract(light.cords, ray->hit_point);
+	hp_to_light = normalize_vector(hp_to_light);
+	ref = reflect(hp_to_light, ray->surface_norm);
+	dotRV = dot_product(ref, vec_scalar_multiply(ray->direction, -1.0));
+	dotRV = clamp(dotRV, 0., 1.);
+	specular.r = obj_shiny * pow(dotRV, obj_specular) * light.colour.r;
+	specular.g = obj_shiny * pow(dotRV, obj_specular) * light.colour.g;
+	specular.b = obj_shiny * pow(dotRV, obj_specular) * light.colour.b;
 	return (specular);
 }
 
@@ -163,32 +158,31 @@ static t_colour calc_phong_reflection(t_ray *ray, t_light light, t_amb_light amb
 	t_colour	specular;
 	t_colour	result;
 
-	ambient = get_ambient_diffusion(amb_light, amb_light.light_ratio);
-	diffuse = calc_diffuse(ray, light, 0.008);
-	specular = calc_specular(ray, light, 0.08, 0.008);
-	(void)calc_specular;
+	ambient = get_ambient_diffusion(amb_light, 0.6);
+	diffuse = calc_diffuse(ray, light, 0.5);
+	specular = calc_specular(ray, light, 0.8, 10.0);
 
-	// Add up the components
-	// result.r = ambient.r + diffuse.r + specular.r;
-	// result.g = ambient.g + diffuse.g + specular.g;
-	// result.b = ambient.b + diffuse.b + specular.b;
+	// ambient.r = ambient.r / 3;
+	// ambient.g = ambient.g / 3;
+	// ambient.b = ambient.b / 3;
+	// diffuse.r = diffuse.r / 3;
+	// diffuse.g = diffuse.g / 3;
+	// diffuse.b = diffuse.b / 3;
+	// specular.r = specular.r / 3;
+	// specular.g = specular.g / 3;
+	// specular.b = specular.b / 3;
 
-	result.r = ambient.r / 3 + diffuse.r / 3 + specular.r / 3;
-	result.g = ambient.g / 3 + diffuse.g / 3 + specular.g / 3;
-	result.b = ambient.b / 3 + diffuse.b / 3 + specular.b / 3;
-	// result.r /= 3;
-	// result.g /= 3;
-	// result.b /= 3;
+	result.r = ambient.r + diffuse.r + specular.r;
+	result.g = ambient.g + diffuse.g + specular.g;
+	result.b = ambient.b + diffuse.b + specular.b;
 
-	// result.r = clamp(result.r, 0, 255);
-	// result.g = clamp(result.g, 0, 255);
-	// result.b = clamp(result.b, 0, 255);
-	return result;
+	result.r = clamp(result.r, 0, 255);
+	result.g = clamp(result.g, 0, 255);
+	result.b = clamp(result.b, 0, 255);
+	return (result);
 }
 
 /*
-
-	// Ensure color components are within the valid range (0-255)
 ** 
 ** Ip​=ka​⋅Ia​+kd​⋅Id​⋅(N⋅L)+ks​⋅Is​⋅(R⋅V)n
 ** 
@@ -205,3 +199,58 @@ static t_colour calc_phong_reflection(t_ray *ray, t_light light, t_amb_light amb
 **     VV is the normalized direction vector from the hit point to the viewer.
 **     nn is the shininess exponent.
 */
+
+/*
+** Phong Reflection:
+** L = Ambient_Light + Diffusion + Specular
+** 
+** Ambient Light:
+** L = Colour (object colour) * Amb_light_factor
+** 
+** Difusion:
+** dotLN = dot(norm(light_pos - hit_point), surfaceNormal(hit_point))
+** light_colour = light_colour * light_ratio(if this doesnt look good, try obj col)
+** L = Diffusion_factor (0, 1) * dotLN * light_colour
+** 
+** Specular:
+** vec3 R = reflect(norm(light_pos - hit_point), surface_normal);
+** vec  V = direction_to_cam (reversed ray direction);
+**      dotRV = dot(R, V);
+** float alpha = 10.;
+** L = Spec_factor(0, 1) * pow(dotRV, alpha) * colour_of_choice(light colour or object colour)
+** 
+** Reflect:
+** R = 2 * (light_dir(normalized) * surface_normal) * Surface_normal - light_dir(normalized);
+** 
+** 
+** 
+** 
+**  vec3 p = ro + rd * d; // point on surface found by ray marching
+**       vec3 normal = calcNormal(p); // surface normal
+** 
+**       // light
+**       vec3 lightPosition = vec3(-8, -6, -5);
+**       vec3 lightDirection = normalize(lightPosition - p);
+** 
+**       // ambient
+**       float k_a = 0.6;
+**       vec3 i_a = vec3(0.7, 0.7, 0);
+**       vec3 ambient = k_a * i_a;
+** 
+**       // diffuse
+**       float k_d = 0.5;
+**       float dotLN = clamp(dot(lightDirection, normal), 0., 1.);
+**       vec3 i_d = vec3(0.7, 0.5, 0);
+**       vec3 diffuse = k_d * dotLN * i_d;
+** 
+**       // specular
+**       float k_s = 0.6;
+**       float dotRV = clamp(dot(reflect(lightDirection, normal), -rd), 0., 1.);
+**       vec3 i_s = vec3(1, 1, 1);
+**       float alpha = 10.;
+**       vec3 specular = k_s * pow(dotRV, alpha) * i_s;
+** 
+**       // final sphere color
+**       col = ambient + diffuse + specular;
+*/
+
