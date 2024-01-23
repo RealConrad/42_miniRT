@@ -37,11 +37,11 @@ t_vector	get_cylinder_surface_norm(t_cy_data data, t_ray *ray, t_cylinder *cylin
 	if (ray->distance == data.d_bot_cap || ray->distance == data.d_top_cap)
 	{
 		if (ray->distance == data.d_top_cap)
-			return (cylinder->axis);
+			return (normalize_vector(cylinder->axis));
 		else
-			return ((t_vector){-cylinder->axis.x, -cylinder->axis.y, -cylinder->axis.z});
+			return (normalize_vector((t_vector){-cylinder->axis.x, -cylinder->axis.y, -cylinder->axis.z}));
 	}
-	axis_to_intersection = vec_subtract(ray->hit_point, cylinder->cords);
+	axis_to_intersection = normalize_vector(vec_subtract(ray->hit_point, cylinder->cords));
 	proj_length = dot_product(axis_to_intersection, cylinder->axis);
 	closest_point = vec_add(cylinder->cords, vec_scalar_multiply(cylinder->axis, proj_length));
 	norm = normalize_vector(vec_subtract(ray->hit_point, closest_point));

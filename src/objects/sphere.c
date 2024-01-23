@@ -26,6 +26,15 @@ void	hit_sphere(t_sphere *sphere, t_ray *ray)
 		ray->distance = -1;
 		return ;
 	}
+	// double		root1;
+	// double		root2;
+
+	// root1 = (-projection_len - sqrt(discriminant));
+	// root2 = (-projection_len + sqrt(discriminant));
+	// if ((root1 > 0 && root1 < root2) || (root2 < 0 && root1 > 0))
+	// 	ray->distance = root1 / (2.0 * dir_len_sq);
+	// else
+	// 	ray->distance = root2 / (2.0 * dir_len_sq);
 	ray->distance = (-projection_len - sqrt(discriminant)) / (2.0 * dir_len_sq);
 	ray->ray_colour = sphere->colour;
 	ray->hit_point = ray_at(*ray, ray->distance);
