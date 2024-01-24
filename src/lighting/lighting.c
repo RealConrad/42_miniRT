@@ -48,8 +48,8 @@ static t_ray	get_light_ray(t_light light, t_vector hit_point)
 	light_ray.direction = vec_subtract(light.cords, hit_point);
 	light_ray.direction = normalize_vector(light_ray.direction);
 	light_ray.hit_point = light.cords;
-	// if (hit_point.y > light.cords.y)
-	// 	light_ray.direction.y *= -1;
+	if (hit_point.y > light.cords.y)
+		light_ray.direction.y *= -1;
 	return (light_ray);
 }
 
@@ -120,7 +120,7 @@ t_vector reflect(t_vector incident, t_vector normal)
 
 	d_product = dot_product(incident, normal);
 	d_product = d_product * 2;
-	reflection = vec_subtract(incident, vec_scalar_multiply(normal, d_product));
+	reflection = vec_subtract(vec_scalar_multiply(normal, d_product), incident);
 	return (normalize_vector(reflection));
 }
 
@@ -143,7 +143,7 @@ static t_colour	calc_specular(t_ray *ray, t_light light, double obj_shiny, doubl
 	hp_to_light = normalize_vector(hp_to_light);
 	ref = reflect(hp_to_light, ray->surface_norm);
 	dotRV = dot_product(ref, vec_scalar_multiply(ray->direction, -1.0));
-	dotRV = clamp(dotRV, 0., 1.);
+	dotRV = clamp(dotRV, 0.0, 1.0);
 	specular.r = obj_shiny * pow(dotRV, obj_specular) * light.colour.r;
 	specular.g = obj_shiny * pow(dotRV, obj_specular) * light.colour.g;
 	specular.b = obj_shiny * pow(dotRV, obj_specular) * light.colour.b;
@@ -176,6 +176,9 @@ static t_colour calc_phong_reflection(t_ray *ray, t_light light, t_amb_light amb
 	result.g = ambient.g + diffuse.g + specular.g;
 	result.b = ambient.b + diffuse.b + specular.b;
 
+	// result.r = result.r / (0.8 + light.light_ratio * 0.6 + amb_light.light_ratio * 0.5);
+	// result.g = result.g / (0.8 + light.light_ratio * 0.6 + amb_light.light_ratio * 0.5);
+	// result.b = result.b / (0.8 + light.light_ratio * 0.6 + amb_light.light_ratio * 0.5);
 	result.r = clamp(result.r, 0, 255);
 	result.g = clamp(result.g, 0, 255);
 	result.b = clamp(result.b, 0, 255);
