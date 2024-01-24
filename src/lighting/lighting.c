@@ -16,7 +16,7 @@ void	lighting(t_scene *scene, t_ray *ray)
 	t_colour	amb;
 
 	if (ray->distance < 0.0)
-		ray->ray_colour = get_ambient_light((t_colour){255, 255, 255}, scene->amb_light);
+		ray->ray_colour = get_ambient_light(scene->amb_light, (t_colour){255, 255, 255});
 	else
 	{
 		light_ray = get_light_ray(scene->light, ray->hit_point);
