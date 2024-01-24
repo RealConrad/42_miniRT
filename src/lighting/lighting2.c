@@ -11,8 +11,8 @@ static t_ray	get_light_ray(t_light light, t_vector hit_point)
 	light_ray.direction = vec_subtract(light.cords, hit_point);
 	light_ray.direction = normalize_vector(light_ray.direction);
 	light_ray.hit_point = light.cords;
-	// if (hit_point.y > light.cords.y)
-	// 	light_ray.direction.y *= -1;
+	if (hit_point.y > light.cords.y)
+		light_ray.direction.y *= -1;
 	return (light_ray);
 }
 
@@ -95,9 +95,9 @@ void	lighting2(t_scene *scene, t_ray *ray)
 	}
 }
 
-static t_colour colour_multiply(t_colour c1, t_colour c2)
+static t_colour	colour_multiply(t_colour c1, t_colour c2)
 {
-	t_colour result;
+	t_colour	result;
 
 	result.r = (c1.r / 255.0 * c2.r / 255.0) * 255;
 	result.g = (c1.g / 255.0 * c2.g / 255.0) * 255;
@@ -105,7 +105,7 @@ static t_colour colour_multiply(t_colour c1, t_colour c2)
 	return (result);
 }
 
-static t_colour colour_scalar_multiply(t_colour c, double scalar)
+static t_colour	colour_scalar_multiply(t_colour c, double scalar)
 {
 	t_colour	result;
 
