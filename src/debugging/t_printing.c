@@ -12,7 +12,7 @@ void	t_print_scene(t_scene scene)
 	current = scene.objects;
 	printf("---Ambient Lightning---\n");
 	printf("Lightning ratio :%f\n", scene.amb_light.light_ratio);
-	t_print_colour(scene.amb_light.colour);
+	t_print_colour(scene.amb_light.colour_in_range);
 	printf("\n---Camera---\n");
 	t_print_vector(scene.camera.cords);
 	t_print_vector(scene.camera.or_vect);

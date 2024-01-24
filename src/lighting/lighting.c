@@ -16,7 +16,7 @@ void	lighting(t_scene *scene, t_ray *ray)
 	t_colour	amb;
 
 	if (ray->distance < 0.0)
-		ray->ray_colour = get_ambient_light(scene->amb_light, (t_colour){255, 255, 255});
+		ray->ray_colour = get_ambient_light((t_colour){255, 255, 255}, scene->amb_light);
 	else
 	{
 		light_ray = get_light_ray(scene->light, ray->hit_point);
@@ -83,9 +83,9 @@ static t_colour	get_ambient_diffusion(t_amb_light amb, double obj_coefficient)
 {
 	t_colour ambient;
 
-	ambient.r = obj_coefficient * amb.light_ratio * amb.colour.r;
-	ambient.g = obj_coefficient * amb.light_ratio * amb.colour.g;
-	ambient.b = obj_coefficient * amb.light_ratio * amb.colour.b;
+	ambient.r = obj_coefficient * amb.light_ratio * amb.colour_in_range.r;
+	ambient.g = obj_coefficient * amb.light_ratio * amb.colour_in_range.g;
+	ambient.b = obj_coefficient * amb.light_ratio * amb.colour_in_range.b;
 	return (ambient);
 }
 

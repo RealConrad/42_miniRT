@@ -15,8 +15,8 @@ void	init_amb(t_scene *scene, char **tokens, int fd)
 	scene->amb_light.light_ratio = ft_atof(tokens[1]);
 	if (scene->amb_light.light_ratio > 1 || scene->amb_light.light_ratio < 0)
 		exit_analyse(scene, tokens, fd, NULL);
-	assign_colour(&(scene->amb_light.colour), tokens, 2);
-	if (!legal_colour(scene->amb_light.colour))
+	assign_colour(&(scene->amb_light.colour_in_range), tokens, 2);
+	if (!legal_colour(scene->amb_light.colour_in_range))
 		exit_analyse(scene, tokens, fd, NULL);
 }
 

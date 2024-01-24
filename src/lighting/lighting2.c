@@ -14,12 +14,7 @@ void	lighting2(t_scene *scene, t_ray *ray)
 	double		shiny;
 
 	shiny = 1;
-	amb.r = (ray->ray_colour.r / 255.0 * scene->amb_light.colour.r / 255.0) * scene->amb_light.light_ratio;
-	amb.g = (ray->ray_colour.g / 255.0 * scene->amb_light.colour.g / 255.0) * scene->amb_light.light_ratio;
-	amb.b = (ray->ray_colour.b / 255.0 * scene->amb_light.colour.b / 255.0) * scene->amb_light.light_ratio;
-	amb.r /= 255;
-	amb.g /= 255;
-	amb.b /= 255;
+	amb = get_ambient_light( ray->ray_colour, scene->amb_light);
 
 	// hits object
 	if (ray->distance >= 0)
@@ -30,6 +25,9 @@ void	lighting2(t_scene *scene, t_ray *ray)
 		{
 			diffuse = colour_multiply(scene->light.colour, ray->ray_colour);
 			diffuse = colour_scalar_multiply(diffuse, dot * scene->light.light_ratio);
+			diffuse.r = (diffuse.r / 255.0) * (scene->light.light_ratio) * 255;
+			diffuse.g = (diffuse.g / 255.0) * (scene->light.light_ratio) * 255;
+			diffuse.b = (diffuse.b / 255.0) * (scene->light.light_ratio) * 255;
 
 			// Calculate reflection vector
 			t_vector reflection = vec_subtract(vec_scalar_multiply(ray->surface_norm, 2 * dot), light_dir);
@@ -37,23 +35,27 @@ void	lighting2(t_scene *scene, t_ray *ray)
 			t_vector view_dir = normalize_vector(vec_subtract(ray->origin, ray->hit_point));
 			// Calculate dot product between view direction and reflection vector
 			double spec_angle = fmax(dot_product(view_dir, reflection), 0.0);
-			//  intensity
+			// intensity
 			double spec_intensity = pow(spec_angle, shiny);
 			// Calculate specular color
 			specular = colour_scalar_multiply(scene->light.colour, spec_intensity);
 
 			// Combine everuthing for phong
-			ray->ray_colour.r = clamp(amb.r + diffuse.r + specular.r, 0, 255);
-			ray->ray_colour.g = clamp(amb.g + diffuse.g + specular.g, 0, 255);
-			ray->ray_colour.b = clamp(amb.b + diffuse.b + specular.b, 0, 255);
+			// ray->ray_colour.r = clamp(amb.r + diffuse.r + specular.r, 0, 255);
+			// ray->ray_colour.g = clamp(amb.g + diffuse.g + specular.g, 0, 255);
+			// ray->ray_colour.b = clamp(amb.b + diffuse.b + specular.b, 0, 255);
+			ray->ray_colour.r = clamp(amb.r + diffuse.r, 0, 255);
+			ray->ray_colour.g = clamp(amb.g + diffuse.g, 0, 255);
+			ray->ray_colour.b = clamp(amb.b + diffuse.b, 0, 255);
 		}
 		else
 			ray->ray_colour = amb;
 	}
 	else
 	{
-		// background
+		// TODO: Add sky background colour??
 		ray->ray_colour = get_ambient_light((t_colour){255, 255, 255}, scene->amb_light);
+		// ray->ray_colour = colour_scalar_multiply(ray->ray_colour, 255);
 	}
 }
 
@@ -69,11 +71,11 @@ static t_colour colour_multiply(t_colour c1, t_colour c2)
 
 static t_colour colour_scalar_multiply(t_colour c, double scalar)
 {
-	t_colour result;
+	t_colour	result;
 
-	result.r = clamp(c.r * scalar, 0, 255);
-	result.g = clamp(c.g * scalar, 0, 255);
-	result.b = clamp(c.b * scalar, 0, 255);
+	result.r = c.r * scalar;
+	result.g = c.g * scalar;
+	result.b = c.b * scalar;
 	return (result);
 }
 
@@ -82,4 +84,3 @@ double	clamp(double value, double min, double max)
 {
 	return fmin(fmax(value, min), max);
 }
-
