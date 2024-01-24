@@ -13,7 +13,7 @@ void	lighting2(t_scene *scene, t_ray *ray)
 	t_colour	specular;
 	double		shiny;
 
-	shiny = 1;
+	shiny = 25;
 	amb = get_ambient_light( ray->ray_colour, scene->amb_light);
 
 	// hits object
@@ -41,12 +41,12 @@ void	lighting2(t_scene *scene, t_ray *ray)
 			specular = colour_scalar_multiply(scene->light.colour, spec_intensity);
 
 			// Combine everuthing for phong
-			// ray->ray_colour.r = clamp(amb.r + diffuse.r + specular.r, 0, 255);
-			// ray->ray_colour.g = clamp(amb.g + diffuse.g + specular.g, 0, 255);
-			// ray->ray_colour.b = clamp(amb.b + diffuse.b + specular.b, 0, 255);
-			ray->ray_colour.r = clamp(amb.r + diffuse.r, 0, 255);
-			ray->ray_colour.g = clamp(amb.g + diffuse.g, 0, 255);
-			ray->ray_colour.b = clamp(amb.b + diffuse.b, 0, 255);
+			ray->ray_colour.r = clamp(amb.r + diffuse.r + specular.r, 0, 255);
+			ray->ray_colour.g = clamp(amb.g + diffuse.g + specular.g, 0, 255);
+			ray->ray_colour.b = clamp(amb.b + diffuse.b + specular.b, 0, 255);
+			// ray->ray_colour.r = clamp(amb.r + diffuse.r, 0, 255);
+			// ray->ray_colour.g = clamp(amb.g + diffuse.g, 0, 255);
+			// ray->ray_colour.b = clamp(amb.b + diffuse.b, 0, 255);
 		}
 		else
 			ray->ray_colour = amb;
