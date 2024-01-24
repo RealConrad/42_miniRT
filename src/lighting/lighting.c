@@ -83,9 +83,9 @@ static t_colour	get_ambient_diffusion(t_amb_light amb, double obj_coefficient)
 {
 	t_colour ambient;
 
-	ambient.r = obj_coefficient * amb.light_ratio * amb.colour_in_range.r;
-	ambient.g = obj_coefficient * amb.light_ratio * amb.colour_in_range.g;
-	ambient.b = obj_coefficient * amb.light_ratio * amb.colour_in_range.b;
+	ambient.r = obj_coefficient * amb.light_ratio * amb.colour.r;
+	ambient.g = obj_coefficient * amb.light_ratio * amb.colour.g;
+	ambient.b = obj_coefficient * amb.light_ratio * amb.colour.b;
 	return (ambient);
 }
 

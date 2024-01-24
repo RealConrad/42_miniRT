@@ -14,9 +14,9 @@ void	lighting2(t_scene *scene, t_ray *ray)
 	double		shiny;
 
 	shiny = 1;
-	amb.r = (ray->ray_colour.r / 255.0 * scene->amb_light.colour_in_range.r / 255.0) * scene->amb_light.light_ratio;
-	amb.g = (ray->ray_colour.g / 255.0 * scene->amb_light.colour_in_range.g / 255.0) * scene->amb_light.light_ratio;
-	amb.b = (ray->ray_colour.b / 255.0 * scene->amb_light.colour_in_range.b / 255.0) * scene->amb_light.light_ratio;
+	amb.r = (ray->ray_colour.r / 255.0 * scene->amb_light.colour.r / 255.0) * scene->amb_light.light_ratio;
+	amb.g = (ray->ray_colour.g / 255.0 * scene->amb_light.colour.g / 255.0) * scene->amb_light.light_ratio;
+	amb.b = (ray->ray_colour.b / 255.0 * scene->amb_light.colour.b / 255.0) * scene->amb_light.light_ratio;
 	amb.r /= 255;
 	amb.g /= 255;
 	amb.b /= 255;

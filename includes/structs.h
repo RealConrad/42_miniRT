@@ -79,7 +79,7 @@ typedef struct s_cy_data
 typedef struct s_amb_light
 {
 	double			light_ratio;
-	t_colour		colour_in_range;
+	t_colour		colour;
 }	t_amb_light;
 
 typedef struct s_camera
