@@ -125,19 +125,6 @@ static bool check_cap(t_cy_data *data, t_vector cap_center, double t_cap, t_ray 
 	return (false);
 }
 
-// double	find_closest_side(t_cy_data *data)
-// {
-// 	if (data->within_bounds_d0 && data->d0 > 0)
-// 	{
-// 		if (data->within_bounds_d1 && data->d1 > 0 && data->d1 < data->d0)
-// 			return (data->d1);
-// 		return (data->d0);
-// 	}
-// 	else if (data->within_bounds_d1 && data->d1 > 0)
-// 		return (data->d1);
-// 	return (-1.0);
-// }
-
 /**
  * @brief Finds which intersection is closer, side or cap and
  * then sets the `ray->distance` to the closer one.
@@ -153,8 +140,8 @@ static void find_closest_intersection(t_ray *ray, t_cy_data *data)
 	d_cap = find_closest_cap(data);
 	if (data->within_bounds_d0 && data->d0 > 0)
 		d_side = data->d0;
-    else if (data->within_bounds_d1 && data->d1 > 0 && (d_side < 0 || data->d1 < d_side))
-        d_side = data->d1;
+	else if (data->within_bounds_d1 && data->d1 > 0 && (d_side < 0 || data->d1 < d_side))
+		d_side = data->d1;
 	if (d_cap > 0 && (d_cap < d_side || d_side <= 0))
 		ray->distance = d_cap;
 	else if (d_side > 0)
