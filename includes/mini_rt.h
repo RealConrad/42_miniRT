@@ -26,6 +26,7 @@
 # include <fcntl.h>
 # include <stdbool.h>
 # include <pthread.h>
+# include <float.h>
 
 /* -------------------------------------------------------------------------- */
 /*                                   Defines                                  */

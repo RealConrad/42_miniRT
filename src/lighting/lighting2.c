@@ -80,21 +80,17 @@ static t_colour	get_specular(t_scene *scene, t_ray *ray, t_vector light_dir, dou
 static bool	light_hit(t_ray ray, t_object *objects)
 {
 	t_object	*temp;
-	double		old_hit;
 	double		distance;
 
 	temp = objects;
-	old_hit = 0;
 	while (temp != NULL)
 	{
 		distance = hit_object(temp, &ray);
-		if ((distance < old_hit || old_hit == 0) && distance > 0.0)
-			old_hit = distance;
+		if (distance > 0.0 && distance < vec_length(vec_subtract(ray.hit_point, ray.origin)) + EPSILON)
+			return (false);
 		temp = temp->next;
 	}
-	if (old_hit == 0)
-		return (true);
-	return (false);
+	return (true);
 }
 
 static t_ray	get_light_ray(t_light light, t_vector hit_point)
