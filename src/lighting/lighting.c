@@ -162,16 +162,6 @@ static t_colour calc_phong_reflection(t_ray *ray, t_light light, t_amb_light amb
 	diffuse = calc_diffuse(ray, light, 0.5);
 	specular = calc_specular(ray, light, 0.8, 10.0);
 
-	// ambient.r = ambient.r / 3;
-	// ambient.g = ambient.g / 3;
-	// ambient.b = ambient.b / 3;
-	// diffuse.r = diffuse.r / 3;
-	// diffuse.g = diffuse.g / 3;
-	// diffuse.b = diffuse.b / 3;
-	// specular.r = specular.r / 3;
-	// specular.g = specular.g / 3;
-	// specular.b = specular.b / 3;
-
 	result.r = ambient.r + diffuse.r + specular.r;
 	result.g = ambient.g + diffuse.g + specular.g;
 	result.b = ambient.b + diffuse.b + specular.b;
@@ -183,6 +173,11 @@ static t_colour calc_phong_reflection(t_ray *ray, t_light light, t_amb_light amb
 	result.g = clamp(result.g, 0, 255);
 	result.b = clamp(result.b, 0, 255);
 	return (result);
+}
+
+double	clamp(double value, double min, double max)
+{
+	return fmin(fmax(value, min), max);
 }
 
 /*

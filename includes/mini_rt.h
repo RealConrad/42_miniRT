@@ -50,12 +50,16 @@
 
 /* ---------------------------------- Utils --------------------------------- */
 
-void	escape(keys_t keycode, void *param);
-void	display_render_progress(int percent);
-double	random_double(void);
+void		escape(keys_t keycode, void *param);
+void		display_render_progress(int percent);
+double		random_double(void);
 
-void	free_objects(t_object *objects);
+t_colour	colour_multiply(t_colour c1, t_colour c2);
+t_colour	colour_scalar_multiply(t_colour c, double scalar);
+t_colour	get_sky_background(t_ray *ray);
 
-double	ft_dabs(double nb);
+void		free_objects(t_object *objects);
+
+double		ft_dabs(double nb);
 
 #endif /*MINI_RT_H*/

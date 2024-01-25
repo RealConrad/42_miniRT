@@ -34,8 +34,8 @@ t_colour	anti_aliasing(t_scene *scene, t_viewport vp, int x, int y)
 					get_pixel_center(vp, (int[]){x, y}, horiz_scale, vert_scale),
 					scene->camera.cords));
 		get_ray_intersection(&ray, scene->objects);
-		// ray.hit_point = vec_add(ray.hit_point, vec_scalar_multiply(ray.surface_norm, 1e-4));
-		lighting(scene, &ray);
+		ray.hit_point = vec_add(ray.hit_point, vec_scalar_multiply(ray.surface_norm, 1e-4));
+		lighting2(scene, &ray);
 		pixel_colour = blend_colour(pixel_colour, ray.ray_colour);
 		i++;
 	}
