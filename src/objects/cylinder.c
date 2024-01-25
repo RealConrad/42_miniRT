@@ -68,13 +68,19 @@ static void check_side_intersection(t_cy_data *data, t_cylinder *cylinder)
 {
 	double	half_height;
 	double	m0;
+	double	m1;
 
 	half_height = cylinder->height / 2.0;
 	data->within_bounds_d0 = false;
+	data->within_bounds_d1 = false;
 	data->d0 = (-data->b - sqrt(data->discriminant)) / (2 * data->a);
+	data->d1 = (-data->b + sqrt(data->discriminant)) / (2 * data->a);
 	m0 = dot_product(data->d, data->v) * data->d0 + dot_product(data->x, data->v);
+	m1 = dot_product(data->d, data->v) * data->d1 + dot_product(data->x, data->v);
 	if (m0 >= -half_height && m0 <= half_height)
 		data->within_bounds_d0 = true;
+	if (m1 >= -half_height && m1 <= half_height)
+		data->within_bounds_d1 = true;
 }
 
 /**
@@ -119,6 +125,18 @@ static bool check_cap(t_cy_data *data, t_vector cap_center, double t_cap, t_ray 
 	return (false);
 }
 
+// double	find_closest_side(t_cy_data *data)
+// {
+// 	if (data->within_bounds_d0 && data->d0 > 0)
+// 	{
+// 		if (data->within_bounds_d1 && data->d1 > 0 && data->d1 < data->d0)
+// 			return (data->d1);
+// 		return (data->d0);
+// 	}
+// 	else if (data->within_bounds_d1 && data->d1 > 0)
+// 		return (data->d1);
+// 	return (-1.0);
+// }
 
 /**
  * @brief Finds which intersection is closer, side or cap and
@@ -135,6 +153,8 @@ static void find_closest_intersection(t_ray *ray, t_cy_data *data)
 	d_cap = find_closest_cap(data);
 	if (data->within_bounds_d0 && data->d0 > 0)
 		d_side = data->d0;
+    else if (data->within_bounds_d1 && data->d1 > 0 && (d_side < 0 || data->d1 < d_side))
+        d_side = data->d1;
 	if (d_cap > 0 && (d_cap < d_side || d_side <= 0))
 		ray->distance = d_cap;
 	else if (d_side > 0)
