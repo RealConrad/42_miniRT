@@ -3,20 +3,7 @@
 static t_colour	get_diffuse(t_scene *scene, t_ray *ray, double dot);
 static t_colour	get_specular(t_scene *scene, t_ray *ray, t_vector light_dir, double dot);
 static bool		light_hit(t_ray ray, t_object *objects);
-
-
-static t_ray	get_light_ray(t_light light, t_vector hit_point)
-{
-	t_ray	light_ray;
-
-	light_ray.origin = hit_point;
-	light_ray.direction = vec_subtract(light.cords, hit_point);
-	light_ray.direction = normalize_vector(light_ray.direction);
-	light_ray.hit_point = light.cords;
-	if (hit_point.y > light.cords.y)
-		light_ray.direction.y *= -1;
-	return (light_ray);
-}
+static t_ray	get_light_ray(t_light light, t_vector hit_point);
 
 void	lighting2(t_scene *scene, t_ray *ray)
 {
@@ -33,11 +20,11 @@ void	lighting2(t_scene *scene, t_ray *ray)
 		light_ray = get_light_ray(scene->light, ray->hit_point);
 		light_dir = normalize_vector(vec_subtract(scene->light.cords, ray->hit_point));
 		dot = dot_product(ray->surface_norm, light_dir);
-		if (light_hit(light_ray, scene->objects))
+		if (light_hit(light_ray, scene->objects) && dot > 0.0)
 		{
 			diffuse = get_diffuse(scene, ray, dot);
 			specular = get_specular(scene, ray, light_dir, dot);
-			// Combine everuthing for phong
+
 			t_vector	temp_col;
 			temp_col.x = (double)amb.r / 255 + (double)diffuse.r / 255 + (double)specular.r / 255;
 			temp_col.y = (double)amb.g / 255 + (double)diffuse.g / 255 + (double)specular.g / 255;
@@ -53,10 +40,7 @@ void	lighting2(t_scene *scene, t_ray *ray)
 			ray->ray_colour.b = clamp(amb.b + diffuse.b + specular.b, 0, 255);
 		}
 		else
-		{
-			// TODO: Shadows
 			ray->ray_colour = amb;
-		}
 	}
 	else
 		ray->ray_colour = get_sky_background(ray);
@@ -111,4 +95,17 @@ static bool	light_hit(t_ray ray, t_object *objects)
 	if (old_hit == 0)
 		return (true);
 	return (false);
+}
+
+static t_ray	get_light_ray(t_light light, t_vector hit_point)
+{
+	t_ray	light_ray;
+
+	light_ray.origin = hit_point;
+	light_ray.direction = vec_subtract(light.cords, hit_point);
+	light_ray.direction = normalize_vector(light_ray.direction);
+	light_ray.hit_point = light.cords;
+	if (hit_point.y > light.cords.y)
+		light_ray.direction.y *= -1;
+	return (light_ray);
 }
