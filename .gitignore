@@ -5,3 +5,5 @@ miniRT
 *.out
 *.exe
 *.dsYM
+out
+out1
