@@ -38,9 +38,9 @@ void hit_sphere(t_sphere *sphere, t_ray *ray)
 		ray->distance = fmin(t1, t2);
 	else
 		ray->distance = fmax(t1, t2);
-	ray->ray_colour = sphere->colour;
+	ray->ray_colour = normalize_colour(sphere->colour);
 	ray->hit_point = ray_at(*ray, ray->distance);
 	ray->surface_norm = normalize_vector(vec_subtract(ray->hit_point, sphere->cords));
-	if (!(t1 > 0 && t2 > 0))
-		ray->surface_norm = vec_scalar_multiply(ray->surface_norm, -1);
+	// if (!(t1 > 0 && t2 > 0))
+	// 	ray->surface_norm = vec_scalar_multiply(ray->surface_norm, -1);
 }

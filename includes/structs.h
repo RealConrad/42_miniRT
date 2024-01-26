@@ -27,9 +27,9 @@ typedef enum e_object_type
 /* ------------------------------ Vector/Colour ----------------------------- */
 typedef struct s_colour
 {
-	int				r;
-	int				g;
-	int				b;
+	double				r;
+	double				g;
+	double				b;
 }	t_colour;
 
 typedef struct s_vector

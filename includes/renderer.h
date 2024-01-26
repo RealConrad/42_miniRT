@@ -9,7 +9,6 @@ void		render_scene(t_scene *scene);
 void		render_cylinder(t_scene *scene, t_cylinder *cylinder);
 void		render_plane(t_scene *scene, t_plane *plane);
 void		render_sphere(t_scene *scene, t_sphere *sphere);
-uint32_t	get_rgb(t_colour colour);
 double		clamp(double value, double min, double max);
 bool		get_ray_intersection(t_ray *ray, t_object *objects);
 t_vector	ray_at(t_ray ray, double t);

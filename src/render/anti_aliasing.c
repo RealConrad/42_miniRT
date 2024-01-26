@@ -17,31 +17,36 @@ static t_vector	get_pixel_center(t_viewport vp, int *cords,
 t_colour	anti_aliasing(t_scene *scene, t_viewport vp, int x, int y)
 {
 	int			i;
+	int			j;
 	t_colour	pixel_colour;
 	t_vector	horiz_scale;
 	t_vector	vert_scale;
 	t_ray		ray;
 
 	i = 0;
+	j = 0;
 	pixel_colour = (t_colour){0, 0 , 0};
 	horiz_scale = vec_divide(vp.horizontal, to_vec(WIDTH));
 	vert_scale = vec_divide(vp.vertical, to_vec(HEIGHT));
 	while (i < RPP)
 	{
-		ray.ray_colour = (t_colour){255, 255, 255};
-		ray.origin = scene->camera.cords;
-		ray.direction = normalize_vector(vec_subtract(
-					get_pixel_center(vp, (int[]){x, y}, horiz_scale, vert_scale),
-					scene->camera.cords));
-		get_ray_intersection(&ray, scene->objects);
-		ray.hit_point = vec_add(ray.hit_point, vec_scalar_multiply(ray.surface_norm, 1e-4));
-		lighting2(scene, &ray);
-		pixel_colour = blend_colour(pixel_colour, ray.ray_colour);
+		j = 0;
+		while (j < RPP)
+		{
+			ray.ray_colour = (t_colour){0, 0, 0};
+			ray.origin = scene->camera.cords;
+			ray.direction = normalize_vector(vec_subtract(
+						get_pixel_center(vp, (int[]){x, y}, horiz_scale, vert_scale),
+						scene->camera.cords));
+			get_ray_intersection(&ray, scene->objects);
+			ray.hit_point = vec_add(ray.hit_point, vec_scalar_multiply(ray.surface_norm, 1e-4));
+			lighting2(scene, &ray);
+			pixel_colour = blend_colour(pixel_colour, ray.ray_colour);
+			j++;
+		}
 		i++;
 	}
-	pixel_colour.r /= RPP;
-	pixel_colour.g /= RPP;
-	pixel_colour.b /= RPP;
+	pixel_colour = colour_scalar_multiply(pixel_colour, 1.0 / (RPP * RPP));
 	return (pixel_colour);
 }
 

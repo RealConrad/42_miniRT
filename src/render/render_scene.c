@@ -49,5 +49,6 @@ static void	calculate_ray_and_draw(t_scene *scene,
 	t_colour	pixel_colour;
 
 	pixel_colour = anti_aliasing(scene, viewport, x, y);
+	pixel_colour = colour_scalar_multiply(pixel_colour, 255);
 	mlx_put_pixel(scene->img, x, y, get_rgb(pixel_colour));
 }
