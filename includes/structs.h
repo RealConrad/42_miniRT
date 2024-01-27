@@ -16,6 +16,9 @@ enum e_exit_msg
 	FORMAT
 };
 
+/**
+ * @brief An object identifier
+*/
 typedef enum e_object_type
 {
 	SPHERE,
@@ -25,6 +28,14 @@ typedef enum e_object_type
 
 
 /* ------------------------------ Vector/Colour ----------------------------- */
+
+/**
+ * @brief A colour datastruct
+ * @note Can either be normalized between 0 and 1 or a rgb colour
+ * @param r the red channel
+ * @param g the green channel
+ * @param b the blue channel
+*/
 typedef struct s_colour
 {
 	double				r;
@@ -32,6 +43,13 @@ typedef struct s_colour
 	double				b;
 }	t_colour;
 
+/**
+ * @brief A vector datastruct
+ * @note Can either be normalized between -1 and 1 or a point
+ * @param x Coordinate (left-right)
+ * @param y Coordinate (down-up)
+ * @param z Coordinate (back-forth)
+*/
 typedef struct s_vector
 {
 	double			x;
@@ -80,12 +98,24 @@ typedef struct s_cy_data
 
 /* ------------------------------- Environment ------------------------------ */
 
+/**
+ * @brief Stores the ambient light data
+ * @param light_ratio the factor (0, 1) the ambient light should be applied with
+ * @param colour_in_range the maximum strengh the ambient light
+ * will give each channel
+*/
 typedef struct s_amb_light
 {
 	double			light_ratio;
 	t_colour		colour_in_range;
 }	t_amb_light;
 
+/**
+ * @brief Stores the camera data
+ * @param cords the position of the camera
+ * @param or_vec the orientation of the camera (normalized between -1 and 1)
+ * @param fov the field of view of the camera
+*/
 typedef struct s_camera
 {
 	t_vector		cords;
@@ -93,6 +123,12 @@ typedef struct s_camera
 	int				fov;
 }	t_camera;
 
+/**
+ * @brief Stores the light data
+ * @param cords the position of the light
+ * @param light_ratio the factor the light will be applied witb (0, 1)
+ * @param colour the colour of the light
+*/
 typedef struct s_light
 {
 	t_vector		cords;
@@ -102,6 +138,12 @@ typedef struct s_light
 
 /* --------------------------------- Objects -------------------------------- */
 
+/**
+ * @brief Stores the data of one sphere object
+ * @param cords the position of the sphere center
+ * @param diameter the diameter of the sphere
+ * @param colour the colour of the sphere
+*/
 typedef struct s_sphere
 {
 	t_vector		cords;
@@ -109,6 +151,12 @@ typedef struct s_sphere
 	t_colour		colour;
 }	t_sphere;
 
+/**
+ * @brief Stores the data of one plane object
+ * @param cords the position of one point in the plane
+ * @param theed_vec the orientation of the plane (normalized between -1, 1)
+ * @param colour the colour of the plane
+*/
 typedef struct s_plane
 {
 	t_vector		cords;
@@ -116,6 +164,14 @@ typedef struct s_plane
 	t_colour		colour;
 }	t_plane;
 
+/**
+ * @brief Stores the data of one cylinder object
+ * @param cords the position of the center point of the cylinder
+ * @param axis the normalized (-1, 1) orientation of the cylinder
+ * @param diameter the diameter (width) of the cylinder
+ * @param height the height of the cylinder
+ * @param colour the colour of the cylinder
+*/
 typedef struct s_cylinder
 {
 	t_vector		cords;
@@ -125,6 +181,15 @@ typedef struct s_cylinder
 	t_colour		colour;
 }	t_cylinder;
 
+/**
+ * @brief A linked list storing all objects
+ * @note Only one object per node (to NULL pointers)
+ * @param sphere pointer to a sphere object
+ * @param plane pointer to a plane objext
+ * @param cylinder pointer to a cylinder object
+ * @param next pointer to the next node containig ONE other object
+ * or NULL if on the last node
+*/
 typedef struct s_object
 {
 	t_sphere		*sphere;
@@ -134,6 +199,20 @@ typedef struct s_object
 }	t_object;
 
 /* ----------------------------------- Ray ---------------------------------- */
+
+/**
+ * @brief Stores the data of a ray
+ * @param origin the origin point of a ray, will either be the camera
+ * or the hit point on an object (for shadow rays)
+ * @param direction the directional vector of a ray (normalized between -1, 1)
+ * @param hit_point the point where the ray hits either a surface
+ * or the light (for a shadow ray)
+ * @param distance the distance between origin and hit_point
+ * @param surface_norm the surface normal of the object on the hit_point
+ * will be uninitialized for shadow rays
+ * @param ray_colour the colour of a ray
+ * (all the light a the hitpoint of the ray from the camera)
+*/
 typedef struct s_ray
 {
 	t_vector	origin;
@@ -148,13 +227,24 @@ typedef struct s_ray
 
 typedef struct s_viewport
 {
-	t_vector	camera_direction;
-	t_vector	horizontal;
-	t_vector	vertical;
-	t_vector	upper_left_corner;
+	double		aspect_ratio;
+	double		focal_length;
+	double		height;
+	double		width;
+	t_vector	delta_u;
+	t_vector	delta_v;
 	t_vector	pixel00_loc;
 }	t_viewport;
 
+/**
+ * @brief Stores all the scene values
+ * @param mlx the mlx window pointer
+ * @param img the image returned from the mlx
+ * @param amb_light the ambient light struct
+ * @param camera the camera struct
+ * @param light the light struct
+ * @param objects the linked list off all the objects
+*/
 typedef struct s_scene
 {
 	mlx_t			*mlx;
