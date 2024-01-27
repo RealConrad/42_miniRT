@@ -27,6 +27,10 @@ void	hit_plane(t_plane *plane, t_ray *ray)
 		ray->distance = distance;
 		ray->ray_colour = normalize_colour(plane->colour);
 		ray->hit_point = ray_at(*ray, ray->distance);
-		ray->surface_norm = normalize_vector(plane->threed_vec);
+		if (d_pro >= 0)
+			ray->surface_norm = normalize_vector(
+				vec_scalar_multiply(plane->threed_vec, -1.0));
+		else
+			ray->surface_norm = normalize_vector(plane->threed_vec);
 	}
 }
