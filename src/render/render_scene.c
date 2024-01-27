@@ -1,7 +1,6 @@
 #include "mini_rt.h"
 
-static void			calculate_ray_and_draw(t_scene *scene,
-						t_viewport viewport, int y, int x);
+static void			calculate_ray_and_draw(t_scene *scene, int y, int x);
 
 /**
  * @brief Renders an entire scene.
@@ -16,17 +15,16 @@ void	render_scene(t_scene *scene)
 {
 	int			x;
 	int			y;
-	t_viewport	viewport;
 
 	y = 0;
 	init_mlx(scene);
-	viewport = calculate_viewport(scene);
+	scene->viewport = calculate_viewport(scene);
 	while (y < HEIGHT)
 	{
 		x = 0;
 		while (x < WIDTH)
 		{
-			calculate_ray_and_draw(scene, viewport, y, x);
+			calculate_ray_and_draw(scene, y, x);
 			x++;
 		}
 		display_render_progress((y * 100) / HEIGHT);
@@ -43,12 +41,11 @@ void	render_scene(t_scene *scene)
  * @param y The current y pixel position
  * @param x The current x pixel position 
  */
-static void	calculate_ray_and_draw(t_scene *scene,
-	t_viewport viewport, int y, int x)
+static void	calculate_ray_and_draw(t_scene *scene, int y, int x)
 {
 	t_colour	pixel_colour;
 
-	pixel_colour = anti_aliasing(scene, viewport, x, y);
+	pixel_colour = anti_aliasing(scene, x, y);
 	pixel_colour = colour_scalar_multiply(pixel_colour, 255);
 	mlx_put_pixel(scene->img, x, y, get_rgb(pixel_colour));
 }

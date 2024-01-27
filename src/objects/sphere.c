@@ -30,6 +30,6 @@ void	hit_sphere(t_sphere *sphere, t_ray *ray)
 	ray->ray_colour = normalize_colour(sphere->colour);
 	ray->hit_point = ray_at(*ray, ray->distance);
 	ray->surface_norm = normalize_vector(vec_subtract(ray->hit_point, sphere->cords));
-	if (dot_product(ray->direction, ray->surface_norm) < 0)
-		ray->surface_norm = vec_scalar_multiply(ray->surface_norm, -1.0);
+	// if (dot_product(ray->direction, ray->surface_norm) < 0)
+	// 	ray->surface_norm = vec_scalar_multiply(ray->surface_norm, -1.0);
 }

@@ -2,9 +2,8 @@
 #include "mini_rt.h"
 
 static t_colour	blend_colour(t_colour pixel_colour, t_colour temp_colour);
-static t_vector	get_random_offset(t_vector horiz_scale, t_vector vert_scale);
-static t_vector	get_pixel_center(t_viewport vp, int *cords,
-					t_vector horiz_scale, t_vector vert_scale);
+// static t_vector	get_random_offset(t_vector horiz_scale, t_vector vert_scale);
+static t_vector	get_pixel_center(t_viewport vp, int x, int y);
 
 /**
  * @brief Sends multiple rays per pixel and averages the colour
@@ -14,20 +13,17 @@ static t_vector	get_pixel_center(t_viewport vp, int *cords,
  * @param y the y coordinate of the pixel
  * @return the colour of the pixel
  */
-t_colour	anti_aliasing(t_scene *scene, t_viewport vp, int x, int y)
+t_colour	anti_aliasing(t_scene *scene, int x, int y)
 {
 	int			i;
 	int			j;
+	double		result;
 	t_colour	pixel_colour;
-	t_vector	horiz_scale;
-	t_vector	vert_scale;
 	t_ray		ray;
 
 	i = 0;
 	j = 0;
 	pixel_colour = (t_colour){0, 0 , 0};
-	horiz_scale = vec_divide(vp.horizontal, to_vec(WIDTH));
-	vert_scale = vec_divide(vp.vertical, to_vec(HEIGHT));
 	while (i < RPP)
 	{
 		j = 0;
@@ -35,9 +31,7 @@ t_colour	anti_aliasing(t_scene *scene, t_viewport vp, int x, int y)
 		{
 			ray.ray_colour = (t_colour){0, 0, 0};
 			ray.origin = scene->camera.cords;
-			ray.direction = normalize_vector(vec_subtract(
-						get_pixel_center(vp, (int[]){x, y}, horiz_scale, vert_scale),
-						scene->camera.cords));
+			ray.direction = normalize_vector(vec_subtract(get_pixel_center(scene->viewport, x, y), scene->camera.cords));
 			get_ray_intersection(&ray, scene->objects);
 			ray.hit_point = vec_add(ray.hit_point, vec_scalar_multiply(ray.surface_norm, 1e-4));
 			lighting2(scene, &ray);
@@ -46,24 +40,22 @@ t_colour	anti_aliasing(t_scene *scene, t_viewport vp, int x, int y)
 		}
 		i++;
 	}
-	pixel_colour = colour_scalar_multiply(pixel_colour, 1.0 / (RPP * RPP));
+	result = 1 / (RPP * RPP);
+	pixel_colour = colour_scalar_multiply(pixel_colour, result);
+	// pixel_colour.r /= RPP;
+	// pixel_colour.g /= RPP;
+	// pixel_colour.b /= RPP;
 	return (pixel_colour);
 }
 
-static t_vector	get_pixel_center(t_viewport vp, int *cords,
-		t_vector horiz_scale, t_vector vert_scale)
+static t_vector	get_pixel_center(t_viewport vp, int x, int y)
 {
-	t_vector	x;
-	t_vector	y;
 	t_vector	pixel_center;
-	t_vector	x_scale;
 
-	x = to_vec(cords[0]);
-	y = to_vec(cords[1]);
-	x_scale = vec_add(vp.pixel00_loc, vec_multiply(horiz_scale, x));
-	pixel_center = vec_add(x_scale, vec_multiply(vert_scale, y));
-	pixel_center = vec_add(pixel_center,
-			get_random_offset(horiz_scale, vert_scale));
+	pixel_center = vec_add(vp.pixel00_loc, vec_scalar_multiply(vp.delta_u, x));
+	pixel_center = vec_add(pixel_center, vec_scalar_multiply(vp.delta_v, y));
+	// pixel_center = vec_add(pixel_center, vec_scalar_multiply(vp.delta_u, 0.5));
+	// pixel_center = vec_add(pixel_center, vec_scalar_multiply(vp.delta_v, 0.5));
 	return (pixel_center);
 }
 
@@ -86,18 +78,18 @@ static t_colour	blend_colour(t_colour pixel_colour, t_colour temp_colour)
 	return (new_colour);
 }
 
-static t_vector	get_random_offset(t_vector horiz_scale, t_vector vert_scale)
-{
-	t_vector	random_offset;
-	t_vector	rand_1;
-	t_vector	rand_2;
-	t_vector	h_mult;
-	t_vector	v_mult;
+// static t_vector	get_random_offset(t_vector horiz_scale, t_vector vert_scale)
+// {
+// 	t_vector	random_offset;
+// 	t_vector	rand_1;
+// 	t_vector	rand_2;
+// 	t_vector	h_mult;
+// 	t_vector	v_mult;
 
-	rand_1 = to_vec(random_double());
-	rand_2 = to_vec(random_double());
-	h_mult = vec_multiply(horiz_scale, rand_1);
-	v_mult = vec_multiply(vert_scale, rand_2);
-	random_offset = vec_add(h_mult, v_mult);
-	return (random_offset);
-}
+// 	rand_1 = to_vec(random_double());
+// 	rand_2 = to_vec(random_double());
+// 	h_mult = vec_multiply(horiz_scale, rand_1);
+// 	v_mult = vec_multiply(vert_scale, rand_2);
+// 	random_offset = vec_add(h_mult, v_mult);
+// 	return (random_offset);
+// }

@@ -48,45 +48,6 @@ static t_colour	get_diffuse(t_scene *scene, t_ray *ray, double dot)
 	return (diffuse);
 }
 
-// Helper function to reflect a vector around a normal
-// t_vector reflect(t_vector v, t_vector normal) {
-//     return vec_subtract(vec_scalar_multiply(normal, 2 * dot_product(normal, v)), v);
-// }
-
-// t_vector vec_negate(t_vector v) {
-//     t_vector negated;
-//     negated.x = -v.x;
-//     negated.y = -v.y;
-//     negated.z = -v.z;
-//     return negated;
-// }
-
-// static t_colour get_specular(t_scene *scene, t_ray *ray, t_vector light_dir, double dot) {
-//     t_vector reflection;
-//     t_vector view_dir;
-//     t_colour specular;
-//     double spec_intensity;
-//     double spec_angle;
-
-//     // Correct the light direction and calculate the reflection vector
-//     light_dir = vec_negate(normalize_vector(light_dir));  // Negate and normalize light direction
-//     reflection = reflect(light_dir, ray->surface_norm);
-
-//     // Correct the view direction calculation
-//     view_dir = normalize_vector(vec_subtract(ray->hit_point, ray->origin));
-
-//     // Calculate the specular angle and intensity
-//     spec_angle = fmax(dot_product(view_dir, reflection), 0.0);
-//     spec_intensity = pow(spec_angle, SHINY);
-
-//     // Normalize the light color and calculate the specular color
-//     t_colour normalized_light_color = normalize_colour(scene->light.colour);
-//     specular = colour_scalar_multiply(normalized_light_color, spec_intensity);
-//     specular = colour_scalar_multiply(specular, scene->light.light_ratio);
-// 	(void)dot;
-//     return specular;
-// }
-
 static t_colour	get_specular(t_scene *scene, t_ray *ray, t_vector light_dir, double dot)
 {
 	t_vector	reflection;
@@ -98,7 +59,7 @@ static t_colour	get_specular(t_scene *scene, t_ray *ray, t_vector light_dir, dou
 	reflection = vec_subtract(vec_scalar_multiply(ray->surface_norm, 2 * dot), light_dir);
 	view_dir = normalize_vector(vec_subtract(ray->origin, ray->hit_point));
 	spec_angle = fmax(dot_product(view_dir, reflection), 0.0);
-	spec_intensity = pow(spec_angle, 300); //TODO CHANHE
+	spec_intensity = pow(spec_angle, 100); //TODO CHANHE
 	specular = colour_scalar_multiply(normalize_colour(scene->light.colour), spec_intensity);
 	specular = colour_scalar_multiply(specular, scene->light.light_ratio);
 	return (specular);
@@ -110,6 +71,7 @@ static bool	light_hit(t_ray ray, t_object *objects)
 	double		distance;
 
 	temp = objects;
+	// ray.origin = vec_add(ray.origin, vec_scalar_multiply(ray.direction, EPSILON));
 	while (temp != NULL)
 	{
 		distance = hit_object(temp, &ray);

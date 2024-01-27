@@ -253,6 +253,7 @@ typedef struct s_scene
 	t_camera		camera;
 	t_light			light;
 	t_object		*objects;
+	t_viewport		viewport;
 }	t_scene;
 
 #endif

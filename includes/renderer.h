@@ -12,7 +12,7 @@ void		render_sphere(t_scene *scene, t_sphere *sphere);
 double		clamp(double value, double min, double max);
 bool		get_ray_intersection(t_ray *ray, t_object *objects);
 t_vector	ray_at(t_ray ray, double t);
-t_colour	anti_aliasing(t_scene *scene, t_viewport vp, int x, int y);
+t_colour	anti_aliasing(t_scene *scene, int x, int y);
 
 /* --------------------------------- Objects -------------------------------- */
 
@@ -33,7 +33,7 @@ void		exit_render(t_scene *scene, char *msg);
 /* -------------------------------- Viewport -------------------------------- */
 
 t_viewport	calculate_viewport(t_scene *scene);
-void		assign_viewport_vectors(t_viewport *viewport, t_scene *scene,
-				double vp_height, double vp_width);
+// void		assign_viewport_vectors(t_viewport *viewport, t_scene *scene,
+// 				double vp_height, double vp_width);
 
 #endif /*RENDERER_H*/
