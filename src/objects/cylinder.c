@@ -43,9 +43,13 @@ void	hit_cylinder(t_cylinder *cylinder, t_ray *ray)
 static void init_cy_data(t_cy_data *data, t_ray *ray, t_cylinder *cylinder)
 {
 	data->x = vec_subtract(ray->origin, cylinder->cords);
-	data->d = normalize_vector(ray->direction);
-	data->v = normalize_vector(cylinder->axis);
-	data->radius = cylinder->diameter / 2.0;
+	data->d = (ray->direction);
+	data->v = normalize_vector(normalize_vector(cylinder->axis));
+	// printf("\n\nCYLINDER:\n");
+	// t_print_vector(data->d);
+	// t_print_vector(data->v);
+	// exit(0);
+	data->radius = cylinder->diameter * 0.5;
 	data->a = dot_product(data->d, data->d) - pow(dot_product(data->d, data->v), 2);
 	data->b = 2 * (dot_product(data->d, data->x) - (dot_product(data->d, data->v) * dot_product(data->x, data->v)));
 	data->c = dot_product(data->x, data->x) - pow(dot_product(data->x, data->v), 2) - data->radius * data->radius;
@@ -131,50 +135,48 @@ static bool check_cap(t_cy_data *data, t_vector cap_center, double t_cap, t_ray 
  * @param ray The ray to set the distance for
  * @param data The data used to determine which is closer
  */
-// static void find_closest_intersection(t_ray *ray, t_cy_data *data)
-// {
-// 	double	d_cap;
-// 	double	d_side;
-
-// 	d_side = -1.0;
-// 	d_cap = find_closest_cap(data);
-// 	if (data->within_bounds_d0 && data->d0 > 0)
-// 		d_side = data->d0;
-// 	else if (data->within_bounds_d1 && data->d1 > 0 && (d_side < 0 || data->d1 < d_side))
-// 		d_side = data->d1;
-// 	if (d_cap > 0 && (d_cap < d_side || d_side <= 0))
-// 		ray->distance = d_cap;
-// 	else if (d_side > 0)
-// 		ray->distance = d_side;
-// 	else
-// 		ray->distance = -1.0;
-// }
-
 static void find_closest_intersection(t_ray *ray, t_cy_data *data)
 {
-    double d_cap;
-    double d_side;
+	double	d_cap;
+	double	d_side;
 
-    // Initialize d_side to a large number or infinity
-    d_side = DBL_MAX; // or a very large number if DBL_MAX is not available
-    d_cap = find_closest_cap(data);
-
-    // Check if the intersection with the cylinder's side (d0) is valid and closer
-    if (data->within_bounds_d0 && data->d0 > 0) {
-        d_side = data->d0;
-    }
-
-    // Check if the intersection with the cylinder's side (d1) is valid and closer
-    if (data->within_bounds_d1 && data->d1 > 0 && data->d1 < d_side) {
-        d_side = data->d1;
-    }
-
-    // Determine the closest intersection
-    if (d_cap > 0 && (d_cap < d_side)) {
-        ray->distance = d_cap; // Cap intersection is closer
-    } else if (d_side < DBL_MAX) {
-        ray->distance = d_side; // Side intersection is closer
-    } else {
-        ray->distance = -1.0; // No valid intersection
-    }
+	d_side = -1.0;
+	d_cap = find_closest_cap(data);
+	if (data->within_bounds_d0)
+		d_side = data->d0;
+	if (d_cap > 0 && (d_cap < d_side || d_side < 0))
+		ray->distance = d_cap;
+	else if (d_side > 0)
+		ray->distance = d_side;
+	else
+		ray->distance = -1.0;
 }
+
+// static void find_closest_intersection(t_ray *ray, t_cy_data *data)
+// {
+//     double d_cap;
+//     double d_side;
+
+//     // Initialize d_side to a large number or infinity
+//     d_side = DBL_MAX; // or a very large number if DBL_MAX is not available
+//     d_cap = find_closest_cap(data);
+
+//     // Check if the intersection with the cylinder's side (d0) is valid and closer
+//     if (data->within_bounds_d0 && data->d0 > 0) {
+//         d_side = data->d0;
+//     }
+
+//     // Check if the intersection with the cylinder's side (d1) is valid and closer
+//     if (data->within_bounds_d1 && data->d1 > 0 && data->d1 < d_side) {
+//         d_side = data->d1;
+//     }
+
+//     // Determine the closest intersection
+//     if (d_cap > 0 && (d_cap < d_side)) {
+//         ray->distance = d_cap; // Cap intersection is closer
+//     } else if (d_side < DBL_MAX) {
+//         ray->distance = d_side; // Side intersection is closer
+//     } else {
+//         ray->distance = -1.0; // No valid intersection
+//     }
+// }

@@ -21,8 +21,44 @@ t_viewport	calculate_viewport(t_scene *scene)
 		temp_vector = (t_vector){0, 0, 1};
 
 	// Get delta
+	printf("HEIGHT: %d WIDTH: %d\n", HEIGHT, WIDTH);
+
+	printf("Focal Length:\n %f\n", viewport.focal_length);
+	printf("Temp:\n");
+	t_print_vector(temp_vector);
+	printf("Camera vector:\n");
+	t_print_vector(camera_vector);
+	printf("Cross product:\n");
+	t_print_vector(cross_product(temp_vector, camera_vector));
+	printf("Norm vector of cross product:\n");
+	t_print_vector(normalize_vector(cross_product(temp_vector, camera_vector)));
+	printf("-----------------------\n");
+
+
 	viewport.delta_v = vec_scalar_multiply(normalize_vector(cross_product(temp_vector, camera_vector)), HEIGHT);
-	viewport.delta_u = vec_scalar_multiply(normalize_vector(cross_product(viewport.delta_v, camera_vector)), -WIDTH);
+
+
+	printf("Delta V:\n");
+	t_print_vector(viewport.delta_v);
+
+	printf("-----------------------\n");
+	printf("Camera vector:\n");
+	t_print_vector(camera_vector);
+	printf("Cross product:\n");
+	t_print_vector(cross_product(camera_vector, viewport.delta_v));
+	printf("Norm vector of cross product:\n");
+	t_print_vector(normalize_vector(cross_product(camera_vector, viewport.delta_v)));
+
+
+	viewport.delta_u = vec_scalar_multiply(normalize_vector(cross_product(camera_vector, viewport.delta_v)), WIDTH);
+	// viewport.delta_u.x *= -1;
+	// viewport.delta_u.z *= -1;
+
+	printf("-----------------------\n");
+	printf("Delta U:\n");
+	t_print_vector(viewport.delta_u);
+
+	// exit(0);
 
 	// Get upper left corner
 	viewport.pixel00_loc = vec_scalar_multiply(viewport.delta_u, -0.5);

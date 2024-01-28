@@ -70,5 +70,11 @@ t_vector	normalize_vector(t_vector v)
 	unit.x = v.x / length;
 	unit.y = v.y / length;
 	unit.z = v.z / length;
+	if (unit.x > EPSILON * -1 && unit.x < 0)
+		unit.x = 0;
+	if (unit.y > EPSILON * -1 && unit.y < 0)
+		unit.y = 0;
+	if (unit.z > EPSILON * -1 && unit.z < 0)
+		unit.z = 0;
 	return (unit);
 }

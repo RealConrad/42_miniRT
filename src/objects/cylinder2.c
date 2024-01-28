@@ -30,29 +30,29 @@ double	find_closest_cap(t_cy_data *data)
 t_vector	get_cylinder_surface_norm(t_cy_data data, t_ray *ray, t_cylinder *cylinder)
 {
 	t_vector	norm;
-	t_vector	axis_to_intersection;
-	t_vector	closest_point;
-	double		proj_length;
 
 	if (ray->distance == data.d_bot_cap || ray->distance == data.d_top_cap)
 	{
 		if (ray->distance == data.d_top_cap)
 		{
-			// printf("TOP CAP ::: Distance: %f, %f\n", ray->distance, data.d_top_cap);
-			t_print_vector(cylinder->axis);
+			// printf("TOP: ");
+			// t_print_vector(normalize_vector(cylinder->axis));
 			return (normalize_vector(cylinder->axis));
 		}
 		else
 		{
-			// printf("BOT CAP::: Distance: %f, %f\n", ray->distance, data.d_bot_cap);
-			return (normalize_vector((t_vector){-cylinder->axis.x, -cylinder->axis.y, -cylinder->axis.z}));
+			// printf("BOT: ");
+			// t_print_vector(normalize_vector(vec_scalar_multiply(cylinder->axis, -1)));
+			return (normalize_vector(vec_scalar_multiply(cylinder->axis, -1)));
 		}
 	}
-	printf("SIDE ::: Distance: %f\n", ray->distance);
-	// axis_to_intersection = vec_subtract(ray->hit_point, cylinder->cords);
-	axis_to_intersection = normalize_vector(vec_subtract(ray->hit_point, cylinder->cords));
-	proj_length = dot_product(axis_to_intersection, cylinder->axis);
-	closest_point = vec_add(cylinder->cords, vec_scalar_multiply(cylinder->axis, proj_length));
-	norm = normalize_vector(vec_subtract(ray->hit_point, closest_point));
-	return (norm);
+
+	// THIS IS OUR CODE:
+	cylinder->axis = normalize_vector(cylinder->axis);
+	t_vector x = vec_subtract(ray->origin, cylinder->cords);
+	double m = dot_product(ray->direction, vec_scalar_multiply(cylinder->axis, ray->distance)) + dot_product(x, cylinder->axis);
+	norm = (vec_subtract(vec_subtract(ray->hit_point, cylinder->cords), vec_scalar_multiply(cylinder->axis, m)));
+	// printf("SIDE: ");
+	// t_print_vector(normalize_vector(norm));
+	return (normalize_vector(norm));
 }

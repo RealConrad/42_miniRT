@@ -7,7 +7,7 @@
  */
 void	init_mlx(t_scene *scene)
 {
-	scene->mlx = mlx_init(WIDTH, HEIGHT, "miniRT", false);
+	scene->mlx = mlx_init(WIDTH, HEIGHT, "miniRT", true);
 	if (scene->mlx == NULL)
 		exit_render(scene, "mlx_init failed");
 	scene->img = mlx_new_image(scene->mlx, WIDTH, HEIGHT);

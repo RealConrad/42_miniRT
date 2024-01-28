@@ -12,7 +12,7 @@ t_vector	ray_at(t_ray ray, double t)
 {
 	t_vector	result;
 
-	result = vec_add(ray.origin, vec_scalar_multiply(ray.direction, t));
+	result = vec_add(ray.origin, vec_scalar_multiply(normalize_vector(ray.direction), t));
 	return (result);
 }
 
