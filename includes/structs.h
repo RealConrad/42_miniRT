@@ -68,11 +68,9 @@ typedef struct s_vector
  * @param radius Radius of the cylinder
  * @param discriminant Result of quadratic equation, used to determine intersections
  * @param d0 Distance of first potentional intersection
- * @param d1 Distance of second potentional intersection
  * @param d_top_cap Distance to the top caps intersection
  * @param d_bot_cap Distance to bot caps intersection
  * @param within_bounds_d0 Used to determine if `d0` is within cy bounds
- * @param within_bounds_d1 Used to determine if `d1` is within cy bounds
  * @param hit_top_cap Boolean indicating if top cap is intersected
  * @param hit_bot_cap Boolean indicating if bot cap is intersected
  */
@@ -87,11 +85,9 @@ typedef struct s_cy_data
 	double		radius;
 	double		discriminant;
 	double		d0;
-	double		d1;
 	double		d_top_cap;
 	double		d_bot_cap;
 	bool		within_bounds_d0;
-	bool		within_bounds_d1;
 	bool		hit_top_cap;
 	bool		hit_bot_cap;
 }	t_cy_data;

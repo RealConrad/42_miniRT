@@ -24,10 +24,12 @@ double		find_closest_cap(t_cy_data *data);
 t_vector	get_cylinder_surface_norm(t_cy_data data, t_ray *ray,
 				t_cylinder *cylinder);
 t_vector	get_cylinder_surface_norm(t_cy_data data, t_ray *ray, t_cylinder *cylinder);
+void		find_closest_intersection(t_ray *ray, t_cy_data *data);
 
 /* ----------------------------------- MLX ---------------------------------- */
 
 void		init_mlx(t_scene *scene);
+void		close_win(void);
 void		exit_render(t_scene *scene, char *msg);
 
 #endif /*RENDERER_H*/

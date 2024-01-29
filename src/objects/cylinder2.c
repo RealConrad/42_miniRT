@@ -8,7 +8,8 @@
  */
 double	find_closest_cap(t_cy_data *data)
 {
-	if (data->hit_top_cap && (!data->hit_bot_cap || data->d_top_cap < data->d_bot_cap))
+	if (data->hit_top_cap && (!data->hit_bot_cap
+			|| data->d_top_cap < data->d_bot_cap))
 		return (data->d_top_cap);
 	else if (data->hit_bot_cap)
 		return (data->d_bot_cap);
@@ -45,3 +46,27 @@ t_vector	get_cylinder_surface_norm(t_cy_data data, t_ray *ray, t_cylinder *cylin
 	norm = (vec_subtract(vec_subtract(ray->hit_point, cylinder->cords), vec_scalar_multiply(cylinder->axis, m)));
 	return (normalize_vector(norm));
 }
+
+/**
+ * @brief Finds which intersection is closer, side or cap and
+ * then sets the `ray->distance` to the closer one.
+ * @param ray The ray to set the distance for
+ * @param data The data used to determine which is closer
+ */
+void find_closest_intersection(t_ray *ray, t_cy_data *data)
+{
+	double	d_cap;
+	double	d_side;
+
+	d_side = -1.0;
+	d_cap = find_closest_cap(data);
+	if (data->within_bounds_d0)
+		d_side = data->d0;
+	if (d_cap > 0 && (d_cap < d_side || d_side < 0))
+		ray->distance = d_cap;
+	else if (d_side > 0)
+		ray->distance = d_side;
+	else
+		ray->distance = -1.0;
+}
+

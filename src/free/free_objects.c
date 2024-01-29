@@ -22,4 +22,3 @@ void	free_objects(t_object *objects)
 		objects = temp;
 	}
 }
-

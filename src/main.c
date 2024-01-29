@@ -1,4 +1,10 @@
+
 #include "mini_rt.h"
+
+// void	leak_check(void)
+// {
+// 	system("leaks miniRT");
+// }
 
 int	main(int argc, char *argv[])
 {
@@ -10,8 +16,9 @@ int	main(int argc, char *argv[])
 		parser_exit(INPUT_FILE, NULL);
 	scene = (t_scene){};
 	scene = parser(argv);
-	
 	render_scene(&scene);
 	mlx_loop(scene.mlx);
 	return (0);
 }
+
+	// atexit(leak_check);
