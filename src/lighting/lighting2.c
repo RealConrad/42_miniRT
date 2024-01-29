@@ -2,7 +2,7 @@
 
 static t_colour	get_diffuse(t_scene *scene, t_ray *ray, double dot);
 static t_colour	get_specular(t_scene *scene, t_ray *ray, t_vector light_dir, double dot);
-static bool		light_hit(t_ray ray, t_object *objects);
+static bool		light_hit(t_ray ray, t_object *objects, t_light light);
 static t_ray	get_light_ray(t_light light, t_vector hit_point);
 
 void	lighting2(t_scene *scene, t_ray *ray)
@@ -17,10 +17,10 @@ void	lighting2(t_scene *scene, t_ray *ray)
 	{
 		amb = get_ambient_light(ray->ray_colour, scene->amb_light);
 		light_ray = get_light_ray(scene->light, ray->hit_point);
-		if (light_hit(light_ray, scene->objects))
+		if (light_hit(light_ray, scene->objects, scene->light))
 		{
 			dot = fmax(dot_product(normalize_vector(ray->surface_norm), light_ray.direction), 0.0);
-			// printf("Dot: %f\n", dot);
+
 			diffuse = get_diffuse(scene, ray, dot);
 			specular = get_specular(scene, ray, light_ray.direction, dot);
 
@@ -30,7 +30,7 @@ void	lighting2(t_scene *scene, t_ray *ray)
 			clamp_normalized_colour(&ray->ray_colour);
 		}
 		else
-			ray->ray_colour = (t_colour){255,255,0};
+			ray->ray_colour = amb;
 	}
 	else
 		ray->ray_colour = get_sky_background(ray);
@@ -63,7 +63,7 @@ static t_colour	get_specular(t_scene *scene, t_ray *ray, t_vector light_dir, dou
 	return (specular);
 }
 
-static bool	light_hit(t_ray ray, t_object *objects)
+static bool	light_hit(t_ray ray, t_object *objects, t_light light)
 {
 	t_object	*temp;
 	double		distance;
@@ -72,7 +72,7 @@ static bool	light_hit(t_ray ray, t_object *objects)
 	while (temp != NULL)
 	{
 		distance = hit_object(temp, &ray);
-		if (distance > 0.0 && distance < vec_length(vec_subtract(ray.hit_point, ray.origin)) + EPSILON)
+		if (distance > 0.0 && distance < vec_length(vec_subtract(light.cords, ray.origin)) + EPSILON)
 			return (false);
 		temp = temp->next;
 	}

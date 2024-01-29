@@ -34,25 +34,14 @@ t_vector	get_cylinder_surface_norm(t_cy_data data, t_ray *ray, t_cylinder *cylin
 	if (ray->distance == data.d_bot_cap || ray->distance == data.d_top_cap)
 	{
 		if (ray->distance == data.d_top_cap)
-		{
-			// printf("TOP: ");
-			// t_print_vector(normalize_vector(cylinder->axis));
 			return (normalize_vector(cylinder->axis));
-		}
 		else
-		{
-			// printf("BOT: ");
-			// t_print_vector(normalize_vector(vec_scalar_multiply(cylinder->axis, -1)));
 			return (normalize_vector(vec_scalar_multiply(cylinder->axis, -1)));
-		}
 	}
-
-	// THIS IS OUR CODE:
+	// THIS IS MARKUS CODE:
 	cylinder->axis = normalize_vector(cylinder->axis);
 	t_vector x = vec_subtract(ray->origin, cylinder->cords);
 	double m = dot_product(ray->direction, vec_scalar_multiply(cylinder->axis, ray->distance)) + dot_product(x, cylinder->axis);
 	norm = (vec_subtract(vec_subtract(ray->hit_point, cylinder->cords), vec_scalar_multiply(cylinder->axis, m)));
-	// printf("SIDE: ");
-	// t_print_vector(normalize_vector(norm));
 	return (normalize_vector(norm));
 }
