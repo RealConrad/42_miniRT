@@ -23,7 +23,7 @@ t_colour	anti_aliasing(t_scene *scene, int x, int y)
 		get_ray_intersection(&ray, scene->objects);
 		ray.hit_point = vec_add(ray.hit_point,
 				vec_scalar_multiply(ray.surface_norm, EPSILON));
-		lighting2(scene, &ray);
+		lighting(scene, &ray);
 		pixel_colour = blend_colour(pixel_colour, ray.ray_colour);
 		i++;
 	}
