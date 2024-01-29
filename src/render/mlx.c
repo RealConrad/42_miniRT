@@ -14,6 +14,7 @@ void	init_mlx(t_scene *scene)
 	if (scene->img == NULL)
 		exit_render(scene, "mlx_new_img failed");
 	mlx_key_hook(scene->mlx, (void *)escape, NULL);
+	mlx_close_hook(scene->mlx, (void *)close_win, NULL);
 	mlx_image_to_window(scene->mlx, scene->img, 0, 0);
 }
 

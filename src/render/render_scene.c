@@ -33,6 +33,7 @@ void	render_scene(t_scene *scene)
 		display_render_progress((y * 100) / HEIGHT);
 		y++;
 	}
+	free_objects(scene->objects);
 	display_render_progress(100);
 }
 
