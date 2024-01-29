@@ -3,8 +3,8 @@
 /**
  * @brief Creates a progress bar in terminal to display the current
  * rendering progress.
- * @param percent The current percentage `((y * 100) / HEIGHT)`.
- * Used to calculate the 
+ * @param percent The current percentage.
+ * @note `((y * 100) / HEIGHT)` Used to calculate the 
  * current position in the progress bar.
  */
 void	display_render_progress(int percent)

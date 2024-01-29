@@ -54,7 +54,6 @@
 void		escape(keys_t keycode, void *param);
 void		display_render_progress(int percent);
 
-t_colour	colour_multiply(t_colour c1, t_colour c2);
 t_colour	colour_scalar_multiply(t_colour c, double scalar);
 t_colour	get_sky_background(t_ray *ray);
 t_colour	normalize_colour(t_colour colour);
