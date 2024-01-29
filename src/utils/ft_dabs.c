@@ -1,6 +1,5 @@
 
 #include "mini_rt.h"
-#include <float.h>
 
 /**
  * @brief Gets the absolute value of a double

@@ -13,3 +13,8 @@ void	escape(keys_t keycode, void *param)
 	if (keycode == MLX_KEY_ESCAPE)
 		exit(0);
 }
+
+void	close_win(void)
+{
+	exit(0);
+}

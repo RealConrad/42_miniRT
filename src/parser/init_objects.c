@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init_objects.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: eweiberl <eweiberl@student.42heilbronn.    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/01/29 17:28:28 by eweiberl          #+#    #+#             */
+/*   Updated: 2024/01/29 17:28:32 by eweiberl         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "mini_rt.h"
 
 static void		add_object_to_linked_list(t_scene *scene, t_object *object);

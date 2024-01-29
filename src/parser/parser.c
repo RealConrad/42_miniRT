@@ -1,13 +1,25 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parser.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: eweiberl <eweiberl@student.42heilbronn.    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/01/29 17:36:30 by eweiberl          #+#    #+#             */
+/*   Updated: 2024/01/29 17:36:31 by eweiberl         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "mini_rt.h"
 
 static void	analyse_line(t_scene *scene, char **tokens, int fd);
 static void	init_scene_default(t_scene *scene);
+static char	*normalize_line(char *line);
 
 /**
  * @brief Parses/Creates a scene from the given file stored in `argv`.
- * 
- * This function opens the given file and reads it line by line. Each line is split
- * into tokens to analyse different scene elements.
+ * This function opens the given file and reads it line by line.
+ * Each line is split into tokens to analyse different scene elements.
  * @param argv The command line input that holds the file.
  * @return The scene based on the file contents.
  */
@@ -27,13 +39,8 @@ t_scene	parser(char **argv)
 		line = get_next_line(fd);
 		if (!line)
 			break ;
-		if (ft_strncmp(line, "\n", 2) == 0 || ft_strncmp(line, "#", 1) == 0)
-		{
-			free(line);
+		if (normalize_line(line) == NULL)
 			continue ;
-		}
-		if (line[ft_strlen(line) - 1] == '\n')
-			line[ft_strlen(line) - 1] = '\0';
 		tokens = split_line(line);
 		free(line);
 		if (!tokens)
@@ -43,6 +50,18 @@ t_scene	parser(char **argv)
 	}
 	close(fd);
 	return (scene);
+}
+
+static char	*normalize_line(char *line)
+{
+	if (ft_strncmp(line, "\n", 2) == 0 || ft_strncmp(line, "#", 1) == 0)
+	{
+		free(line);
+		return (NULL);
+	}
+	if (line[ft_strlen(line) - 1] == '\n')
+		line[ft_strlen(line) - 1] = '\0';
+	return (line);
 }
 
 /**

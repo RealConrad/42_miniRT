@@ -10,9 +10,9 @@
  */
 uint32_t	get_rgb(t_colour colour)
 {
-	return (((int)colour.r << 24) | ((int)colour.g << 16) | ((int)colour.b << 8) | 255);
+	return (((int)colour.r << 24) | ((int)colour.g << 16)
+		| ((int)colour.b << 8) | 255);
 }
-
 
 /**
  * @brief Scales the given colour by `scalar`
@@ -20,7 +20,7 @@ uint32_t	get_rgb(t_colour colour)
  * @param scalar A double to scale each colour element by
  * @return A newly scaled colour.
  */
-t_colour colour_scalar_multiply(t_colour c, double scalar)
+t_colour	colour_scalar_multiply(t_colour c, double scalar)
 {
 	t_colour	result;
 
@@ -83,12 +83,10 @@ void	clamp_normalized_colour(t_colour *colour)
 		colour->r = 1.0;
 	if (colour->r < 0)
 		colour->r = 0;
-
 	if (colour->g > 1.0)
 		colour->g = 1.0;
 	if (colour->g < 0)
 		colour->g = 0;
-
 	if (colour->b > 1.0)
 		colour->b = 1.0;
 	if (colour->b < 0)

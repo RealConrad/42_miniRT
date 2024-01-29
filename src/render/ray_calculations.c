@@ -11,7 +11,8 @@ t_vector	ray_at(t_ray ray, double distance)
 {
 	t_vector	result;
 
-	result = vec_add(ray.origin, vec_scalar_multiply(normalize_vector(ray.direction), distance));
+	result = vec_add(ray.origin, vec_scalar_multiply(
+				normalize_vector(ray.direction), distance));
 	return (result);
 }
 
