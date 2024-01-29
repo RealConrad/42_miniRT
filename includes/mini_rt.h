@@ -13,8 +13,8 @@
 /*                                  Includes                                  */
 /* -------------------------------------------------------------------------- */
 
-# include "parser.h"
 # include "structs.h"
+# include "parser.h"
 # include "renderer.h"
 # include "testing.h"
 # include "vector.h"
@@ -27,6 +27,7 @@
 # include <stdbool.h>
 # include <pthread.h>
 # include <float.h>
+# include <stdint.h>
 
 /* -------------------------------------------------------------------------- */
 /*                                   Defines                                  */
@@ -34,16 +35,23 @@
 
 # ifndef WIDTH
 #  define WIDTH 1920
-# endif
+# endif /*WIDTH*/
 
 # ifndef HEIGHT
 #  define HEIGHT 1080
-# endif
+# endif /*HEIGHT*/
 
 # ifndef RPP
 #  define RPP 1
-# endif
+# endif /*RPP*/
 
+# ifndef SHINY
+#  define SHINY 100
+# endif /*SHINY*/
+
+# ifndef EPSILON
+#  define EPSILON 1e-6
+# endif /*EPSILON*/
 
 /* -------------------------------------------------------------------------- */
 /*                                  Functions                                 */

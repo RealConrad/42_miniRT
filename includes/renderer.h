@@ -2,8 +2,11 @@
 #ifndef RENDERER_H
 # define RENDERER_H
 
-# include <stdint.h>
-# include "struct.h"
+# include "mini_rt.h"
+
+/* -------------------------------------------------------------------------- */
+/*                                  Functions                                 */
+/* -------------------------------------------------------------------------- */
 
 void		render_scene(t_scene *scene);
 void		render_cylinder(t_scene *scene, t_cylinder *cylinder);
@@ -23,7 +26,8 @@ void		hit_cylinder(t_cylinder *cylinder, t_ray *ray);
 double		find_closest_cap(t_cy_data *data);
 t_vector	get_cylinder_surface_norm(t_cy_data data, t_ray *ray,
 				t_cylinder *cylinder);
-t_vector	get_cylinder_surface_norm(t_cy_data data, t_ray *ray, t_cylinder *cylinder);
+t_vector	get_cylinder_surface_norm(t_cy_data data, t_ray *ray,
+				t_cylinder *cylinder);
 void		find_closest_intersection(t_ray *ray, t_cy_data *data);
 
 /* ----------------------------------- MLX ---------------------------------- */

@@ -2,7 +2,9 @@
 #ifndef STRUCTS_H
 # define STRUCTS_H
 
-# include <stdint.h>
+# include "mini_rt.h"
+
+/* ---------------------------------- Enums --------------------------------- */
 
 enum e_exit_msg
 {
@@ -66,11 +68,13 @@ typedef struct s_vector
  * @param b Coefficient `b` in quadratic equation for intersection
  * @param c Coefficient `c` in quadratic equation for intersection
  * @param radius Radius of the cylinder
- * @param discriminant Result of quadratic equation, used to determine intersections
+ * @param discriminant Result of quadratic equation,
+ * used to determine intersections
  * @param d0 Distance of first potentional intersection
  * @param d_top_cap Distance to the top caps intersection
  * @param d_bot_cap Distance to bot caps intersection
- * @param within_bounds_d0 Used to determine if `d0` is within cy bounds
+ * @param within_bounds_d0 Used to determine if `d0`
+ * is within cy bounds
  * @param hit_top_cap Boolean indicating if top cap is intersected
  * @param hit_bot_cap Boolean indicating if bot cap is intersected
  */
