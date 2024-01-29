@@ -45,7 +45,7 @@ RENDER_SRC		:= render_scene.c ray_calculations.c mlx.c anti_aliasing.c
 DEBUGGING_SRC	:= t_printing.c
 VEC_UTILS_SRC	:= vector_operations.c vector_operations2.c
 
-LIGHTING_SRC	:= lighting.c lighting2.c lighting3.c ambient_light.c
+LIGHTING_SRC	:= lighting.c lighting2.c ambient_light.c
 
 OBJECTS_SRC		:= cylinder.c cylinder2.c plane.c sphere.c objects.c
 
