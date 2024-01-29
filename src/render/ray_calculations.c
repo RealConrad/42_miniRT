@@ -1,28 +1,30 @@
 
 #include "mini_rt.h"
 
-
 /**
- * @brief returns the point of the ray at distance t
- * @param ray
- * @param t The point of intersection of an object at a distance from its origin
- * @return the point from ray origin at distance t
+ * @brief Calculates the point of intersection based on the distance
+ * @param ray The given ray.
+ * @param distance The distance from the rays origin along the ray.
+ * @return The position vector of the point along the ray.
  */
-t_vector	ray_at(t_ray ray, double t)
+t_vector	ray_at(t_ray ray, double distance)
 {
 	t_vector	result;
+	t_vector	scaled_vector;
 
-	result = vec_add(ray.origin, vec_scalar_multiply(normalize_vector(ray.direction), t));
+	scaled_vector = vec_scalar_multiply(normalize_vector(ray.direction), distance);
+	result = vec_add(ray.origin, scaled_vector);
 	return (result);
 }
 
 /**
- * @brief Gets the ray information
- * @param ray 
- * @param objects 
- * @return true if the ray hits anything, otherwise false
+ * @brief Determines if the given ray intersects with an object.
+ * @param ray The ray to check for intersection
+ * @param objects The list of objects in the scene.
+ * @note If the ray distance is -1, there was no intersection.
+ * If its a positive value, there was intersection.
  */
-bool	get_ray_intersection(t_ray *ray, t_object *objects)
+void	get_ray_intersection(t_ray *ray, t_object *objects)
 {
 	t_object	*temp;
 	double		distance;
@@ -42,8 +44,5 @@ bool	get_ray_intersection(t_ray *ray, t_object *objects)
 		}
 		temp = temp->next;
 	}
-	if (closest == NULL)
-		return (false);
 	hit_object(closest, ray);
-	return (true);
 }

@@ -3,7 +3,7 @@
 
 /**
  * @brief Initialises the window and puts the image to the window
- * @param scene 
+ * @param scene Contains the mlx to initalize.
  */
 void	init_mlx(t_scene *scene)
 {
