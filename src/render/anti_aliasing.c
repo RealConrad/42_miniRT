@@ -2,76 +2,84 @@
 #include "mini_rt.h"
 
 static t_colour	blend_colour(t_colour pixel_colour, t_colour temp_colour);
+static t_vector	get_pixel_center(t_viewport vp, int x, int y);
 static t_vector	get_random_offset(t_vector horiz_scale, t_vector vert_scale);
-static t_vector	get_pixel_center(t_viewport vp, int *cords,
-		t_vector horiz_scale, t_vector vert_scale);
 
-t_colour	anti_aliasing(t_scene *scene, t_viewport vp, int x, int y)
+t_colour	anti_aliasing(t_scene *scene, int x, int y)
 {
 	int			i;
 	t_colour	pixel_colour;
-	t_vector	horiz_scale;
-	t_vector	vert_scale;
 	t_ray		ray;
 
 	i = 0;
-	pixel_colour = (t_colour){0, 0 , 0};
-	horiz_scale = vec_divide(vp.horizontal, to_vec(WIDTH));
-	vert_scale = vec_divide(vp.vertical, to_vec(HEIGHT));
+	pixel_colour = (t_colour){0, 0, 0};
 	while (i < RPP)
 	{
+		ray.ray_colour = (t_colour){0, 0, 0};
 		ray.origin = scene->camera.cords;
-		ray.direction = normalize_vector(vec_subtract(
-					get_pixel_center(vp, (int[]){x, y}, horiz_scale, vert_scale),
-					scene->camera.cords));
-		pixel_colour = blend_colour(pixel_colour,
-			get_ray_colour(ray, scene->objects));
+		ray.direction = normalize_vector(vec_subtract(get_pixel_center(scene->viewport, x, y), scene->camera.cords));
+		get_ray_intersection(&ray, scene->objects);
+		ray.hit_point = vec_add(ray.hit_point, vec_scalar_multiply(ray.surface_norm, EPSILON));
+		lighting2(scene, &ray);
+		pixel_colour = blend_colour(pixel_colour, ray.ray_colour);
 		i++;
 	}
+	// result = 1 / (RPP * RPP);
+	// pixel_colour = colour_scalar_multiply(pixel_colour, result);
 	pixel_colour.r /= RPP;
 	pixel_colour.g /= RPP;
 	pixel_colour.b /= RPP;
 	return (pixel_colour);
 }
 
-static t_vector	get_pixel_center(t_viewport vp, int *cords,
-		t_vector horiz_scale, t_vector vert_scale)
+/**
+ * @brief Calculates the pixel center based on the current x and y position.
+ * 
+ * Scales the deltaU by x and deltaV by y.
+ * @param vp The viewport containing the deltaU and deltaV.
+ * @param x The current x position in the scene/widnow.
+ * @param y The current y position in the scene/window.
+ * @return The pixel center for the given x/y position.
+ */
+static t_vector	get_pixel_center(t_viewport vp, int x, int y)
 {
-	t_vector	x;
-	t_vector	y;
 	t_vector	pixel_center;
-	t_vector	x_scale;
+	t_vector	scaled_detla_u;
+	t_vector	scaled_detla_v;
 
-	x = to_vec(cords[0]);
-	y = to_vec(cords[1]);
-	x_scale = vec_add(vp.pixel00_loc, vec_multiply(horiz_scale, x));
-	pixel_center = vec_add(x_scale, vec_multiply(vert_scale, y));
-	pixel_center = vec_add(pixel_center,
-			get_random_offset(horiz_scale, vert_scale));
+	scaled_detla_u = vec_scalar_multiply(vp.delta_u, x);
+	scaled_detla_v = vec_scalar_multiply(vp.delta_v, y);
+
+	pixel_center = vec_add(vp.pixel00_loc, scaled_detla_u);
+	pixel_center = vec_add(pixel_center, scaled_detla_v);
+	pixel_center = vec_add(pixel_center, get_random_offset(scaled_detla_u, scaled_detla_v));
 	return (pixel_center);
 }
 
-static t_colour	blend_colour(t_colour pixel_colour, t_colour temp_colour)
+/**
+ * @brief Adds 2 colours together
+ * @param c1 The first colour
+ * @param c2 The second colour
+ * @return A new colour that is the result from addding `c1` and `c2`
+ */
+static t_colour	blend_colour(t_colour c1, t_colour c2)
 {
 	t_colour	new_colour;
-	new_colour.r = pixel_colour.r + temp_colour.r;
-	new_colour.g = pixel_colour.g + temp_colour.g;
-	new_colour.b = pixel_colour.b + temp_colour.b;
+
+	new_colour.r = c1.r + c2.r;
+	new_colour.g = c1.g + c2.g;
+	new_colour.b = c1.b + c2.b;
 	return (new_colour);
 }
 
 static t_vector	get_random_offset(t_vector horiz_scale, t_vector vert_scale)
 {
 	t_vector	random_offset;
-	t_vector	rand_1;
-	t_vector	rand_2;
-	t_vector	h_mult;
-	t_vector	v_mult;
 
-	rand_1 = to_vec(random_double());
-	rand_2 = to_vec(random_double());
-	h_mult = vec_multiply(horiz_scale, rand_1);
-	v_mult = vec_multiply(vert_scale, rand_2);
-	random_offset = vec_add(h_mult, v_mult);
+	(void)horiz_scale;
+	(void)vert_scale;
+	random_offset.x = random_double();
+	random_offset.y = random_double();
+	random_offset.z = random_double();
 	return (random_offset);
 }

@@ -1,4 +1,6 @@
 
+# --------------------------------- MAKEFILE --------------------------------- #
+
 # ---------------------------------------------------------------------------- #
 #                                    Config                                    #
 # ---------------------------------------------------------------------------- #
@@ -6,35 +8,51 @@
 NAME			:= miniRT
 CC				:= cc
 RPP				:= 10
-CFLAGS			:= -I./includes -Wall -Wextra -Werror -DRPP=$(RPP)
+CFLAGS			:= -I./includes -Wall -Wextra -Werror
+
 LINKS			= -Iinclude -lglfw -L"/Users/$(USER)/.brew/opt/glfw/lib/"
 LINKS			+= -framework Cocoa -framework OpenGL -framework IOKit
 LINKS			+= -pthread
+
 LIBFT_DIR		:= ./libraries/libft
 LIBFT			:= ./libraries/libft/libft.a
+
 MLX_DIR			:= ./libraries/mlx
 MLX				:= ./libraries/mlx/build/libmlx42.a
 
 # ---------------------------------------------------------------------------- #
-#                                 Source Files                                 #
+#                                     Files                                    #
 # ---------------------------------------------------------------------------- #
 
 OBJ_DIR			:= ./objs
+
 VPATH			:= ./src/ ./src/parser/ ./src/utils/ ./src/debugging/ ./src/input/
-VPATH			+= ./src/free/ ./src/render/ ./src/vec_utils.c
+VPATH			+= ./src/free/ ./src/render/ ./src/vec_utils/ ./src/lighting/
+VPATH			+= ./src/objects/
 
 SRC				:= main.c
+
 PARSER_SRC		:= parser.c init_scene.c parser_utils.c init_objects.c input_check.c
-UTIL_SRC		:= progress_bar.c split_line.c colour_utils.c ft_dabs.c rand.c
+
+UTIL_SRC		:= progress_bar.c split_line.c colour_utils.c ft_dabs.c utils.c
+
 FREE_SRC		:= free_objects.c
+
 INPUT_SRC		:= input.c
-RENDER_SRC		:= render_scene.c pixel_colour.c amb_light.c intersection.c ray_calculations.c \
-					mlx.c anti_aliasing.c
+
+RENDER_SRC		:= render_scene.c ray_calculations.c mlx.c anti_aliasing.c
+
 DEBUGGING_SRC	:= t_printing.c
 VEC_UTILS_SRC	:= vector_operations.c vector_operations2.c
 
+LIGHTING_SRC	:= lighting.c lighting2.c ambient_light.c
+
+OBJECTS_SRC		:= cylinder.c cylinder2.c plane.c sphere.c objects.c
+
 SRCS			:= $(SRC) $(PARSER_SRC) $(UTIL_SRC) $(DEBUGGING_SRC) $(INPUT_SRC)
-SRCS			+= $(FREE_SRC) $(RENDER_SRC) $(VEC_UTILS_SRC)
+SRCS			+= $(FREE_SRC) $(RENDER_SRC) $(VEC_UTILS_SRC) $(LIGHTING_SRC)
+SRCS			+= $(OBJECTS_SRC)
+
 OBJS			:= $(addprefix $(OBJ_DIR)/, $(SRCS:%.c=%.o))
 
 # ---------------------------------------------------------------------------- #

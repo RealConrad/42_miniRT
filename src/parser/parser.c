@@ -19,13 +19,15 @@ t_scene	parser(char **argv)
 	char	**tokens;
 
 	fd = open(argv[1], O_RDONLY);
+	if (fd == -1)
+		parser_exit(OPEN_FAIL, NULL);
 	init_scene_default(&scene);
 	while (true)
 	{
 		line = get_next_line(fd);
 		if (!line)
 			break ;
-		if (ft_strncmp(line, "\n", 2) == 0)
+		if (ft_strncmp(line, "\n", 2) == 0 || ft_strncmp(line, "#", 1) == 0)
 		{
 			free(line);
 			continue ;

@@ -57,21 +57,3 @@ void	init_light(t_scene *scene, char **tokens, int fd)
 	if (!legal_colour(scene->light.colour))
 		exit_analyse(scene, tokens, fd, NULL);
 }
-
-/**
- * @brief Checks if the vector is legal
- * @param vector the vector to check
- * @param min the minimal value
- * @param max the max value
- * @return true if in range, false
- */
-bool	legal_vector(t_vector vector, double min, double max)
-{
-	if (vector.x < min || vector.x > max)
-		return (false);
-	if (vector.y < min || vector.y > max)
-		return (false);
-	if (vector.z < min || vector.z > max)
-		return (false);
-	return (true);
-}

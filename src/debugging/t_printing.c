@@ -34,7 +34,7 @@ void	t_print_scene(t_scene scene)
  */
 void	t_print_colour(t_colour colour)
 {
-	printf("Colour: %d, %d, %d\n", colour.r, colour.g, colour.b);
+	printf("Colour: %f, %f, %f\n", colour.r, colour.g, colour.b);
 }
 
 /**

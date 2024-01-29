@@ -18,5 +18,6 @@ double		dot_product(t_vector v1, t_vector v2);
 t_vector	to_vec(double n);
 t_vector 	vec_scalar_multiply(t_vector v, double scalar);
 double		vec_length(t_vector v);
+t_vector	cross_product(t_vector a, t_vector b);
 
 #endif /*VECTOR_H*/

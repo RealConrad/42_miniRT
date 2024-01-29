@@ -1,5 +1,12 @@
+
 #include "mini_rt.h"
 
+/**
+ * @brief Exits the program on escape press
+ * @param keycode 
+ * @param param the scene to free
+ * @note LEAKS FOR NOW
+ */
 void	escape(keys_t keycode, void *param)
 {
 	(void)param;
