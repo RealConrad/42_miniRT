@@ -3,9 +3,9 @@
 
 /**
  * @brief Substracts vector 2 from vector 1
- * @param v1 the minuend
- * @param v2 the subtrahend
- * @return the difference of the two vectors
+ * @param v1 The minuend
+ * @param v2 The subtrahend
+ * @return The difference of the two vectors
  * @throw if the difference is bigger than
  * DOUBLE_MAX or smaller DOUBLE_MIN, it will overflow
  */
@@ -16,8 +16,8 @@ t_vector	vec_subtract(t_vector v1, t_vector v2)
 
 /**
  * @brief Adds two vectors together
- * @param v1 addend 1
- * @param v2 addend 2
+ * @param v1 First vector
+ * @param v2 Second vector
  * @return the sum of the vectors
  * @throw if the sum of two of the vector values is bigger
  * than DOUBLE_MAX or smaller DOUBLE_MIN, it will overflow
@@ -55,9 +55,9 @@ t_vector	vec_multiply(t_vector v1, t_vector v2)
 
 /**
  * @brief Scales vector to length of 1 (normalizes a vector)
- * @param v the vector to normalise
+ * @param v The vector to normalise
  * @return the normalised vector
- * @note if issues arrise, try checking lenght < 0 instead of < 1e-10
+ * @note If issues arrise, try checking length < 0 instead of < 1e-10
  */
 t_vector	normalize_vector(t_vector v)
 {
