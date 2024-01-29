@@ -12,7 +12,8 @@ void	hit_plane(t_plane *plane, t_ray *ray)
 	double	d_pro;
 	double	distance;
 
-	d_pro = dot_product(normalize_vector(plane->threed_vec), normalize_vector(ray->direction));
+	d_pro = dot_product(normalize_vector(plane->threed_vec),
+			normalize_vector(ray->direction));
 	if (ft_dabs(d_pro) < EPSILON)
 	{
 		ray->distance = -1;
@@ -29,7 +30,7 @@ void	hit_plane(t_plane *plane, t_ray *ray)
 		ray->hit_point = ray_at(*ray, ray->distance);
 		if (d_pro >= 0)
 			ray->surface_norm = normalize_vector(
-				vec_scalar_multiply(plane->threed_vec, -1.0));
+					vec_scalar_multiply(plane->threed_vec, -1.0));
 		else
 			ray->surface_norm = normalize_vector(plane->threed_vec);
 	}

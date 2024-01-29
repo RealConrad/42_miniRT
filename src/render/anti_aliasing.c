@@ -50,7 +50,6 @@ static t_vector	get_pixel_center(t_viewport vp, int x, int y)
 
 	scaled_detla_u = vec_scalar_multiply(vp.delta_u, x);
 	scaled_detla_v = vec_scalar_multiply(vp.delta_v, y);
-
 	pixel_center = vec_add(vp.pixel00_loc, scaled_detla_u);
 	pixel_center = vec_add(pixel_center, scaled_detla_v);
 	pixel_center = vec_add(pixel_center, get_random_offset());

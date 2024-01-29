@@ -28,9 +28,12 @@ double	find_closest_cap(t_cy_data *data)
  * @param cylinder The cylinder to calculate the surface normal for
  * @return The calculated surface normal
  */
-t_vector	get_cylinder_surface_norm(t_cy_data data, t_ray *ray, t_cylinder *cylinder)
+t_vector	get_cylinder_surface_norm(t_cy_data data, t_ray *ray,
+	t_cylinder *cylinder)
 {
 	t_vector	norm;
+	t_vector	v;
+	double		a;
 
 	if (ray->distance == data.d_bot_cap || ray->distance == data.d_top_cap)
 	{
@@ -39,12 +42,15 @@ t_vector	get_cylinder_surface_norm(t_cy_data data, t_ray *ray, t_cylinder *cylin
 		else
 			return (normalize_vector(vec_scalar_multiply(cylinder->axis, -1)));
 	}
-	// THIS IS MARKUS CODE:
 	cylinder->axis = normalize_vector(cylinder->axis);
-	t_vector x = vec_subtract(ray->origin, cylinder->cords);
-	double m = dot_product(ray->direction, vec_scalar_multiply(cylinder->axis, ray->distance)) + dot_product(x, cylinder->axis);
-	norm = (vec_subtract(vec_subtract(ray->hit_point, cylinder->cords), vec_scalar_multiply(cylinder->axis, m)));
-	return (normalize_vector(norm));
+	v = vec_subtract(ray->origin, cylinder->cords);
+	a = dot_product(v, cylinder->axis);
+	a = dot_product(ray->direction,
+			vec_scalar_multiply(cylinder->axis, ray->distance)) + a;
+	norm = (vec_subtract(vec_subtract(ray->hit_point, cylinder->cords),
+				vec_scalar_multiply(cylinder->axis, a)));
+	norm = normalize_vector(norm);
+	return (norm);
 }
 
 /**
@@ -53,7 +59,7 @@ t_vector	get_cylinder_surface_norm(t_cy_data data, t_ray *ray, t_cylinder *cylin
  * @param ray The ray to set the distance for
  * @param data The data used to determine which is closer
  */
-void find_closest_intersection(t_ray *ray, t_cy_data *data)
+void	find_closest_intersection(t_ray *ray, t_cy_data *data)
 {
 	double	d_cap;
 	double	d_side;
@@ -69,4 +75,3 @@ void find_closest_intersection(t_ray *ray, t_cy_data *data)
 	else
 		ray->distance = -1.0;
 }
-
