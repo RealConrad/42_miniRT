@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parser.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: eweiberl <eweiberl@student.42heilbronn.    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/01/29 17:36:30 by eweiberl          #+#    #+#             */
+/*   Updated: 2024/01/29 17:36:31 by eweiberl         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "mini_rt.h"
 
 static void	analyse_line(t_scene *scene, char **tokens, int fd);
@@ -6,9 +18,8 @@ static char	*normalize_line(char *line);
 
 /**
  * @brief Parses/Creates a scene from the given file stored in `argv`.
- * 
- * This function opens the given file and reads it line by line. Each line is split
- * into tokens to analyse different scene elements.
+ * This function opens the given file and reads it line by line.
+ * Each line is split into tokens to analyse different scene elements.
  * @param argv The command line input that holds the file.
  * @return The scene based on the file contents.
  */
