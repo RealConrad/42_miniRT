@@ -1,6 +1,5 @@
 #include "mini_rt.h"
 
-static void			calculate_ray_and_draw(t_scene *scene, int y, int x);
 static t_viewport	calculate_viewport(t_scene *scene);
 
 /**

@@ -3,32 +3,25 @@
 
 static t_colour	blend_colour(t_colour pixel_colour, t_colour temp_colour);
 static t_vector	get_pixel_center(t_viewport vp, int x, int y);
+static t_vector	get_random_offset(t_vector horiz_scale, t_vector vert_scale);
 
 t_colour	anti_aliasing(t_scene *scene, int x, int y)
 {
 	int			i;
-	int			j;
-	double		result;
 	t_colour	pixel_colour;
 	t_ray		ray;
 
 	i = 0;
-	j = 0;
 	pixel_colour = (t_colour){0, 0, 0};
 	while (i < RPP)
 	{
-		j = 0;
-		while (j < RPP)
-		{
-			ray.ray_colour = (t_colour){0, 0, 0};
-			ray.origin = scene->camera.cords;
-			ray.direction = normalize_vector(vec_subtract(get_pixel_center(scene->viewport, x, y), scene->camera.cords));
-			get_ray_intersection(&ray, scene->objects);
-			ray.hit_point = vec_add(ray.hit_point, vec_scalar_multiply(ray.surface_norm, EPSILON));
-			lighting2(scene, &ray);
-			pixel_colour = blend_colour(pixel_colour, ray.ray_colour);
-			j++;
-		}
+		ray.ray_colour = (t_colour){0, 0, 0};
+		ray.origin = scene->camera.cords;
+		ray.direction = normalize_vector(vec_subtract(get_pixel_center(scene->viewport, x, y), scene->camera.cords));
+		get_ray_intersection(&ray, scene->objects);
+		ray.hit_point = vec_add(ray.hit_point, vec_scalar_multiply(ray.surface_norm, EPSILON));
+		lighting2(scene, &ray);
+		pixel_colour = blend_colour(pixel_colour, ray.ray_colour);
 		i++;
 	}
 	// result = 1 / (RPP * RPP);
@@ -51,9 +44,15 @@ t_colour	anti_aliasing(t_scene *scene, int x, int y)
 static t_vector	get_pixel_center(t_viewport vp, int x, int y)
 {
 	t_vector	pixel_center;
+	t_vector	scaled_detla_u;
+	t_vector	scaled_detla_v;
 
-	pixel_center = vec_add(vp.pixel00_loc, vec_scalar_multiply(vp.delta_u, x));
-	pixel_center = vec_add(pixel_center, vec_scalar_multiply(vp.delta_v, y));
+	scaled_detla_u = vec_scalar_multiply(vp.delta_u, x);
+	scaled_detla_v = vec_scalar_multiply(vp.delta_v, y);
+
+	pixel_center = vec_add(vp.pixel00_loc, scaled_detla_u);
+	pixel_center = vec_add(pixel_center, scaled_detla_v);
+	pixel_center = vec_add(pixel_center, get_random_offset(scaled_detla_u, scaled_detla_v));
 	return (pixel_center);
 }
 
@@ -73,3 +72,14 @@ static t_colour	blend_colour(t_colour c1, t_colour c2)
 	return (new_colour);
 }
 
+static t_vector	get_random_offset(t_vector horiz_scale, t_vector vert_scale)
+{
+	t_vector	random_offset;
+
+	(void)horiz_scale;
+	(void)vert_scale;
+	random_offset.x = random_double();
+	random_offset.y = random_double();
+	random_offset.z = random_double();
+	return (random_offset);
+}

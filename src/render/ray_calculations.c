@@ -10,10 +10,8 @@
 t_vector	ray_at(t_ray ray, double distance)
 {
 	t_vector	result;
-	t_vector	scaled_vector;
 
-	scaled_vector = vec_scalar_multiply(normalize_vector(ray.direction), distance);
-	result = vec_add(ray.origin, scaled_vector);
+	result = vec_add(ray.origin, vec_scalar_multiply(normalize_vector(ray.direction), distance));
 	return (result);
 }
 
@@ -44,5 +42,6 @@ void	get_ray_intersection(t_ray *ray, t_object *objects)
 		}
 		temp = temp->next;
 	}
-	hit_object(closest, ray);
+	if (closest)
+		hit_object(closest, ray);
 }

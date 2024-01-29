@@ -41,7 +41,7 @@
 # endif
 
 # ifndef RPP
-#  define RPP 1
+#  define RPP 10
 # endif
 
 
@@ -59,6 +59,7 @@ t_colour	get_sky_background(t_ray *ray);
 t_colour	normalize_colour(t_colour colour);
 void		clamp_normalized_colour(t_colour *colour);
 uint32_t	get_rgb(t_colour colour);
+double		random_double(void);
 
 void		free_objects(t_object *objects);
 
