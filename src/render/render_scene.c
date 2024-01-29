@@ -1,3 +1,4 @@
+
 #include "mini_rt.h"
 
 static t_viewport	calculate_viewport(t_scene *scene);

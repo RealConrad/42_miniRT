@@ -17,15 +17,16 @@ t_colour	anti_aliasing(t_scene *scene, int x, int y)
 	{
 		ray.ray_colour = (t_colour){0, 0, 0};
 		ray.origin = scene->camera.cords;
-		ray.direction = normalize_vector(vec_subtract(get_pixel_center(scene->viewport, x, y), scene->camera.cords));
+		ray.direction = get_pixel_center(scene->viewport, x, y);
+		ray.direction = vec_subtract(ray.direction, scene->camera.cords);
+		ray.direction = normalize_vector(ray.direction);
 		get_ray_intersection(&ray, scene->objects);
-		ray.hit_point = vec_add(ray.hit_point, vec_scalar_multiply(ray.surface_norm, EPSILON));
+		ray.hit_point = vec_add(ray.hit_point,
+				vec_scalar_multiply(ray.surface_norm, EPSILON));
 		lighting2(scene, &ray);
 		pixel_colour = blend_colour(pixel_colour, ray.ray_colour);
 		i++;
 	}
-	// result = 1 / (RPP * RPP);
-	// pixel_colour = colour_scalar_multiply(pixel_colour, result);
 	pixel_colour.r /= RPP;
 	pixel_colour.g /= RPP;
 	pixel_colour.b /= RPP;
