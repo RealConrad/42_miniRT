@@ -34,7 +34,7 @@ SRC				:= main.c
 
 PARSER_SRC		:= parser.c init_scene.c parser_utils.c init_objects.c input_check.c
 
-UTIL_SRC		:= progress_bar.c split_line.c colour_utils.c ft_dabs.c
+UTIL_SRC		:= progress_bar.c split_line.c colour_utils.c ft_dabs.c utils.c
 
 FREE_SRC		:= free_objects.c
 
