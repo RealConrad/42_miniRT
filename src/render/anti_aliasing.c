@@ -3,7 +3,7 @@
 
 static t_colour	blend_colour(t_colour pixel_colour, t_colour temp_colour);
 static t_vector	get_pixel_center(t_viewport vp, int x, int y);
-static t_vector	get_random_offset(t_vector horiz_scale, t_vector vert_scale);
+static t_vector	get_random_offset(void);
 
 t_colour	anti_aliasing(t_scene *scene, int x, int y)
 {
@@ -52,7 +52,7 @@ static t_vector	get_pixel_center(t_viewport vp, int x, int y)
 
 	pixel_center = vec_add(vp.pixel00_loc, scaled_detla_u);
 	pixel_center = vec_add(pixel_center, scaled_detla_v);
-	pixel_center = vec_add(pixel_center, get_random_offset(scaled_detla_u, scaled_detla_v));
+	pixel_center = vec_add(pixel_center, get_random_offset());
 	return (pixel_center);
 }
 
@@ -72,12 +72,10 @@ static t_colour	blend_colour(t_colour c1, t_colour c2)
 	return (new_colour);
 }
 
-static t_vector	get_random_offset(t_vector horiz_scale, t_vector vert_scale)
+static t_vector	get_random_offset(void)
 {
 	t_vector	random_offset;
 
-	(void)horiz_scale;
-	(void)vert_scale;
 	random_offset.x = random_double();
 	random_offset.y = random_double();
 	random_offset.z = random_double();
