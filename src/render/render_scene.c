@@ -2,6 +2,7 @@
 #include "mini_rt.h"
 
 static t_viewport	calculate_viewport(t_scene *scene);
+static void			*render_rows(void *param);
 
 /**
  * @brief Renders an entire scene.
@@ -35,6 +36,32 @@ void	render_scene(t_scene *scene)
 	}
 	free_objects(scene->objects);
 	display_render_progress(100);
+}
+
+static void	*render_rows(void *param)
+{
+	t_threads	*threads;
+	int			y;
+	int			x;
+	t_colour	pixel_colour;
+
+	threads = (t_threads *)param;
+	y = threads->start_y;
+	while (y < threads->end_y)
+	{
+		x = 0;
+		while (x < WIDTH)
+		{
+			pixel_colour = anti_aliasing(threads->scene, x, y);
+			pixel_colour = colour_scalar_multiply(pixel_colour, 255);
+			pthread_mutex_lock(threads->scene->mlx_lock);
+			mlx_put_pixel(threads->scene->img, x, y, get_rgb(pixel_colour));
+			pthread_mutex_unlock(threads->scene->mlx_lock);
+			x++;
+		}
+		y++;
+	}
+	return (0);
 }
 
 /**

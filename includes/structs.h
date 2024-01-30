@@ -255,6 +255,18 @@ typedef struct s_scene
 	t_object		*objects;
 	t_viewport		viewport;
 	long			core_num;
+	pthread_mutex_t	*mlx_lock;
 }	t_scene;
+
+/* --------------------------------- Threads -------------------------------- */
+
+//MAKE INT array with Cores numbers saving the thread id;
+typedef struct s_threads
+{
+	t_scene		*scene;
+	int			start_y;
+	int			end_y;
+	pthread_t	thread_id;
+}	t_threads;
 
 #endif
