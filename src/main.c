@@ -1,6 +1,9 @@
 
 #include "mini_rt.h"
 
+static void	check_no_light(t_scene *scene);
+static void	exit_main(t_scene *scene, int msg);
+
 // void	leak_check(void)
 // {
 // 	system("leaks miniRT");
@@ -16,9 +19,31 @@ int	main(int argc, char *argv[])
 		parser_exit(INPUT_FILE, NULL);
 	scene = (t_scene){};
 	scene = parser(argv);
+	check_no_light(&scene);
 	render_scene(&scene);
 	mlx_loop(scene.mlx);
 	return (0);
 }
 
-	// atexit(leak_check);
+static void	check_no_light(t_scene *scene)
+{
+	if (!legal_colour(scene->light.colour))
+		exit_main(scene, MISSING);
+	if (scene->light.light_ratio == -1)
+		exit_main(scene, MISSING);
+	if (scene->amb_light.light_ratio == -1)
+		exit_main(scene, MISSING);
+	if (!legal_colour(scene->amb_light.colour_in_range))
+		exit_main(scene, MISSING);
+	if (scene->camera.or_vect.x == 0.0 && scene->camera.or_vect.y == 0.0
+		&& scene->camera.or_vect.z == 0.0)
+		exit_main(scene, FORMAT);
+}
+
+// atexit(leak_check);
+
+static void	exit_main(t_scene *scene, int msg)
+{
+	free_objects(scene->objects);
+	parser_exit(msg, NULL);
+}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_scene.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eweiberl <eweiberl@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: cwenz <cwenz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 17:28:38 by eweiberl          #+#    #+#             */
-/*   Updated: 2024/01/29 17:28:40 by eweiberl         ###   ########.fr       */
+/*   Updated: 2024/01/30 13:35:03 by cwenz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ void	init_cam(t_scene *scene, char **tokens, int fd)
 	if (legal_vector(scene->camera.or_vect, -1, 1) == false
 		|| scene->camera.fov < 0 || scene->camera.fov > 180)
 		exit_analyse(scene, tokens, fd, NULL);
+	if (scene->camera.fov == 180)
+		scene->camera.fov = 179;
 }
 
 /**

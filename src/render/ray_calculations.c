@@ -33,6 +33,7 @@ void	get_ray_intersection(t_ray *ray, t_object *objects)
 	closest = NULL;
 	temp = objects;
 	old_hit = 0;
+	ray->distance = -1;
 	while (temp)
 	{
 		distance = hit_object(temp, ray);
