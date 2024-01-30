@@ -11,7 +11,7 @@ double	ft_dabs(double nb)
 {
 	if (nb >= 0)
 		return (nb);
-	else if (nb == DBL_MIN)
+	else if (nb == 2.2250738585072014e-308)
 		return (nb);
 	else
 		return (-nb);
