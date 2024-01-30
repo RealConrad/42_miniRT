@@ -6,7 +6,7 @@
 /*   By: eweiberl <eweiberl@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 17:28:13 by eweiberl          #+#    #+#             */
-/*   Updated: 2024/01/29 17:28:16 by eweiberl         ###   ########.fr       */
+/*   Updated: 2024/01/30 16:47:31 by eweiberl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,8 @@ void	assign_vector(t_vector *vector, char **tokens, int start_index)
  * @param colour The colour struct to assign data to.
  * @param tokens An array of strings containing the data.
  * @param start_index The start index used for the `tokens`.
- * @note The 3 colours (red, green, blue) should be stored in tokens consecutively.
+ * @note The 3 colours (red, green, blue) should be stored in
+ * tokens consecutively.
  */
 void	assign_colour(t_colour *colour, char **tokens, int start_index)
 {
