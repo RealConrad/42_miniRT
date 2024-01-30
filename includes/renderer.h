@@ -8,6 +8,7 @@
 /*                                  Functions                                 */
 /* -------------------------------------------------------------------------- */
 
+t_viewport	calculate_viewport(t_scene *scene);
 void		render_scene(t_scene *scene);
 void		render_cylinder(t_scene *scene, t_cylinder *cylinder);
 void		render_plane(t_scene *scene, t_plane *plane);

@@ -13,13 +13,6 @@
 /*                                  Includes                                  */
 /* -------------------------------------------------------------------------- */
 
-# include "structs.h"
-# include "parser.h"
-# include "renderer.h"
-# include "testing.h"
-# include "vector.h"
-# include "lighting.h"
-
 # include <stdio.h>
 # include <stdlib.h>
 # include <math.h>
@@ -28,6 +21,13 @@
 # include <pthread.h>
 # include <float.h>
 # include <stdint.h>
+
+# include "structs.h"
+# include "parser.h"
+# include "renderer.h"
+# include "testing.h"
+# include "vector.h"
+# include "lighting.h"
 
 /* -------------------------------------------------------------------------- */
 /*                                   Defines                                  */
@@ -42,7 +42,7 @@
 # endif /*HEIGHT*/
 
 # ifndef RPP
-#  define RPP 1
+#  define RPP 100
 # endif /*RPP*/
 
 # ifndef SHINY
