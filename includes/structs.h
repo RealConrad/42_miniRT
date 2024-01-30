@@ -28,7 +28,6 @@ typedef enum e_object_type
 	PLANE
 }	t_object_type;
 
-
 /* ------------------------------ Vector/Colour ----------------------------- */
 
 /**
