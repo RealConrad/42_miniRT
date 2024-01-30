@@ -254,6 +254,7 @@ typedef struct s_scene
 	t_light			light;
 	t_object		*objects;
 	t_viewport		viewport;
+	long			core_num;
 }	t_scene;
 
 #endif

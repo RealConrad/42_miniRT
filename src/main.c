@@ -3,6 +3,7 @@
 
 static void	check_no_light(t_scene *scene);
 static void	exit_main(t_scene *scene, int msg);
+static void	get_cores(t_scene *scene);
 
 // void	leak_check(void)
 // {
@@ -20,6 +21,7 @@ int	main(int argc, char *argv[])
 	scene = (t_scene){};
 	scene = parser(argv);
 	check_no_light(&scene);
+	get_cores(&scene);
 	render_scene(&scene);
 	mlx_loop(scene.mlx);
 	return (0);
@@ -46,4 +48,13 @@ static void	exit_main(t_scene *scene, int msg)
 {
 	free_objects(scene->objects);
 	parser_exit(msg, NULL);
+}
+
+static void	get_cores(t_scene *scene)
+{
+	scene->core_num = sysconf(_SC_NPROCESSORS_ONLN);
+	if (scene->core_num < 1)
+		scene->core_num = 1;
+	if (scene->core_num > 64)
+		scene->core_num = 64;
 }
