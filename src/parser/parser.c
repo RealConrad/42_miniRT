@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eweiberl <eweiberl@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: cwenz <cwenz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 17:36:30 by eweiberl          #+#    #+#             */
-/*   Updated: 2024/01/29 17:36:31 by eweiberl         ###   ########.fr       */
+/*   Updated: 2024/01/30 11:16:29 by cwenz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,8 @@ static void	init_scene_default(t_scene *scene)
 {
 	scene->amb_light.light_ratio = -1;
 	scene->camera.fov = -1;
+	scene->light.colour = (t_colour){-1, -1, -1};
+	scene->amb_light.colour_in_range = (t_colour){0, 0, 0};
 	scene->light.light_ratio = -1;
 	scene->objects = NULL;
 }
