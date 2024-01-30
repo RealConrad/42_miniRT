@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mini_rt.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eweiberl <eweiberl@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: cwenz <cwenz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 16:38:21 by eweiberl          #+#    #+#             */
-/*   Updated: 2024/01/30 16:41:56 by eweiberl         ###   ########.fr       */
+/*   Updated: 2024/01/30 17:33:25 by cwenz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@
 # endif /*HEIGHT*/
 
 # ifndef RPP
-#  define RPP 1
+#  define RPP 10
 # endif /*RPP*/
 
 # ifndef SHINY
