@@ -2,6 +2,7 @@
 #include "mini_rt.h"
 
 static void	check_no_light(t_scene *scene);
+static void	exit_main(t_scene *scene, int msg);
 
 // void	leak_check(void)
 // {
@@ -27,13 +28,22 @@ int	main(int argc, char *argv[])
 static void	check_no_light(t_scene *scene)
 {
 	if (!legal_colour(scene->light.colour))
-		scene->light.colour = (t_colour){255, 255, 255};
+		exit_main(scene, MISSING);
 	if (scene->light.light_ratio == -1)
-		scene->light.light_ratio = 0;
+		exit_main(scene, MISSING);
 	if (scene->amb_light.light_ratio == -1)
-		scene->amb_light.light_ratio = 0;
+		exit_main(scene, MISSING);
 	if (!legal_colour(scene->amb_light.colour_in_range))
-		scene->amb_light.colour_in_range = (t_colour){0, 0, 0};
+		exit_main(scene, MISSING);
+	if (scene->camera.or_vect.x == 0.0 && scene->camera.or_vect.y == 0.0
+		&& scene->camera.or_vect.z == 0.0)
+		exit_main(scene, FORMAT);
 }
 
 // atexit(leak_check);
+
+static void	exit_main(t_scene *scene, int msg)
+{
+	free_objects(scene->objects);
+	parser_exit(msg, NULL);
+}
