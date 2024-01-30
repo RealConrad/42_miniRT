@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   structs.h                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: eweiberl <eweiberl@student.42heilbronn.    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/01/30 16:38:55 by eweiberl          #+#    #+#             */
+/*   Updated: 2024/01/30 16:38:56 by eweiberl         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #ifndef STRUCTS_H
 # define STRUCTS_H
@@ -27,7 +38,6 @@ typedef enum e_object_type
 	CYLINDER,
 	PLANE
 }	t_object_type;
-
 
 /* ------------------------------ Vector/Colour ----------------------------- */
 
@@ -254,6 +264,18 @@ typedef struct s_scene
 	t_light			light;
 	t_object		*objects;
 	t_viewport		viewport;
+	long			core_num;
+	pthread_mutex_t	mlx_lock;
 }	t_scene;
+
+/* --------------------------------- Threads -------------------------------- */
+
+typedef struct s_threads
+{
+	t_scene		*scene;
+	int			start_y;
+	int			end_y;
+	pthread_t	t_id;
+}	t_threads;
 
 #endif

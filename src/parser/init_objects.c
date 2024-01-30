@@ -6,7 +6,7 @@
 /*   By: eweiberl <eweiberl@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 17:28:28 by eweiberl          #+#    #+#             */
-/*   Updated: 2024/01/29 17:28:32 by eweiberl         ###   ########.fr       */
+/*   Updated: 2024/01/30 16:47:21 by eweiberl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,6 @@ static t_object	*common_init_object(char **tokens, t_object_type type)
 	object = ft_calloc(1, sizeof(t_object));
 	if (!object)
 		return (NULL);
-
 	if (type == SPHERE)
 		object->sphere = ft_calloc(1, sizeof(t_sphere));
 	else if (type == CYLINDER)

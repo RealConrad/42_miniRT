@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   renderer.h                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: eweiberl <eweiberl@student.42heilbronn.    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/01/30 16:38:44 by eweiberl          #+#    #+#             */
+/*   Updated: 2024/01/30 16:38:45 by eweiberl         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #ifndef RENDERER_H
 # define RENDERER_H
@@ -8,6 +19,7 @@
 /*                                  Functions                                 */
 /* -------------------------------------------------------------------------- */
 
+t_viewport	calculate_viewport(t_scene *scene);
 void		render_scene(t_scene *scene);
 void		render_cylinder(t_scene *scene, t_cylinder *cylinder);
 void		render_plane(t_scene *scene, t_plane *plane);
