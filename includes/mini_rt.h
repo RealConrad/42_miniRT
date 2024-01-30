@@ -42,7 +42,7 @@
 # endif /*HEIGHT*/
 
 # ifndef RPP
-#  define RPP 100
+#  define RPP 10
 # endif /*RPP*/
 
 # ifndef SHINY
