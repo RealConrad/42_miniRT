@@ -24,7 +24,7 @@
 - [License](#license)
 
 ## Features
-- **Anti-Aliasing:** Reduces the jagged edge effects to produce a smoother image. This works by sending multiple rays er pixel and averaging the ray colour.
+- **Anti-Aliasing:** Reduces the jagged edge effects to produce a smoother image. This works by sending multiple rays per pixel and averaging the ray colour.
 - **Objects:** Supports the rendering of the following 3D objects:
   - Cylinder
   - Sphere
