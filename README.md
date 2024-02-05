@@ -69,7 +69,7 @@ Resources we used to better understand ray tracing concepts and implementing spe
 - [Ray tracing in a weekend](https://raytracing.github.io/books/RayTracingInOneWeekend.html)
 - [Chris Dragan - Ray tracing shapes](https://hugi.scene.org/online/hugi24/coding%20graphics%20chris%20dragan%20raytracing%20shapes.htm)
 - [Mastering 42](https://haglobah.github.io/Mastering-42/holy_graph/miniRT.html)
-- [Gabriel Gambetta - Lighting](https://gabrielgambetta.com/computer-graphics-from-scratch/03-light.html)
+- [Computer graphics from scratch - Gabriel Gambetta](https://www.gabrielgambetta.com/computer-graphics-from-scratch/)
 - [Phong reflection model](https://en.wikipedia.org/wiki/Phong_reflection_model)
 - [Introduction to ray tracing](https://www.scratchapixel.com/lessons/3d-basic-rendering/introduction-to-ray-tracing/how-does-it-work.html)
 
