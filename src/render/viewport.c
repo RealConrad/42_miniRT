@@ -42,7 +42,7 @@ t_viewport	calculate_viewport(t_scene *scene)
 	viewport.pixel00_loc = vec_scalar_multiply(viewport.delta_u, -0.5);
 	viewport.pixel00_loc = vec_add(viewport.pixel00_loc,
 			vec_scalar_multiply(viewport.delta_v, -0.5));
-	viewport.pixel00_loc = vec_subtract(vec_add(viewport.pixel00_loc,
+	viewport.pixel00_loc = vec_add(vec_add(viewport.pixel00_loc,
 				camera_vector), scene->camera.cords);
 	viewport.delta_v = normalize_vector(viewport.delta_v);
 	viewport.delta_u = normalize_vector(viewport.delta_u);
