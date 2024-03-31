@@ -73,5 +73,5 @@ Resources we used to better understand ray tracing concepts and implementing spe
 - [Phong reflection model](https://en.wikipedia.org/wiki/Phong_reflection_model)
 - [Introduction to ray tracing](https://www.scratchapixel.com/lessons/3d-basic-rendering/introduction-to-ray-tracing/how-does-it-work.html)
 
-## Liencse
+## License
 [MIT](https://choosealicense.com/licenses/mit/)
